@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "41873801636",
+    "firebase_url": "https://growio-2019.firebaseio.com",
+    "project_id": "growio-2019",
+    "storage_bucket": "growio-2019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41873801636:android:f7bcfd54dc7a89c1",
+        "android_client_info": {
+          "package_name": "reallyintoplants.growio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41873801636-7ggr7t9uoi6gtii1huecijfcfmlj143u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "reallyintoplants.growio",
+            "certificate_hash": "e284a577199a1784b81f7be74b53e2778ac86ab1"
+          }
+        },
+        {
+          "client_id": "41873801636-7du43r30988qga587s4duormmi07h0op.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH17Wo4MOEP5qo-ngkHEn21MoxF0bCvzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41873801636-7du43r30988qga587s4duormmi07h0op.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
