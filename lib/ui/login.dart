@@ -35,7 +35,7 @@ class LoginState extends State<Login> {
     // If the user provided username and password
     if (_userController.text != "" && _passwordController.text != "") {
       users.signInUser( _userController.text, _passwordController.text ).then((FirebaseUser user) {
-        routes.goToHomeScreen(context);
+        routes.goToMyGardenScreen(context);
       }).catchError((e) => help.popupAlert(context, e.message));
     }
     // If either username or password weren't supplied
@@ -76,7 +76,7 @@ class LoginState extends State<Login> {
                     // Email text field
                     Container(
                       width: 325.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _userController,
                         decoration: InputDecoration(
                           hintText: 'you@example.com',
@@ -90,7 +90,7 @@ class LoginState extends State<Login> {
                     // Password text field
                     Container(
                       width: 325.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
                           hintText: 'Password',
@@ -247,7 +247,7 @@ class _ForgottenPasswordState extends State<ForgottenPassword> {
                     // full name text field
                     Container(
                       width: 325.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
                           hintText: 'you@example.com',

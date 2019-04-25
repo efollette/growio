@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/users.dart' as users;
 import '../utils/routes.dart' as routes;
+import '../wdigets/plantTile.dart';
 
 class MyGarden extends StatefulWidget {
   @override
@@ -8,18 +9,26 @@ class MyGarden extends StatefulWidget {
 }
 
 class _MyGardenState extends State<MyGarden> {
+
   @override
   Widget build(BuildContext context) {
+
+    // Check if the keyboard is up to determine if we need to show the FAB or not
+    final bool _showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+
+    // Handle Navigation
+    void onTabTapped(int index) {
+      setState(() {
+        // Set current index equal to the page we wish to navigate to
+        routes.currentIndex = index;
+      });
+      if ( routes.currentIndex == 0 ) routes.goToMyGardenScreen(context);
+      if ( routes.currentIndex == 1 ) routes.goToPlantcyclopediaScreen(context);
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Growio",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 20,
-            fontStyle: FontStyle.italic,
-          ),
-        ),
+        title: Image.asset("Assets/plant.png"),
         backgroundColor: Colors.green,
         centerTitle: true,
       ),
@@ -27,6 +36,9 @@ class _MyGardenState extends State<MyGarden> {
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.lightGreen,
+              ),
               accountName: Text("Erik Follette"),
               accountEmail: Text(users.userEmail),
               currentAccountPicture: CircleAvatar(
@@ -52,119 +64,23 @@ class _MyGardenState extends State<MyGarden> {
         ),
       ),
       body: ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: 12,
         itemBuilder: (BuildContext context, int position) {
-          return Column(
-            children: <Widget>[
-              Divider(
-                height: 15.5,
-              ),
-              // Plant Tile
-              Row(
-                children: <Widget>[
-                  Padding(padding: const EdgeInsets.all(7.25)),
-                  // Plant Image
-                  Container(
-                    height: 170.0,
-                    width: 170.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: Colors.greenAccent,
-                    ),
-                    // Poster's profile picture
-                    child: IconButton(
-                      icon: Icon(Icons.local_florist),
-                      onPressed: () => debugPrint("Go to plant"),
-                      iconSize: 40.0,
-                    ),
-                  ),
-                  Padding(padding: const EdgeInsets.all(7.25)),
-                  Container(
-                    height: 170,
-                    width: MediaQuery.of(context).size.width - 213.5,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.green,
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Plant Name",
-                              style: TextStyle(
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(padding: const EdgeInsets.all(1.5)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Scientific Name",
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.black26,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(padding: const EdgeInsets.all(3.5)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Water:",
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(padding: const EdgeInsets.all(3.5)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Sunlight:",
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(padding: const EdgeInsets.all(7.25)),
-                ],
-              ),
-            ],
-          );
+          return plantTile(context);
         },
+
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: _showFab ? FloatingActionButton(
         onPressed: () {},
         tooltip: 'Increment',
-        child: new Icon(Icons.add_a_photo),
+        child: Icon(Icons.add_a_photo),
         backgroundColor: Colors.greenAccent,
         elevation: 4.0,
-      ),
+      ) : null,
       bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: routes.currentIndex,
         backgroundColor: Colors.green,
         selectedItemColor: Colors.greenAccent,
         unselectedItemColor: Colors.green[900],

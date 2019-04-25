@@ -44,3 +44,8 @@ flutter:
   assets:
     - Assets/
 
+  fonts:
+    - family: Hojas de plata
+      fonts:
+        - asset: Assets/fonts/HojasPlata.otf
+

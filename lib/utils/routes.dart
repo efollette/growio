@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import '../ui/Login.dart';
 import '../ui/myGarden.dart';
 import '../ui/signUp.dart';
+import '../ui/plantcyclopedia.dart';
+
+int currentIndex = 0;
 
 final routes = {
   '/login' : (BuildContext context) => new Login(),
-  '/home' : (BuildContext context) => new MyGarden(),
+  '/myGarden' : (BuildContext context) => new MyGarden(),
   '/signUp' : (BuildContext context) => new SignUp(),
+  '/plantcyclopedia' : (BuildContext context) => new Plantcyclopedia(),
 
   // Default route
-  '/' : (BuildContext context) => new MyGarden(),
+  '/' : (BuildContext context) => new Plantcyclopedia(),
 };
 
 /*
@@ -24,10 +28,10 @@ void goToSignUpScreen(BuildContext context) {
 /*
    * Name: goToHomeScreen
    * Parameters:  context - build context of the current widget its being called from
-   * Description: Sends user to home screen.
+   * Description: Sends user to MyGarden screen.
    */
-void goToHomeScreen(BuildContext context) {
-  Navigator.pushReplacementNamed(context, '/home');
+void goToMyGardenScreen(BuildContext context) {
+  Navigator.popAndPushNamed(context, '/myGarden');
 }
 
 /*
@@ -39,3 +43,11 @@ void goToLoginScreen(BuildContext context) {
   Navigator.pushNamed(context, '/login');
 }
 
+/*
+   * Name: goToPlantcyclopediaScreen
+   * Parameters:  context - build context of the current widget its being called from
+   * Description: Sends user to Plantcyclopedia screen.
+   */
+void goToPlantcyclopediaScreen(BuildContext context) {
+  Navigator.popAndPushNamed(context, '/plantcyclopedia');
+}

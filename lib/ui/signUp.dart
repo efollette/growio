@@ -66,7 +66,7 @@ class _SignUpState extends State<SignUp> {
       _currentUser = users
           .createUser(_emailController.text, _passwordController.text)
           .then((FirebaseUser user) {
-        routes.goToHomeScreen(context);
+        routes.goToMyGardenScreen(context);
       }).catchError((e) => help.popupAlert(context, e.message));
     }
   }
@@ -98,7 +98,7 @@ class _SignUpState extends State<SignUp> {
                     // email text field
                     Container(
                       width: 325.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
                           hintText: 'you@example.com',
@@ -112,7 +112,7 @@ class _SignUpState extends State<SignUp> {
                     // Password text field
                     Container(
                       width: 325.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
                           hintText: 'Password',
@@ -126,7 +126,7 @@ class _SignUpState extends State<SignUp> {
                     // Reenter password field
                     Container(
                       width: 325.0,
-                      child: TextField(
+                      child: TextFormField(
                         controller: _repasswordController,
                         decoration: InputDecoration(
                           hintText: 'Password',
