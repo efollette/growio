@@ -81,9 +81,9 @@ class _MyGardenState extends State<MyGarden> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: routes.currentIndex,
-        backgroundColor: Colors.green,
-        selectedItemColor: Colors.greenAccent,
-        unselectedItemColor: Colors.green[900],
+        // backgroundColor: Colors.green,
+        // selectedItemColor: Colors.greenAccent,
+        // unselectedItemColor: Colors.green[900],
         items: [
           BottomNavigationBarItem(
             title: Text("MyGarden"),
