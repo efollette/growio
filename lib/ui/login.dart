@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
 
   // Padding between logo and button
   final Padding padding2 = Padding(
-    padding: const EdgeInsets.all(45.0),
+    padding: const EdgeInsets.all(40.0),
   );
 
   @override
@@ -88,9 +88,10 @@ class _LoginState extends State<Login> {
           children: <Widget>[
             padding1,
             logo,
-            padding2,
             makeLoginButton(context),
+            padding2,
           ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),
         // Gradient Background
         decoration: gradient,
