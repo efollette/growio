@@ -2,6 +2,27 @@ import 'package:flutter/material.dart';
 import '../helper/messages.dart' as help;
 import '../utils/routes.dart' as routes;
 import '../utils/users.dart' as users;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+
+class Post {
+  final int userId;
+  final int id;
+  final String title;
+  final String body;
+
+  Post({this.userId, this.id, this.title, this.body});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      userId: json['userId'],
+      id: json['id'],
+      title: json['title'],
+      body: json['body'],
+    );
+  }
+}
 
 class Login extends StatefulWidget {
   @override
@@ -10,10 +31,19 @@ class Login extends StatefulWidget {
   }
 }
 
-// Method to handle logging in using Google Auth API
-void handleLogin(BuildContext context) {
-  routes.goToMyGardenScreen(context);
+Future<Post> handleLogin(temp) async {
+  final response =
+  await http.get('http://10.0.2.2:3000/auth/google');
+
+  if (response.statusCode == 200) {
+    // If server returns an OK response, parse the JSON
+    return Post.fromJson(json.decode(response.body));
+  } else {
+    // If that response was not OK, throw an error.
+    throw Exception('Failed to load post');
+  }
 }
+
 
 class _LoginState extends State<Login> {
   // Gradient for the login screen
