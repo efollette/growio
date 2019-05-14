@@ -155,7 +155,6 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
  *              to where they were in the app
  */
 void _handleLogOut(BuildContext context) {
-  users.signOutUser(context);
   Navigator.of(context)
       .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 }

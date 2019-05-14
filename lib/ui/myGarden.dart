@@ -108,7 +108,6 @@ class _MyGardenState extends State<MyGarden> {
  *              to where they were in the app
  */
 void _handleLogOut(BuildContext context) {
-  users.signOutUser(context);
   Navigator.of(context)
       .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 }
