@@ -33,8 +33,10 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset("Assets/plant.png"),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         centerTitle: true,
+        iconTheme: IconThemeData(color: Color(0xFF278478)),
+        elevation: 0,
       ),
       drawer: Drawer(
         child: ListView(
@@ -69,16 +71,15 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       ),
       body: Column(
         children: <Widget>[
-          Padding(padding: const EdgeInsets.all(15.0)),
           Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 50.0,
             child: Text(
                 "Plantcyclopedia",
               style: TextStyle(
-                color: Colors.green[900],
-                fontSize: 50.0,
-                fontFamily: 'Hojas de Plata',
+                color: Color(0xFF8BE4BB),
+                fontSize: 30,
+                fontFamily: 'Quicksand',
               ),
             ),
           ),
@@ -86,6 +87,10 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           Container(
             width: MediaQuery.of(context).size.width - 50.0,
             child: TextFormField(
+              style: TextStyle(
+                color: Color(0xFF8BE4BB),
+              ),
+              textAlign: TextAlign.center,
               textInputAction: TextInputAction.search,
               controller: _searchController,
               decoration: InputDecoration(
@@ -94,23 +99,19 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide(
-                    color: Colors.green,
+                    color: Color(0x388BE4BB),
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.green,
+                    color: Color(0x388BE4BB),
                   ),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 filled: true,
-                fillColor: Colors.green,
+                fillColor: Color(0x388BE4BB),
                 hintText: 'e.x. Daisy',
                 labelText: 'Search for plants!',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () => debugPrint("Search for plants boi"),
-                ),
               ),
             ),
           ),

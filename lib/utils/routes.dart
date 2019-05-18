@@ -11,7 +11,7 @@ final routes = {
   '/plantcyclopedia' : (BuildContext context) => new Plantcyclopedia(),
 
   // Default route
-  '/' : (BuildContext context) => new Login(),
+  '/' : (BuildContext context) => new Plantcyclopedia(),
 };
 
 /*
