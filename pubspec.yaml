@@ -20,7 +20,7 @@ dependencies:
   flutter_launcher_icons: "^0.6.1"
 
 flutter_icons:
-  image_path: "Assets/growiotopicon.png"
+  image_path: "Assets/GrowioIconScaled.png"
   android: true
   ios: true
 
