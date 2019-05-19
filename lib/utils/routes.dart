@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import '../ui/Login.dart';
 import '../ui/myGarden.dart';
 import '../ui/plantcyclopedia.dart';
-
-int currentIndex = 0;
+import '../ui/mainPage.dart';
 
 final routes = {
-  '/login' : (BuildContext context) => new Login(),
-  '/myGarden' : (BuildContext context) => new MyGarden(),
-  '/plantcyclopedia' : (BuildContext context) => new Plantcyclopedia(),
+  '/login' : (BuildContext context) => Login(),
+  '/myGarden' : (BuildContext context) => MyGarden(),
+  '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
 
   // Default route
-  '/' : (BuildContext context) => new Plantcyclopedia(),
+  '/' : (BuildContext context) => MainPage(),
 };
 
 /*

@@ -48,9 +48,6 @@ flutter:
     - Assets/
 
   fonts:
-    - family: Hojas de plata
-      fonts:
-        - asset: Assets/fonts/HojasPlata.otf
     - family: Quicksand
       fonts:
         - asset: Assets/fonts/Quicksand-Bold.otf
