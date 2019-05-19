@@ -9,9 +9,10 @@ final routes = {
   '/login' : (BuildContext context) => Login(),
   '/myGarden' : (BuildContext context) => MyGarden(),
   '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
+  '/camera' :(BuildContext context) => Camera(),
 
   // Default route
-  '/' : (BuildContext context) => Camera(),
+  '/' : (BuildContext context) => MainPage(),
 };
 
 /*

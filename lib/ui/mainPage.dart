@@ -101,6 +101,7 @@ class _MainPageState extends State<MainPage> {
             )
           ),
           child: BottomNavigationBar(
+            elevation: 0.0,
             onTap: _onTabTapped,
             currentIndex: currentPage,
             items: [
@@ -181,6 +182,7 @@ class _MainPageState extends State<MainPage> {
     final bool _showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: _appBar,
       drawer: _makeDrawer(context),
       body: PageView(
