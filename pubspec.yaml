@@ -18,7 +18,7 @@ dependencies:
     sdk: flutter
 
   flutter_launcher_icons: "^0.6.1"
-  image_picker: "^0.4.5"
+  image_picker:
 
 flutter_icons:
   image_path: "Assets/GrowioIconScaled.png"
