@@ -54,13 +54,9 @@ class _MainPageState extends State<MainPage> {
 
   // Navigation method
   void _onTabTapped(int index) {
-    setState(() {
-      // Set current index equal to the page we wish to navigate to
-      currentPage = index;
-    });
     //Animate to the page we want
     controller.animateToPage(
-        currentPage,
+        index,
         duration: Duration(
           milliseconds: 850,
         ),
