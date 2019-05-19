@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'dart:convert';
 
 class Camera extends StatefulWidget {
   @override
@@ -18,6 +19,10 @@ class CameraState extends State<Camera> {
       image=img;
       print(img.path);
       //updates our UI
+      List<int> imageBytes= image.readAsBytesSync();
+      String base64Image = base64Encode(imageBytes);
+      print('Printing the image path');
+      print(base64Image);
       setState(() {
         print('Update the UI');
       });
