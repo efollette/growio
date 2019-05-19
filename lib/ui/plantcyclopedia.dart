@@ -7,6 +7,7 @@ class Plantcyclopedia extends StatefulWidget {
 
   final bool showFab;
 
+  // Constructor for plantcyclopedia
   Plantcyclopedia(this.showFab);
 
   @override

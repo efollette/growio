@@ -30,21 +30,19 @@ class CameraState extends State<Camera> {
   }
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: new Text('Image Picker'),
+          title: Text('Image Picker'),
         ),
-        body: new Container(
-          child: new Center(
-              child: image==null?new Text('No Image To Show'):new Image.file(image),
+        body: Container(
+          child: Center(
+              child: image == null ? Text('No Image To Show'): Image.file(image),
           ),
         ),
-        floatingActionButton: new FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
           onPressed: picker,
-          child: new Icon(Icons.camera_alt),
+          child: Icon(Icons.camera_alt),
         ),
-      ),
     );
   }
 }
