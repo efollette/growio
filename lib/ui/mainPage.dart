@@ -45,6 +45,16 @@ class _MainPageState extends State<MainPage> {
 
   // Floating action button to go to camera
   final FloatingActionButton _fab = FloatingActionButton(
+    //in the parenthesis define the functionality of what happens when you
+    //click the camera button
+
+    //use a switch statement to determine
+    //make a function that sends a certain number to the camera page
+    //use a ternary statement to display things.
+    //make camera=true, gallery=false.
+    //pass the camera page a parameter either true or false
+    //speedDial
+    //morphing
     onPressed: () {},
     tooltip: 'Add a plant',
     child: Icon(Icons.camera_enhance),
