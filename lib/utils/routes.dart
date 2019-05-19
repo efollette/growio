@@ -3,6 +3,7 @@ import '../ui/Login.dart';
 import '../ui/myGarden.dart';
 import '../ui/plantcyclopedia.dart';
 import '../ui/mainPage.dart';
+import '../ui/Camera.dart';
 
 final routes = {
   '/login' : (BuildContext context) => Login(),
@@ -10,7 +11,7 @@ final routes = {
   '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
 
   // Default route
-  '/' : (BuildContext context) => MainPage(),
+  '/' : (BuildContext context) => Camera(),
 };
 
 /*
