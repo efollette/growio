@@ -4,9 +4,11 @@ import 'dart:io';
 import 'dart:convert';
 
 class Camera extends StatefulWidget {
+  final bool cameraStatus;
+
+  Camera(this.cameraStatus);
   @override
-  State<StatefulWidget> createState(){
-    return new CameraState();
+  CameraState createState() => CameraState();
   }
 }
 
@@ -22,6 +24,7 @@ class CameraState extends State<Camera> {
       List<int> imageBytes= image.readAsBytesSync();
       String base64Image = base64Encode(imageBytes);
       print('Printing the image path');
+      print(widget.cameraStatus);
       print(base64Image);
       setState(() {
         print('Update the UI');
@@ -30,8 +33,7 @@ class CameraState extends State<Camera> {
   }
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: new Text('Image Picker'),
         ),
