@@ -21,7 +21,11 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0"
+=======
+    version: "2.2.0"
+>>>>>>> 3b54bb79901cef9722e1695dd1d9b28739699920
   boolean_selector:
     dependency: transitive
     description:
@@ -131,7 +135,11 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.2"
+=======
+    version: "2.0.3"
+>>>>>>> 3b54bb79901cef9722e1695dd1d9b28739699920
   sky_engine:
     dependency: transitive
     description: flutter
@@ -178,7 +186,11 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.2.4"
+=======
+    version: "0.2.5"
+>>>>>>> 3b54bb79901cef9722e1695dd1d9b28739699920
   typed_data:
     dependency: transitive
     description:

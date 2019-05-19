@@ -26,6 +26,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       body: Column(
         children: <Widget>[
           Container(
+            color: Colors.white,
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 50.0,
             child: Text(
@@ -34,12 +35,15 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                 color: Color(0xFF8BE4BB),
                 fontSize: 33,
                 fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
           Padding(padding: const EdgeInsets.all(10.0)),
           Container(
-            width: MediaQuery.of(context).size.width - 50.0,
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width - 75.0,
+            height: 35.0,
             child: TextFormField(
               style: TextStyle(
                 color: Color(0xFF8BE4BB),
@@ -63,14 +67,28 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 filled: true,
-                fillColor: Color(0x388BE4BB),
+                fillColor: Color(0xFFDFFFF0),
                 hintText: 'e.x. Daisy',
-                labelText: 'Search for plants!',
+                labelText: 'Type the name of your plant here.',
+
               ),
             ),
           ),
           Padding(padding: const EdgeInsets.all(10.0)),
-          widget.showFab ? plantOfTheDay(context) : Container(),
+          // Plant of the Day
+          widget.showFab ? Container(
+            color: Colors.white,
+              alignment: Alignment.center,
+              child: Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: MediaQuery.of(context).size.width - 75.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14.0),
+                  color: Color(0xFFDFFFF0),
+                ),
+                child: plantOfTheDay(context),
+              )
+          ) : Container(),
         ],
       ),
 

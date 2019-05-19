@@ -51,4 +51,8 @@ flutter:
     - family: Quicksand
       fonts:
         - asset: Assets/fonts/Quicksand-Bold.otf
+        - asset: Assets/fonts/Quicksand-Italic.otf
+        - asset: Assets/fonts/Quicksand-Light.otf
+        - asset: Assets/fonts/Quicksand-Regular.otf
+
 
