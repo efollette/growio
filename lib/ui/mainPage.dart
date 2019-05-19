@@ -105,7 +105,6 @@ class _MainPageState extends State<MainPage> {
             )
           ),
           child: BottomNavigationBar(
-            elevation: 0.0,
             onTap: _onTabTapped,
             currentIndex: currentPage,
             items: [
