@@ -49,11 +49,17 @@ flutter:
     - Assets/
 
   fonts:
+    - family: Fredoka One Regular
+      fonts:
+        - asset: Assets/fonts/FredokaOne-Regular.otf
     - family: Quicksand
       fonts:
         - asset: Assets/fonts/Quicksand-Bold.otf
         - asset: Assets/fonts/Quicksand-Italic.otf
         - asset: Assets/fonts/Quicksand-Light.otf
         - asset: Assets/fonts/Quicksand-Regular.otf
+    - family: ABeeZee Italic
+      fonts:
+        - asset: Assets/fonts/ABeeZee-Italic.ttf
 
 

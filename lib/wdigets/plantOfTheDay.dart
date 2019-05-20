@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
 
+// Plant of the Day! title
+Row _title = Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: <Widget>[
+    Text(
+      "Plant of the Day!",
+      style: TextStyle(
+          fontFamily: 'Fredoka One Regular',
+          fontSize: 30.0,
+          color: Color(0xFF278478)
+      ),
+    ),
+  ],
+);
+
 Column plantOfTheDay(BuildContext context) {
   return Column(
     children: <Widget>[
@@ -8,19 +23,7 @@ Column plantOfTheDay(BuildContext context) {
         color: Color(0xFFE2F8EE),
       ),
       // Plant Of The Day Title Text
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "Plant of the Day!",
-            style: TextStyle(
-              fontFamily: 'Quicksand',
-              fontSize: 30.0,
-              color: Color(0xFF278478),
-            ),
-          ),
-        ],
-      ),
+      _title,
       // Plant Tile
       Column(
         children: <Widget>[
@@ -29,15 +32,10 @@ Column plantOfTheDay(BuildContext context) {
           Container(
             height: 140.0,
             width: 140.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50.0),
-              color: Colors.greenAccent,
-            ),
-            // Poster's profile picture
+            // Picture of plant
             child: IconButton(
-              icon: Icon(Icons.local_florist),
+              icon: Image.asset("Assets/TestSucculent.png"),
               onPressed: () => debugPrint("Go to plant"),
-              iconSize: 40.0,
             ),
           ),
           Padding(padding: const EdgeInsets.all(7.25)),
@@ -75,7 +73,7 @@ Column plantOfTheDay(BuildContext context) {
                       "Scientific Name",
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
-                        fontFamily: 'Quicksand',
+                        fontFamily: 'ABeeZee Italic',
                         color: Color(0xFF726767)
                       ),
                     ),
@@ -84,6 +82,7 @@ Column plantOfTheDay(BuildContext context) {
               ],
             )
           ),
+          Padding(padding: const EdgeInsets.all(7.25)),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,6 +108,7 @@ Column plantOfTheDay(BuildContext context) {
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
+                          //height: 1.2,
                         ),
                       ),
                     ),
@@ -117,6 +117,7 @@ Column plantOfTheDay(BuildContext context) {
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
+                          //height: 1.2,
                         ),
                       ),
                     ),
@@ -125,6 +126,7 @@ Column plantOfTheDay(BuildContext context) {
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
+                          //height: 1.2,
                         ),
                       ),
                     ),
@@ -161,12 +163,46 @@ Column plantOfTheDay(BuildContext context) {
               ],
             ),
           ),
-
           Padding(padding: const EdgeInsets.all(7.25)),
+          // More info about the plant of the day
         ],
       ),
       Padding(padding: const EdgeInsets.all(7.25)),
-      // More info about the plant of the day
+      // Additional Info
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text("Additional Info:",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Padding(padding: const EdgeInsets.all(4.25)),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text("Add dilute solution fertilizer once a month in the summer. \n"
+                  "Little need for pruning. \n"
+                  "Humidity is not an issue. \n"
+                  "Avoid wet soil and foliage when temperatures are cool.",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Padding(padding: const EdgeInsets.all(7.25)),
+          ],
+        ),
+      ),
     ],
   );
 }
