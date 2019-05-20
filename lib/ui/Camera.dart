@@ -15,6 +15,7 @@ class CameraState extends State<Camera> {
   picker() async{
     print('Picker is called');
     File img= await ImagePicker.pickImage(source: ImageSource.gallery);
+    print('Imageexec');
     if(img!=null){
       image=img;
       print(img.path);
@@ -28,6 +29,34 @@ class CameraState extends State<Camera> {
       });
     }
   }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Take Picture"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Upload From Gallery"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -41,7 +70,7 @@ class CameraState extends State<Camera> {
           ),
         ),
         floatingActionButton: new FloatingActionButton(
-          onPressed: picker,
+          onPressed: _showDialog,
           child: new Icon(Icons.camera_alt),
         ),
       ),
