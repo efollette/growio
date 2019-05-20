@@ -7,7 +7,6 @@ class Plantcyclopedia extends StatefulWidget {
 
   final bool showFab;
 
-  // Constructor for plantcyclopedia
   Plantcyclopedia(this.showFab);
 
   @override
@@ -16,8 +15,87 @@ class Plantcyclopedia extends StatefulWidget {
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
-  // Text controller for the search bar
+  /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
+
+  /* Plantcyclopedia title */
+  Container _title(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width - 50.0,
+      child: Text(
+        "Plantcyclopedia",
+        style: TextStyle(
+          color: Color(0xFF8BE4BB),
+          fontSize: 33,
+          fontFamily: 'Quicksand',
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  /* Search bar */
+  Container _searchBar(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      width: MediaQuery.of(context).size.width - 75.0,
+      height: 35.0,
+      child: TextField(
+        style: TextStyle(
+          color: Color(0xFF278478),
+        ),
+        textAlign: TextAlign.left,
+        textInputAction: TextInputAction.search,
+        controller: _searchController,
+        decoration: InputDecoration(
+          hasFloatingPlaceholder: false,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(
+              color: Color(0x388BE4BB),
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0x388BE4BB),
+            ),
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+          filled: true,
+          fillColor: Color(0xFFDFFFF0),
+          hintText: 'e.x. Daisy',
+          hintStyle: TextStyle(fontFamily: 'Quicksand',
+              fontSize: 15.0, height: 0),
+          labelText: 'Type the name of your plant here.',
+          labelStyle: TextStyle(fontFamily: 'Quicksand',
+              fontWeight: FontWeight.bold, fontSize: 15.0,
+              color: Color(0xFF8BE4BB)
+          ),
+        ),
+        cursorColor: Colors.green,
+      ),
+    );
+  }
+
+  /* Plant of the day */
+  Container _plantOfDay(BuildContext context) {
+    return Container(
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: Container(
+          padding: const EdgeInsets.only(top: 10.0),
+          width: MediaQuery.of(context).size.width - 75.0,
+          height: MediaQuery.of(context).size.height * (462/812),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24.0),
+            color: Color(0xFFDFFFF0),
+          ),
+          child: plantOfTheDay(context),
+        )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,73 +104,14 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          Container(
-            color: Colors.white,
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width - 50.0,
-            child: Text(
-                "Plantcyclopedia",
-              style: TextStyle(
-                color: Color(0xFF8BE4BB),
-                fontSize: 33,
-                fontFamily: 'Quicksand',
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          _title(context),
           Padding(padding: const EdgeInsets.all(10.0)),
-          Container(
-            color: Colors.white,
-            width: MediaQuery.of(context).size.width - 75.0,
-            height: 35.0,
-            child: TextFormField(
-              style: TextStyle(
-                color: Color(0xFF8BE4BB),
-              ),
-              textAlign: TextAlign.center,
-              textInputAction: TextInputAction.search,
-              controller: _searchController,
-              decoration: InputDecoration(
-                hasFloatingPlaceholder: false,
-                contentPadding: const EdgeInsets.only(left: 20.0),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(
-                    color: Color(0x388BE4BB),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x388BE4BB),
-                  ),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                filled: true,
-                fillColor: Color(0xFFDFFFF0),
-                hintText: 'e.x. Daisy',
-                labelText: 'Type the name of your plant here.',
-
-              ),
-            ),
-          ),
+          _searchBar(context),
           Padding(padding: const EdgeInsets.all(10.0)),
           // Plant of the Day
-          widget.showFab ? Container(
-            color: Colors.white,
-              alignment: Alignment.center,
-              child: Container(
-                padding: const EdgeInsets.only(top: 10.0),
-                width: MediaQuery.of(context).size.width - 75.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.0),
-                  color: Color(0xFFDFFFF0),
-                ),
-                child: plantOfTheDay(context),
-              )
-          ) : Container(),
+          widget.showFab ? _plantOfDay(context) : Container(),
         ],
       ),
-
     );
   }
 }
