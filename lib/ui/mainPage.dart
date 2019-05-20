@@ -11,6 +11,9 @@ final controller = PageController(
 // Current page
 int currentPage = 0;
 
+// Boolean checks if camera button has been clicked
+bool cam = false;
+
 /*
  * Name: _handleLogOut
  * Parameters:  context - build context of the current widget its being called from
@@ -39,18 +42,68 @@ class _MainPageState extends State<MainPage> {
     ),
     backgroundColor: Colors.white,
     centerTitle: true,
-    iconTheme: IconThemeData(color: Color(0xFF278478)),
+    iconTheme: IconThemeData(color: Color(0xFF8BE4BB)),
     elevation: 0,
   );
 
-  // Floating action button to go to camera
-  final FloatingActionButton _fab = FloatingActionButton(
-    onPressed: () {},
-    tooltip: 'Add a plant',
-    child: Icon(Icons.camera_enhance),
-    backgroundColor: Colors.greenAccent,
-    elevation: 4.0,
-  );
+  // All 3 FABS
+  Column _makeFabz(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        cam ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // Gallery FAB
+            FloatingActionButton(
+              onPressed: () {},
+              child: Icon(Icons.photo),
+              backgroundColor: Color(0xFF8BE4BB),
+              foregroundColor: Color(0xFF278478),
+              mini: true,
+            ),
+            // Space between the two other FABS
+            Padding(padding: const EdgeInsets.all(5.0)),
+            // Photo FAB
+            FloatingActionButton(
+              onPressed: () {},
+              child: Icon(Icons.camera),
+              backgroundColor: Color(0xFF8BE4BB),
+              foregroundColor: Color(0xFF278478),
+              mini: true,
+            ),
+          ],
+        ) : Row(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 85/819 * MediaQuery.of(context).size.height,
+              child: FittedBox(
+                child:  FloatingActionButton(
+                  onPressed: () {
+                    // Display or hide the camera options
+                    setState(() {
+                      cam = !cam;
+                    });
+                  },
+                  tooltip: 'Add a plant',
+                  child: Icon(Icons.camera_enhance),
+                  backgroundColor: Color(0xFF8BE4BB),
+                  foregroundColor: Color(0xFF278478),
+                  elevation: 4.0,
+                ),
+              ),
+            )
+          ],
+        ),
+        // Set the FABS to be on the top of the bottom navigation bar
+        Padding(
+          padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight - 14/812 * MediaQuery.of(context).size.height)
+        ),
+      ],
+    );
+  } 
 
   // Navigation method
   void _onTabTapped(int index) {
@@ -82,6 +135,39 @@ class _MainPageState extends State<MainPage> {
 
   // Bottom navigation bar that can also navigate to the pages
   Theme _createBottomNavBar(BuildContext context) {
+    BottomNavigationBar _botNav = BottomNavigationBar(
+      elevation: 0.0,
+      onTap: _onTabTapped,
+      currentIndex: currentPage,
+      items: [
+        BottomNavigationBarItem(
+          title: Text(
+            "MyGarden",
+            style: TextStyle(
+              color: Color(0xFF8BE4BB),
+            ),
+          ),
+          icon: Icon(
+            Icons.local_florist,
+            color: Color(0xFF8BE4BB),
+            size: 38.5,
+          ),
+        ),
+        BottomNavigationBarItem(
+          title: Text(
+            "Plantcyclopedia",
+            style: TextStyle(
+              color: Color(0xFF8BE4BB),
+            ),
+          ),
+          icon: Icon(
+            Icons.find_in_page,
+            color: Color(0xFF8BE4BB),
+            size: 38.5,
+          ),
+        ),
+      ],
+    );
     return Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Color(0xFF278478),
@@ -100,39 +186,7 @@ class _MainPageState extends State<MainPage> {
               ),
             )
           ),
-          child: BottomNavigationBar(
-            elevation: 0.0,
-            onTap: _onTabTapped,
-            currentIndex: currentPage,
-            items: [
-              BottomNavigationBarItem(
-                title: Text(
-                  "MyGarden",
-                  style: TextStyle(
-                    color: Color(0xFF8BE4BB),
-                  ),
-                ),
-                icon: Icon(
-                  Icons.local_florist,
-                  color: Color(0xFF8BE4BB),
-                  size: 38.5,
-                ),
-              ),
-              BottomNavigationBarItem(
-                title: Text(
-                  "Plantcyclopedia",
-                  style: TextStyle(
-                    color: Color(0xFF8BE4BB),
-                  ),
-                ),
-                icon: Icon(
-                  Icons.find_in_page,
-                  color: Color(0xFF8BE4BB),
-                  size: 38.5,
-                ),
-              ),
-            ],
-          ),
+          child: _botNav,
         ),
     );
   }
@@ -193,12 +247,7 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       bottomNavigationBar: _createBottomNavBar(context),
-      floatingActionButton: _showFab ? Container(
-        height: 85/819 * MediaQuery.of(context).size.height,
-        child: FittedBox(
-          child: _fab,
-        ),
-      ) : null,
+      floatingActionButton: _showFab ? _makeFabz(context) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
