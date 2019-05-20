@@ -1,3 +1,4 @@
+import 'package:Growio/wdigets/myGardenTile.dart';
 import 'package:flutter/material.dart';
 import '../wdigets/plantTile.dart';
 
@@ -12,14 +13,15 @@ class _MyGardenState extends State<MyGarden> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: ListView.builder(
+      body: GridView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount: 12,
+        itemCount: 8,
+        gridDelegate:
+          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int position) {
-          return plantTile(context);
-        },
+          return myGardenTile(context);
+        }, 
       ),
     );
   }
 }
-
