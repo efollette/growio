@@ -37,16 +37,38 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   File image;
-  picker() async{
+  File img;
+  String base64Image;
+  //async function that calls the ImagePicker.camera
+  cameraPicker() async{
 
-    print('Picker is called');
-    File img= await ImagePicker.pickImage(source: ImageSource.gallery);
+    print('Camera is called');
+    img= await ImagePicker.pickImage(source: ImageSource.camera);
     if(img!=null){
       image=img;
       print(img.path);
       //updates our UI
       List<int> imageBytes= image.readAsBytesSync();
-      String base64Image = base64Encode(imageBytes);
+      base64Image = base64Encode(imageBytes);
+      print('Printing the image path');
+      print(base64Image);
+      setState(() {
+        print('Update the UI');
+      });
+    }
+  }
+
+  //calls image picker on the gallery
+  galleryPicker() async{
+
+    print('Gallery is called');
+    img= await ImagePicker.pickImage(source: ImageSource.gallery);
+    if(img!=null){
+      image=img;
+      print(img.path);
+      //updates our UI
+      List<int> imageBytes= image.readAsBytesSync();
+      base64Image = base64Encode(imageBytes);
       print('Printing the image path');
       print(base64Image);
       setState(() {
@@ -78,7 +100,7 @@ class _MainPageState extends State<MainPage> {
           children: <Widget>[
             // Gallery FAB
             FloatingActionButton(
-              onPressed: picker,
+              onPressed: galleryPicker,
               child: Icon(Icons.photo),
               backgroundColor: Color(0xFF8BE4BB),
               foregroundColor: Color(0xFF278478),
@@ -88,7 +110,7 @@ class _MainPageState extends State<MainPage> {
             Padding(padding: const EdgeInsets.all(5.0)),
             // Photo FAB
             FloatingActionButton(
-              onPressed: picker,
+              onPressed: cameraPicker,
               child: Icon(Icons.camera),
               backgroundColor: Color(0xFF8BE4BB),
               foregroundColor: Color(0xFF278478),
