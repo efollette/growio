@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
-// Plant of the Day! title
-Row _title = Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: <Widget>[
-    Text(
-      "Plant of the Day!",
-      style: TextStyle(
-          fontFamily: 'Fredoka One Regular',
-          fontSize: 30.0,
-          color: Color(0xFF278478)
-      ),
-    ),
-  ],
-);
+// Group to scale size of text for water, sun and temp
+var _group = AutoSizeGroup();
+
+// Group to scale size of text for additional info
+var _group2 = AutoSizeGroup();
 
 Column plantOfTheDay(BuildContext context) {
   return Column(
@@ -23,67 +15,71 @@ Column plantOfTheDay(BuildContext context) {
         color: Color(0xFFE2F8EE),
       ),
       // Plant Of The Day Title Text
-      _title,
-      // Plant Tile
+      Container(
+        //alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width * (247/375),
+        child: AutoSizeText(
+          "Plant of the Day!",
+          style: TextStyle(
+            fontFamily: 'Fredoka One Regular',
+            fontSize: 30.0,
+            color: Color(0xFF278478)
+          ),
+          maxLines: 1,
+        ),
+      ),
       Column(
         children: <Widget>[
-          Padding(padding: const EdgeInsets.all(7.25)),
           // Plant Image
           Container(
-            height: 140.0,
-            width: 140.0,
+            height: MediaQuery.of(context).size.height * (106/812),
+            width:  MediaQuery.of(context).size.width * (122/375),
             // Picture of plant
             child: IconButton(
               icon: Image.asset("Assets/TestSucculent.png"),
               onPressed: () => debugPrint("Go to plant"),
             ),
           ),
-          Padding(padding: const EdgeInsets.all(7.25)),
-          // Plant Info: Name, Scientific name, etc.
+          // Plant Info: Name, Scientific name
           Container(
-            width: MediaQuery.of(context).size.width - 213.5,
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFFDFFFF0)),
-            ),
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
+                Container(
+                  width: MediaQuery.of(context).size.width * (104/375),
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    "Plant Name",
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'Quicksand',
+                      color: Color(0xFF312F2F),
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Plant Name",
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        fontFamily: 'Quicksand',
-                        color: Color(0xFF312F2F),
-                      ),
-                    ),
+                    maxLines: 1,
                   ),
-                ),
+                  ),
                 Padding(padding: const EdgeInsets.all(1.5)),
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Scientific Name",
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontFamily: 'ABeeZee Italic',
-                        color: Color(0xFF726767)
-                      ),
+                Container(
+                  width: MediaQuery.of(context).size.width * (92/375),
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    "Scientific Name",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'ABeeZee Italic',
+                      color: Color(0xFF726767)
                     ),
+                    maxLines: 1,
+                    minFontSize: 5.0,
                   ),
                 ),
               ],
             )
           ),
           Padding(padding: const EdgeInsets.all(7.25)),
+          // Additional plant info: water, sunlight
           Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -104,28 +100,41 @@ Column plantOfTheDay(BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      child: Text("Watering Frequency: ",
+                      width: MediaQuery.of(context).size.width * (138/375),
+                      child: AutoSizeText("Watering Frequency: ",
+                        group: _group,
+                        maxLines: 1,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
+                          height: 1.2
                           //height: 1.2,
                         ),
                       ),
                     ),
                     Container(
-                      child: Text("Sunlight: ",
+                      width: MediaQuery.of(context).size.width * (69/375),
+                      child: AutoSizeText("Sunlight: ",
+                        group: _group,
+                        maxLines: 1,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
+                          height: 1.2
                           //height: 1.2,
                         ),
                       ),
                     ),
                     Container(
-                      child: Text("Optimal Temperature",
+                      width: MediaQuery.of(context).size.width * (135/375),
+                      child: AutoSizeText("Optimal Temperature",
+                        maxLines: 1,
+                        minFontSize: 5.0,
+                        group: _group,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
+                          height: 1.2
                           //height: 1.2,
                         ),
                       ),
@@ -135,7 +144,10 @@ Column plantOfTheDay(BuildContext context) {
                 Column(
                   children: <Widget>[
                     Container(
-                      child: Text("Every 14 Days",
+                      child: AutoSizeText("Every 14 Days",
+                        maxLines: 1,
+                        minFontSize: 5.0,
+                        group: _group,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
@@ -143,7 +155,10 @@ Column plantOfTheDay(BuildContext context) {
                       ),
                     ),
                     Container(
-                      child: Text("Full/Partial",
+                      child: AutoSizeText("Full/Partial",
+                        maxLines: 1,
+                        minFontSize: 5.0,
+                        group: _group,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
@@ -151,7 +166,10 @@ Column plantOfTheDay(BuildContext context) {
                       ),
                     ),
                     Container(
-                      child: Text(">40°",
+                      child: AutoSizeText(">40°",
+                        maxLines: 1,
+                        minFontSize: 5.0,
+                        group: _group,
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.black,
@@ -162,47 +180,50 @@ Column plantOfTheDay(BuildContext context) {
                 ),
               ],
             ),
-          ),
+          ), // Container to close row
           Padding(padding: const EdgeInsets.all(7.25)),
           // More info about the plant of the day
-        ],
-      ),
-      Padding(padding: const EdgeInsets.all(7.25)),
-      // Additional Info
-      Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text("Additional Info:",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: AutoSizeText("Additional Info:",
+                    textAlign: TextAlign.start,
+                    minFontSize: 5.0,
+                    maxLines: 1,
+                    group: _group2,
+                    style: TextStyle(
+                      fontFamily: 'Quicksand',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Padding(padding: const EdgeInsets.all(4.25)),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text("Add dilute solution fertilizer once a month in the summer. \n"
-                  "Little need for pruning. \n"
-                  "Humidity is not an issue. \n"
-                  "Avoid wet soil and foliage when temperatures are cool.",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                  color: Colors.black,
+                Padding(padding: const EdgeInsets.all(4.25)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: AutoSizeText("Add dilute solution fertilizer once a month in the summer. \n"
+                      "Little need for pruning. \n"
+                      "Humidity is not an issue. \n"
+                      "Avoid wet soil and foliage when temperatures are cool.",
+                    minFontSize: 5.0,
+                    maxLines: 6,
+                    group: _group2,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontFamily: 'Quicksand',
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+                //Padding(padding: const EdgeInsets.all(7.25))
+              ],
             ),
-            Padding(padding: const EdgeInsets.all(7.25)),
-          ],
-        ),
-      ),
+          )
+        ]
+      )
     ],
   );
 }
