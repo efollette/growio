@@ -26,6 +26,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
+          // Title
           Container(
             color: Colors.white,
             alignment: Alignment.center,
@@ -41,6 +42,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
             ),
           ),
           Padding(padding: const EdgeInsets.all(10.0)),
+          // Search bar
           Container(
             color: Colors.white,
             width: MediaQuery.of(context).size.width - 75.0,
@@ -79,16 +81,16 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           // Plant of the Day
           widget.showFab ? Container(
             color: Colors.white,
-              alignment: Alignment.center,
-              child: Container(
-                padding: const EdgeInsets.only(top: 10.0),
-                width: MediaQuery.of(context).size.width - 75.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.0),
-                  color: Color(0xFFDFFFF0),
-                ),
-                child: plantOfTheDay(context),
-              )
+            alignment: Alignment.center,
+            child: Container(
+              padding: const EdgeInsets.only(top: 10.0),
+              width: MediaQuery.of(context).size.width - 75.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14.0),
+                color: Color(0xFFDFFFF0),
+              ),
+              child: plantOfTheDay(context),
+            )
           ) : Container(),
         ],
       ),
