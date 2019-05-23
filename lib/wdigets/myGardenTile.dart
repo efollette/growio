@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:Growio/utils/routes.dart';
+import 'package:Growio/wdigets/plantProfile.dart';
+
+
+void _showDialog(BuildContext context) {
+    // flutter defined function
+   showGeneralDialog(
+    barrierColor: Colors.black.withOpacity(0.5),
+    transitionBuilder: (context, a1, a2, widget) {
+      return Transform.scale(
+        scale: a1.value,
+        child: Opacity(
+          opacity: a1.value,
+          child: PlantProfile(),
+        ),
+      );
+    },
+    transitionDuration: Duration(milliseconds: 300),
+    barrierDismissible: true,
+    barrierLabel: '',
+    context: context,
+    pageBuilder: (context, animation1, animation2) {});
+  }
+
 
 Column myGardenTile(BuildContext context) {
   return Column(
     children: <Widget> [
       FlatButton(
-      onPressed: () => debugPrint("Go to plant"),
+      onPressed: () => _showDialog(context),
       child: Container(
           width: 190.0,
           height: 200.0,
@@ -23,18 +47,21 @@ Column myGardenTile(BuildContext context) {
                 children: <Widget>[
                   Padding(padding: const EdgeInsets.all(5.25)),
                   // Plant Image
-                  Container(
-                    height: 73.0,
-                    width: 87.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      color: Colors.greenAccent,
-                    ),
-                    // Poster's profile picture
-                    child: IconButton(
-                      icon: Icon(Icons.local_florist),
-                      onPressed: () => debugPrint("Go to plant"),
-                      iconSize: 40.0,
+                  Hero(
+                    tag: 'plantProf',
+                    child: Container(
+                      height: 73.0,
+                      width: 87.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80.0),
+                        color: Colors.greenAccent,
+                      ),
+                      // Poster's profile picture
+                      child: IconButton(
+                        icon: Icon(Icons.local_florist),
+                        onPressed: () => debugPrint("Go to plant"),
+                        iconSize: 40.0,
+                      ),
                     ),
                   ),
                   Padding(padding: const EdgeInsets.all(5.25)),
