@@ -238,33 +238,101 @@ class _MainPageState extends State<MainPage> {
 
   // Drawer that contains the settings and logout buttons
   Drawer _makeDrawer( BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.lightGreen,
-            ),
-            accountName: Text("Erik Follette"),
-            accountEmail: Text(users.userEmail),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.green[600],
-              child: Text(
-                users.userEmail[0].toUpperCase(),
-                style: TextStyle(
-                  fontSize: 40.0,
+    var _mode = true; // i don't know what this is yet, its for switches :)
+        return Drawer(
+          child: ListView(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFF278478),
+                ),
+                accountName: Text("Erik Follette"),
+                accountEmail: Text(users.userEmail),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.green[600],
+                  child: Text(
+                    users.userEmail[0].toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 40.0,
+                    ),
+                  ),
                 ),
               ),
-            ),
+          SwitchListTile(
+              title: const Text('Notifications'),
+              value: _mode,
+              onChanged: (bool value) { setState(() { _mode = value; }); },
+              
           ),
-          ListTile(
-            title: Text("Settings"),
-            trailing: Icon(Icons.settings),
+          SwitchListTile(
+              title: const Text('Mode'),
+              value: _mode,
+              onChanged: (bool value) { setState(() { _mode = value; }); },
+              
           ),
-          ListTile(
-            title: Text("Logout"),
-            trailing: Icon(Icons.power_settings_new),
-            onTap: () => _handleLogOut(context),
+          Padding(padding: EdgeInsets.all(100),),
+          Column (
+            children: <Widget>[
+              Text(
+                'Credits',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: 'Quicksand',
+                  color: Color(0xFF278478),
+                ),
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                'Support',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: 'Quicksand',
+                  color: Color(0xFF278478),
+                  fontWeight: FontWeight.bold
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+          Padding (padding: EdgeInsets.all(2)),
+          Center(
+            child: Container (
+              constraints: BoxConstraints(
+                maxWidth: 250.0,
+              ),
+              child: OutlineButton(
+                borderSide: BorderSide(
+                  color: Color(0xFF278478)
+                ),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(50.0)
+                ),
+                splashColor: Color(0xFF278478),
+                child: Column(
+                  children: <Widget> [ 
+                    Container (  
+                      width: 190.0,
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: 'Quicksand',
+                        color: Color(0xFF278478),
+                      ),
+                      textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                ),
+                onPressed: () {},
+                /* //old list tile code
+                title: Text("Logout"),
+                trailing: Icon(Icons.power_settings_new),
+                onTap: () => _handleLogOut(context), */
+              ),
+          ),
           ),
         ],
       ),
