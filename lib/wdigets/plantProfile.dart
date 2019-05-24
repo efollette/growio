@@ -14,6 +14,52 @@ class PlantProfile extends StatefulWidget {
 
 class _PlantProfileState extends State<PlantProfile> {
 
+/* button top remove plant */
+Container _addButton(BuildContext context){
+  return Container(
+    child: OutlineButton(
+      borderSide: BorderSide(
+        color: Color(0xFF278478),),
+      shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(50.0)),
+      splashColor: Color(0xFF278478),
+      onPressed: () {},
+        child: Column(
+          children: <Widget> [
+            Container(
+              width: 190.0,
+              child: Text(
+                "Remove",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: 'Quicksand',
+                  color: Color(0xFF278478),
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+            ),
+          ],
+        ),
+      )
+    );
+}
+
+Container _exitButton(BuildContext context){
+  return Container(
+    width: 50.0,
+    height: 50.0,
+    child: FlatButton(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent, 
+      onPressed: () => Navigator.pop(context),
+      child: Icon(Icons.close,
+      color: Color(0xFF278478),
+      ),
+      ),
+  );
+}
+
 /* Plant Profile Page */
 Dialog build(BuildContext context) {
   return Dialog(
@@ -22,36 +68,44 @@ Dialog build(BuildContext context) {
     ),
     backgroundColor: Color(0xFFE2F8EE),
     child: Container(
+      width: 250.0,
+      height: 600.0,
       decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35.0),
             color: Color(0xFFDFFFF0),
           ),
-          child: Column(
+      child: Column(
             children: <Widget>[
-              Divider(
-                height: 15.5,
-                color: Color(0xFFE2F8EE),
+              Row(
+                children: <Widget> [
+                  Divider(
+                    height: 15.5,
+                    color: Color(0xFFE2F8EE),
+                  ),
+                  Padding(padding: EdgeInsets.fromLTRB(230.0, 0, 0, 0)),
+                  _exitButton(context),
+                ],
               ),
               Column(
                 children: <Widget>[
                   // Plant Image
-                  Hero(
-                    tag: 'plantProf',
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * (106/812),
-                      width:  MediaQuery.of(context).size.width * (122/375),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80.0),
-                        color: Colors.greenAccent,
-                      ),
-                      // Poster's profile picture
-                      child: IconButton(
-                        icon: Icon(Icons.local_florist),
-                        onPressed: () => debugPrint("Go to plant"),
-                        iconSize: 40.0,
-                      ),
-                    ),
+                    Container(
+                            height: MediaQuery.of(context).size.height * (106/812),
+                            width:  MediaQuery.of(context).size.width * (122/375),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(80.0),
+                              color: Colors.greenAccent,
+                            ),
+                            // Poster's profile picture
+                            child: IconButton(
+                              icon: Icon(Icons.local_florist),
+                              onPressed: () => debugPrint("Go to plant"),
+                              iconSize: 40.0,
+                            ),
+                        ),
+                      ],
                   ),
+                  Padding(padding: EdgeInsets.all(6.0)),
                   // Plant Info: Name, Scientific name
                   Container(
                     child: Column(
@@ -100,9 +154,11 @@ Dialog build(BuildContext context) {
                             Container(
                               child: Image.asset('Assets/WaterDrop.png'),
                             ),
+                            Padding(padding: EdgeInsets.all(10.0)),
                             Container(
                               child: Image.asset('Assets/SunIcon.png'),
                             ),
+                            Padding(padding: EdgeInsets.all(6.0)),
                             Container(
                               child: Image.asset('Assets/Thermostat.png'),
                             ),
@@ -124,6 +180,7 @@ Dialog build(BuildContext context) {
                                 ),
                               ),
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Container(
                               width: MediaQuery.of(context).size.width * (69/375),
                               child: AutoSizeText("Sunlight: ",
@@ -137,6 +194,7 @@ Dialog build(BuildContext context) {
                                 ),
                               ),
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Container(
                               width: MediaQuery.of(context).size.width * (135/375),
                               child: AutoSizeText("Optimal Temperature",
@@ -166,6 +224,7 @@ Dialog build(BuildContext context) {
                                 ),
                               ),
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Container(
                               child: AutoSizeText("Full/Partial",
                                 maxLines: 1,
@@ -177,6 +236,7 @@ Dialog build(BuildContext context) {
                                 ),
                               ),
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             Container(
                               child: AutoSizeText(">40°",
                                 maxLines: 1,
@@ -233,12 +293,13 @@ Dialog build(BuildContext context) {
                         //Padding(padding: const EdgeInsets.all(7.25))
                       ],
                     ),
-                  )
-                ]
-              )
+                  ),
+                  // adding the button to the bottom
+                  Padding(padding: EdgeInsets.all(40.0)),
+                  _addButton(context),
             ],
-          ),
+        ),
       ),
-  );
+    );
   }
 }
