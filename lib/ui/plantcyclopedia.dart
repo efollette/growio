@@ -86,16 +86,8 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     return Container(
         color: Colors.white,
         alignment: Alignment.center,
-        child: Container(
-          padding: const EdgeInsets.only(top: 10.0),
-          width: MediaQuery.of(context).size.width - 75.0,
-          height: MediaQuery.of(context).size.height * (440/812),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24.0),
-            color: Color(0xFFDFFFF0),
-          ),
-          child: plantOfTheDay(context),
-        )
+        child: plantOfTheDay(context),
+
     );
   }
 
@@ -112,6 +104,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           Padding(padding: const EdgeInsets.all(10.0)),
           // Plant of the Day
           widget.showFab ? _plantOfDay(context) : Container(),
+          Padding(padding: const EdgeInsets.all(10.0)),
         ],
       ),
     );

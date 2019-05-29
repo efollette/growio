@@ -304,8 +304,8 @@ class _MainPageState extends State<MainPage> {
                 borderSide: BorderSide(
                   color: Color(0xFF278478)
                 ),
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(50.0)
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50.0)
                 ),
                 splashColor: Color(0xFF278478),
                 child: Column(
@@ -326,7 +326,9 @@ class _MainPageState extends State<MainPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.min,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _handleLogOut(context);
+                },
                 /* //old list tile code
                 title: Text("Logout"),
                 trailing: Icon(Icons.power_settings_new),
