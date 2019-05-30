@@ -358,7 +358,7 @@ class _MainPageState extends State<MainPage> {
         controller: controller,
         children: <Widget>[
           MyGarden(),
-          Plantcyclopedia(_showFab),
+          Plantcyclopedia(),
         ],
       ),
       bottomNavigationBar: _createBottomNavBar(context),
