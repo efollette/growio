@@ -7,7 +7,7 @@ import '../ui/Camera.dart';
 
 final routes = {
   '/login' : (BuildContext context) => Login(),
-  '/myGarden' : (BuildContext context) => MyGarden(),
+  '/myGarden' : (BuildContext context) => MainPage(),
   '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
   '/camera' :(BuildContext context) => Camera(),
 

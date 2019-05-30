@@ -45,8 +45,7 @@ Widget build(BuildContext context) {
               child: GridView.builder(
                 physics: BouncingScrollPhysics(),
                 itemCount: 8,
-                gridDelegate:
-                  new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int position) {
                   return myGardenTile(context);
                 },

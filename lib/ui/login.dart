@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
+import 'dart:convert' as json;
 import '../helper/messages.dart' as help;
 import '../utils/routes.dart' as routes;
 import '../utils/users.dart' as users;
@@ -12,10 +16,12 @@ class Login extends StatefulWidget {
 
 // Method to handle logging in using Google Auth API
 void handleLogin(BuildContext context) {
+  users.handleSignIn();
   routes.goToMyGardenScreen(context);
 }
 
 class _LoginState extends State<Login> {
+
   // Gradient for the login screen
   final BoxDecoration gradient = BoxDecoration(
     gradient: LinearGradient(
@@ -78,6 +84,19 @@ class _LoginState extends State<Login> {
   final Padding padding2 = Padding(
     padding: const EdgeInsets.all(40.0),
   );
+
+  GoogleSignInAccount _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    users.googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+      setState(() {
+        _currentUser = account;
+      });
+    });
+    users.googleSignIn.signInSilently();
+  }
 
   @override
   Widget build(BuildContext context) {

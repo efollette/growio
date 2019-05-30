@@ -20,6 +20,8 @@ dependencies:
   flutter_launcher_icons: "^0.6.1"
   auto_size_text: "^1.1.2"
   image_picker:
+  http: ^0.12.0
+  google_sign_in: ^4.0.1+3
 
 flutter_icons:
   image_path: "Assets/GrowioIconScaled.png"
