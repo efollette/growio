@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import '../utils/users.dart' as users;
-import '../utils/routes.dart' as routes;
 import '../wdigets/plantOfTheDay.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class Plantcyclopedia extends StatefulWidget {
-
   final bool showFab;
 
   Plantcyclopedia(this.showFab);
@@ -15,7 +12,6 @@ class Plantcyclopedia extends StatefulWidget {
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
-
   /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
 
@@ -24,7 +20,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width * (247/375),
+      width: MediaQuery.of(context).size.width * (247 / 375),
       child: AutoSizeText(
         "Plantcyclopedia",
         style: TextStyle(
@@ -68,12 +64,13 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           filled: true,
           fillColor: Color(0xFFDFFFF0),
           hintText: 'e.x. Daisy',
-          hintStyle: TextStyle(fontFamily: 'Quicksand',
-              fontSize: 15.0, height: 0),
-          labelStyle: TextStyle(fontFamily: 'Quicksand',
-              fontWeight: FontWeight.bold, fontSize: 13.0,
-              color: Color(0xFF8BE4BB)
-          ),
+          hintStyle:
+              TextStyle(fontFamily: 'Quicksand', fontSize: 15.0, height: 0),
+          labelStyle: TextStyle(
+              fontFamily: 'Quicksand',
+              fontWeight: FontWeight.bold,
+              fontSize: 13.0,
+              color: Color(0xFF8BE4BB)),
           labelText: 'Type the name of your plant here.',
         ),
         cursorColor: Colors.green,
@@ -84,24 +81,14 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   /* Plant of the day */
   Container _plantOfDay(BuildContext context) {
     return Container(
-        color: Colors.white,
-        alignment: Alignment.center,
-        child: Container(
-          padding: const EdgeInsets.only(top: 10.0),
-          width: MediaQuery.of(context).size.width - 75.0,
-          height: MediaQuery.of(context).size.height * (440/812),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24.0),
-            color: Color(0xFFDFFFF0),
-          ),
-          child: plantOfTheDay(context),
-        )
+      color: Colors.white,
+      alignment: Alignment.center,
+      child: plantOfTheDay(context),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -109,13 +96,12 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           _title(context),
           Padding(padding: const EdgeInsets.all(10.0)),
           _searchBar(context),
-          Padding(padding: const EdgeInsets.all(10.0)),
+          Padding(padding: const EdgeInsets.all(20.0)),
           // Plant of the Day
           widget.showFab ? _plantOfDay(context) : Container(),
+          Padding(padding: const EdgeInsets.all(10.0)),
         ],
       ),
     );
   }
 }
-
-

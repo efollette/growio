@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
 
-
 void _showDialog(BuildContext context) {
-    // flutter defined function
-   showGeneralDialog(
-    barrierColor: Colors.black.withOpacity(0.5),
-    transitionBuilder: (context, a1, a2, widget) {
-      return Transform.scale(
-        scale: a1.value,
-        child: Opacity(
-          opacity: a1.value,
-          child: PlantProfile(),
-        ),
-      );
-    },
-    transitionDuration: Duration(milliseconds: 300),
-    barrierDismissible: true,
-    barrierLabel: '',
-    context: context,
-    pageBuilder: (context, animation1, animation2) {});
-  }
+  // flutter defined function
+  showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: PlantProfile(),
+          ),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {});
+}
 
-
-Column myGardenTile(BuildContext context) {
+Column myGardenTile(
+    BuildContext context, int index, String plantName, String scientificName) {
   return Column(
-    children: <Widget> [
+    children: <Widget>[
       FlatButton(
-      onPressed: () => _showDialog(context),
-      child: Container(
+        onPressed: () => _showDialog(context),
+        child: Container(
           width: 190.0,
           height: 200.0,
           decoration: BoxDecoration(
@@ -47,7 +46,7 @@ Column myGardenTile(BuildContext context) {
                   Padding(padding: const EdgeInsets.all(5.25)),
                   // Plant Image
                   Hero(
-                    tag: 'plantProf',
+                    tag: 'plantProf$index',
                     child: Container(
                       height: 73.0,
                       width: 87.0,
@@ -66,48 +65,46 @@ Column myGardenTile(BuildContext context) {
                   Padding(padding: const EdgeInsets.all(5.25)),
                   // Plant Info: Name, Scientific name, etc.
                   Container(
-                    width: MediaQuery.of(context).size.width - 213.5,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFFDFFFF0)),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Plant Name",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: 'Quicksand',
-                                color: Color(0xFF312F2F),
+                      width: MediaQuery.of(context).size.width - 213.5,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFFDFFFF0)),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            width: double.infinity,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                plantName,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: 'Quicksand',
+                                  color: Color(0xFF312F2F),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(padding: const EdgeInsets.all(1.5)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Scientific Name",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontStyle: FontStyle.italic,
-                                fontFamily: 'Quicksand',
-                                color: Color(0xFF726767)
+                          Padding(padding: const EdgeInsets.all(1.5)),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                scientificName,
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: 'Quicksand',
+                                    color: Color(0xFF726767)),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  ),
+                        ],
+                      )),
                   Padding(padding: const EdgeInsets.all(3.5)),
                   Container(
                     child: Row(
@@ -131,13 +128,11 @@ Column myGardenTile(BuildContext context) {
                       ],
                     ),
                   ),
-                  //Padding(padding: const EdgeInsets.all(7.25)),
                 ],
               ),
               Padding(padding: const EdgeInsets.all(1.5)),
-              // More info about the plant of the day
             ],
-          ), 
+          ),
         ),
       ),
     ],

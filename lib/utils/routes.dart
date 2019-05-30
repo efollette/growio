@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import '../ui/Login.dart';
-import '../ui/myGarden.dart';
+import '../utils/users.dart' as users;
 import '../ui/plantcyclopedia.dart';
 import '../ui/mainPage.dart';
 import '../ui/Camera.dart';
 
-final routes = {
+var routes = {
   '/login' : (BuildContext context) => Login(),
   '/myGarden' : (BuildContext context) => MainPage(),
   '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
   '/camera' :(BuildContext context) => Camera(),
 
   // Default route
-  '/' : (BuildContext context) => MainPage(),
+  '/' : (BuildContext context) => Login(),
 };
 
 /*

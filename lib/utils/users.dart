@@ -4,32 +4,39 @@ import '../helper/messages.dart' as help;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:convert' as json;
 
-
 GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: <String>[
     'email',
   ],
 );
 
-String userEmail = "Test";
+GoogleSignInAccount currentUser;
+
+String userEmail = "";
+
+String userName = "";
 
 String token = "";
 
-Future<void> handleSignIn() async {
+GoogleUserCircleAvatar userPic;
+
+Future<void> handleSignIn(BuildContext context) async {
   try {
     await googleSignIn.signIn().then((result){
       result.authentication.then((googleKey){
-        print(googleKey.accessToken);
-        print(googleKey.idToken);
-        print(googleSignIn.currentUser.displayName);
+        currentUser = googleSignIn.currentUser;
+        token = googleKey.idToken;
+        userName = currentUser.displayName;
+        userEmail = currentUser.email;
+        userPic = GoogleUserCircleAvatar(identity: currentUser);
       }).catchError((err){
-        print('inner error');
+        help.popupAlert(context, err);
       });
     }).catchError((err){
-      print('error occured');
+      help.popupAlert(context, err);
     });
   } catch (error) {
-    print(error);
+    help.popupAlert(context, error);
   }
 }
 

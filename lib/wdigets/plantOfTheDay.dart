@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../wdigets/plantProfile.dart';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
-// Group to scale size of text for additional info
-var _group2 = AutoSizeGroup();
+void _showDialog(BuildContext context) {
+  // flutter defined function
+  showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: PlantProfile(),
+          ),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {});
+}
 
-Column plantOfTheDay(BuildContext context) {
-  return Column(
+Container plantOfTheDay(BuildContext context) {
+  return Container(
+    padding: const EdgeInsets.only(top: 10.0),
+    width: MediaQuery.of(context).size.width - 75.0,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(24.0),
+      color: Color(0xFFDFFFF0),
+    ),
+    child: Column(
     children: <Widget>[
       Divider(
         height: 15.5,
@@ -37,7 +62,7 @@ Column plantOfTheDay(BuildContext context) {
             // Picture of plant
             child: IconButton(
               icon: Image.asset("Assets/TestSucculent.png"),
-              onPressed: () => debugPrint("Go to plant"),
+              onPressed: () => _showDialog(context),
             ),
           ),
           // Plant Info: Name, Scientific name
@@ -181,49 +206,13 @@ Column plantOfTheDay(BuildContext context) {
               ],
             ),
           ), // Container to close row
-          Padding(padding: const EdgeInsets.all(7.25)),
-          // More info about the plant of the day
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: AutoSizeText("Additional Info:",
-                    textAlign: TextAlign.start,
-                    minFontSize: 5.0,
-                    maxLines: 1,
-                    group: _group2,
-                    style: TextStyle(
-                      fontFamily: 'Quicksand',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                Padding(padding: const EdgeInsets.all(4.25)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: AutoSizeText("Add dilute solution fertilizer once a month in the summer. \n"
-                      "Little need for pruning. \n"
-                      "Humidity is not an issue. \n"
-                      "Avoid wet soil and foliage when temperatures are cool.",
-                    minFontSize: 5.0,
-                    maxLines: 6,
-                    group: _group2,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Quicksand',
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                //Padding(padding: const EdgeInsets.all(7.25))
-              ],
-            ),
-          )
+          Divider(
+            height: 15.5,
+            color: Color(0xFFE2F8EE),
+          ),
         ]
       )
     ],
+  )
   );
 }

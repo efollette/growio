@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:async';
-import 'dart:convert' as json;
-import '../helper/messages.dart' as help;
 import '../utils/routes.dart' as routes;
 import '../utils/users.dart' as users;
+import 'dart:async';
 
 class Login extends StatefulWidget {
   @override
@@ -15,8 +12,8 @@ class Login extends StatefulWidget {
 }
 
 // Method to handle logging in using Google Auth API
-void handleLogin(BuildContext context) {
-  users.handleSignIn();
+void handleLogin(BuildContext context) async {
+  await users.handleSignIn(context);
   routes.goToMyGardenScreen(context);
 }
 
@@ -85,15 +82,50 @@ class _LoginState extends State<Login> {
     padding: const EdgeInsets.all(40.0),
   );
 
-  GoogleSignInAccount _currentUser;
+  Future test(BuildContext context) {
+    Future test = Future.delayed(Duration(seconds:2), () => handleLogin(context));
+    return test;
+  }
 
   @override
   void initState() {
     super.initState();
     users.googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
-        _currentUser = account;
+        users.currentUser = account;
       });
+      if (users.currentUser != null) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            backgroundColor: Colors.black.withOpacity(0.1),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                padding1,
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                ),
+                padding1,
+                Text(
+                  "Loading",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontFamily: 'Fredoka One Regular'
+                  ),
+                ),
+                padding1,
+              ],
+            ),
+          ),
+        );
+        test(context);
+      }
     });
     users.googleSignIn.signInSilently();
   }
