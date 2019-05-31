@@ -2,6 +2,8 @@ import 'package:Growio/wdigets/myGardenTile.dart';
 import '../utils/users.dart' as users;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import '../api/garden_api.dart' as garden;
+import '../model/plant_model.dart';
 
 Map _data = {};
 
@@ -45,23 +47,56 @@ class _MyGardenState extends State<MyGarden> {
     }
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          _title(context),
-          Padding(padding: const EdgeInsets.all(10.0)),
-          Expanded(
-            child: GridView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: _data.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (BuildContext context, int position) {
-                return myGardenTile(context, position, "Plant Name", "Scientific Name");
-              },
-            ),
-          ),
-        ],
-      ),
+      body: new FutureBuilder<List<Plant>>(
+          future: garden.getAllPlants(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data != null) {
+                return new Column(
+                  children: <Widget>[
+                    _title(context),
+                    Padding(padding: const EdgeInsets.all(10.0)),
+                    Expanded(
+                      child: GridView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: _data.length,
+                        gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                        itemBuilder: (BuildContext context, int position) {
+                          return myGardenTile(context, position, "saurabh", "saurabhus kanhegus");
+                        },
+                      )
+                    )
+                  ],
+                );
+              } else {
+                return new CircularProgressIndicator();
+              }
+            } else {
+              return new CircularProgressIndicator();
+            }
+          }
+
+      )
     );
   }
 }
+
+/*
+Column(
+children: <Widget>[
+_title(context),
+Padding(padding: const EdgeInsets.all(10.0)),
+Expanded(
+child: GridView.builder(
+physics: BouncingScrollPhysics(),
+itemCount: _data.length,
+gridDelegate:
+SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+itemBuilder: (BuildContext context, int position) {
+return myGardenTile(context, position, "Plant Name", "Scientific Name");
+},
+),
+),
+],
+),*/
