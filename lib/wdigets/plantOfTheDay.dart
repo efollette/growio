@@ -41,7 +41,7 @@ Container plantOfTheDay(BuildContext context) {
       ),
       // Plant Of The Day Title Text
       Container(
-        //alignment: Alignment.center,
+        alignment: Alignment.center,
         width: MediaQuery.of(context).size.width * (247/375),
         child: AutoSizeText(
           "Plant of the Day!",

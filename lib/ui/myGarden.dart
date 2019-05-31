@@ -1,7 +1,14 @@
 import 'package:Growio/wdigets/myGardenTile.dart';
-import 'package:Growio/wdigets/plantProfile.dart';
+import '../utils/users.dart' as users;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
+Map _data = {};
+
+Future<void> fetchPlants() async {
+  Map waiting = await users.getGarden(users.apiToken);
+  _data = waiting;
+}
 
 class MyGarden extends StatefulWidget {
   @override
@@ -9,6 +16,13 @@ class MyGarden extends StatefulWidget {
 }
 
 class _MyGardenState extends State<MyGarden> {
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPlants();
+  }
+
   @override
   Widget build(BuildContext context) {
     /* Plantcyclopedia title */
@@ -29,7 +43,6 @@ class _MyGardenState extends State<MyGarden> {
         ),
       );
     }
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -39,7 +52,7 @@ class _MyGardenState extends State<MyGarden> {
           Expanded(
             child: GridView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: 2,
+              itemCount: _data.length,
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (BuildContext context, int position) {

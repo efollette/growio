@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../helper/messages.dart' as help;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:convert' as json;
+import 'package:http/http.dart' as http;
 
 GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -10,36 +11,80 @@ GoogleSignIn googleSignIn = GoogleSignIn(
   ],
 );
 
+// Current user
 GoogleSignInAccount currentUser;
 
+// User's email
 String userEmail = "";
 
+// User's name
 String userName = "";
 
-String token = "";
+// Token to ping the api
+String apiToken = "";
 
+// Token for access to our servers
+String accessToken = "";
+
+// User's profile pic
 GoogleUserCircleAvatar userPic;
+
+// Url for our own api
+String apiUrl = "https://growio-prod-test.herokuapp.com";
+
+// Data from the api
+Map data;
+
+/*
+ * Name: getAPIToken
+ * Parameters: accessToken - User's unique access token to be able to access our server
+ * Description: Gets the user's auth data from our server in JSON format
+ */
+Future<Map> getAPIToken(String accessToken) async {
+  apiUrl += "/auth/google?code=";
+  apiUrl += accessToken;
+  http.Response response = await http.get(apiUrl);
+  return json.jsonDecode(response.body);
+}
+
+/*
+ * Name: getGarden
+ * Parameters: apiToken - User's unique api token to be able to access their garden
+ * Description: Gets the user's garden data from our server in JSON format
+ */
+Future<Map> getGarden(String apiToken) async {
+  apiUrl += "/garden/plants?token=";
+  apiUrl += apiToken;
+  http.Response response = await http.get(apiUrl);
+  return json.jsonDecode(response.body);
+}
 
 Future<void> handleSignIn(BuildContext context) async {
   try {
-    await googleSignIn.signIn().then((result){
-      result.authentication.then((googleKey){
-        currentUser = googleSignIn.currentUser;
-        token = googleKey.idToken;
-        userName = currentUser.displayName;
-        userEmail = currentUser.email;
-        userPic = GoogleUserCircleAvatar(identity: currentUser);
-      }).catchError((err){
-        help.popupAlert(context, err);
-      });
-    }).catchError((err){
-      help.popupAlert(context, err);
-    });
+    var result = await googleSignIn.signIn();
+    var googleKey = await result.authentication;
+    currentUser = googleSignIn.currentUser;
+    accessToken = googleKey.accessToken;
+    debugPrint(accessToken);
+    userName = currentUser.displayName;
+    userEmail = currentUser.email;
+    userPic = GoogleUserCircleAvatar(identity: currentUser);
+    if( accessToken != "" ) {
+      data = await getAPIToken(accessToken);
+    }
+    apiToken = data['token'];
+    debugPrint(apiToken);
   } catch (error) {
-    help.popupAlert(context, error);
+    debugPrint(error.toString());
   }
 }
 
 Future<void> handleSignOut() async {
-  googleSignIn.disconnect();
+  userEmail = "";
+  userName = "";
+  userPic = null;
+  apiToken = "";
+  accessToken = "";
+  currentUser = null;
+  googleSignIn.signOut();
 }
