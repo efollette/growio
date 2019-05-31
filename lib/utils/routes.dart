@@ -8,11 +8,11 @@ import '../ui/Camera.dart';
 var routes = {
   '/login' : (BuildContext context) => Login(),
   '/myGarden' : (BuildContext context) => MainPage(),
-  '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
+  '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(),
   '/camera' :(BuildContext context) => Camera(),
 
   // Default route
-  '/' : (BuildContext context) => Login(),
+  '/' : (BuildContext context) => MainPage(),
 };
 
 /*
