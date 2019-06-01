@@ -4,6 +4,7 @@ import '../helper/messages.dart' as help;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:convert' as json;
 import 'package:http/http.dart' as http;
+import '../utils/constants.dart' as constant;
 
 GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -30,7 +31,7 @@ String accessToken = "";
 GoogleUserCircleAvatar userPic;
 
 // Url for our own api
-String apiUrl = "https://growio-prod-test.herokuapp.com";
+//String apiUrl = "https://growio-prod-test.herokuapp.com";
 
 // Data from the api
 Map data;
@@ -41,9 +42,9 @@ Map data;
  * Description: Gets the user's auth data from our server in JSON format
  */
 Future<Map> getAPIToken(String accessToken) async {
-  apiUrl += "/auth/google?code=";
-  apiUrl += accessToken;
-  http.Response response = await http.get(apiUrl);
+  String authApiUrl = constant.apiUrl + "/auth/google?code=";
+  authApiUrl += accessToken;
+  http.Response response = await http.get(authApiUrl);
   return json.jsonDecode(response.body);
 }
 
@@ -52,12 +53,12 @@ Future<Map> getAPIToken(String accessToken) async {
  * Parameters: apiToken - User's unique api token to be able to access their garden
  * Description: Gets the user's garden data from our server in JSON format
  */
-Future<Map> getGarden(String apiToken) async {
-  apiUrl += "/garden/plants?token=";
-  apiUrl += apiToken;
-  http.Response response = await http.get(apiUrl);
-  return json.jsonDecode(response.body);
-}
+//Future<Map> getGarden(String apiToken) async {
+//  apiUrl += "/garden/plants?token=";
+//  apiUrl += apiToken;
+//  http.Response response = await http.get(apiUrl);
+//  return json.jsonDecode(response.body);
+//}
 
 Future<void> handleSignIn(BuildContext context) async {
   try {

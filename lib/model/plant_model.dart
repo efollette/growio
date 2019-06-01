@@ -17,9 +17,16 @@ String plantToJson(Plant data) {
 
 
 List<Plant> allPlantsFromJson(String str) {
-  final jsonData = json.decode(str);
-  debugPrint(jsonData);
-  return new List<Plant>.from(jsonData.map((x) => Plant.fromJson(x)));
+  List<Plant> plants = new List<Plant>();
+  List jsonParsed = json.decode(str)['plants'];
+  for (int i = 0; i < jsonParsed.length; i++) {
+    plants.add(new Plant.fromJson(jsonParsed[i]));
+  }
+  return plants;
+//
+//  final jsonData = json.decode(str);
+//  print(jsonData);
+//  return new List<Plant>.from(jsonData.map((x) => Plant.fromJson(x)));
 }
 
 String allPlantsToJson(List<Plant> data) {

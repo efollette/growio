@@ -7,10 +7,10 @@ import '../model/plant_model.dart';
 
 Map _data = {};
 
-Future<void> fetchPlants() async {
-  Map waiting = await users.getGarden(users.apiToken);
-  _data = waiting;
-}
+//Future<void> fetchPlants() async {
+//  Map waiting = await users.getGarden(users.apiToken);
+//  _data = waiting;
+//}
 
 class MyGarden extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class _MyGardenState extends State<MyGarden> {
   @override
   void initState() {
     super.initState();
-    fetchPlants();
+    //fetchPlants();
   }
 
   @override
@@ -49,31 +49,37 @@ class _MyGardenState extends State<MyGarden> {
       backgroundColor: Colors.white,
       body: new FutureBuilder<List<Plant>>(
           future: garden.getAllPlants(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data != null) {
+          builder: (context, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return new Text('loading...');
+              default:
+                if (snapshot.hasError)
+                  return new Text('Error: ${snapshot}');
+                else
+                  print('snap');
                 return new Column(
                   children: <Widget>[
                     _title(context),
                     Padding(padding: const EdgeInsets.all(10.0)),
                     Expanded(
-                      child: GridView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: _data.length,
-                        gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                        itemBuilder: (BuildContext context, int position) {
-                          return myGardenTile(context, position, "saurabh", "saurabhus kanhegus");
-                        },
-                      )
+                        child: GridView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemCount: snapshot.data.length,
+                          gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                          itemBuilder: (BuildContext context, int position) {
+                            print('position');
+                            print(position);
+                            return myGardenTile(context, position, snapshot.data[position].commonName,
+                                snapshot.data[position].scientificName);
+                          },
+                        )
                     )
                   ],
                 );
-              } else {
-                return new CircularProgressIndicator();
-              }
-            } else {
-              return new CircularProgressIndicator();
             }
           }
 
