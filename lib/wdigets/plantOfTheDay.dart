@@ -25,7 +25,7 @@ void _showDialog(BuildContext context) {
       pageBuilder: (context, animation1, animation2) {});
 }
 
-Container plantOfTheDay(BuildContext context) {
+Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
   return Container(
     padding: const EdgeInsets.only(top: 10.0),
     width: MediaQuery.of(context).size.width - 75.0,
@@ -45,7 +45,7 @@ Container plantOfTheDay(BuildContext context) {
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width * (247/375),
         child: AutoSizeText(
-          "Plant of the Day!",
+          "Plant of the Week!",
           style: TextStyle(
             fontFamily: 'Fredoka One Regular',
             fontSize: 30.0,
@@ -62,7 +62,7 @@ Container plantOfTheDay(BuildContext context) {
             width:  MediaQuery.of(context).size.width * (122/375),
             // Picture of plant
             child: IconButton(
-              icon: Image.asset("Assets/TestSucculent.png"),
+              icon: Image.network(snapshot.data.plantImage),
               onPressed: () => _showDialog(context),
             ),
           ),
@@ -71,12 +71,12 @@ Container plantOfTheDay(BuildContext context) {
             child: Column(
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width * (104/375),
+                  width: MediaQuery.of(context).size.width * (304/375),
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    "Plant Name",
+                    snapshot.data.commonName,
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                       fontFamily: 'Quicksand',
                       color: Color(0xFF312F2F),
                     ),
@@ -85,18 +85,18 @@ Container plantOfTheDay(BuildContext context) {
                   ),
                 Padding(padding: const EdgeInsets.all(1.5)),
                 Container(
-                  width: MediaQuery.of(context).size.width * (92/375),
+                  width: MediaQuery.of(context).size.width * (192/375),
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    "Scientific Name",
+                    snapshot.data.scientificName,
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 15.0,
                       fontStyle: FontStyle.italic,
                       fontFamily: 'ABeeZee Italic',
                       color: Color(0xFF726767)
                     ),
                     maxLines: 1,
-                    minFontSize: 5.0,
+                    minFontSize: 10.0,
                   ),
                 ),
               ],
