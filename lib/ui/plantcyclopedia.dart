@@ -91,17 +91,32 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          _title(context),
-          Padding(padding: const EdgeInsets.all(10.0)),
-          _searchBar(context),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          // Plant of the Day
-          widget.showFab ? _plantOfDay(context) : Container(),
-          Padding(padding: const EdgeInsets.all(10.0)),
-        ],
-      ),
+      body: new FutureBuilder<Plant>(
+          future: garden.getAllPlants(),
+          builder: (context, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return new Text('loading...');
+              default:
+                if (snapshot.hasError)
+                  return new Text('Error: ${snapshot}');
+                else
+                  return new Column(
+                    children: <Widget>[
+                        _title(context),
+                        Padding(padding: const EdgeInsets.all(10.0)),
+                        _searchBar(context),
+                        Padding(padding: const EdgeInsets.all(20.0)),
+  // Plant of the Day
+                        widget.showFab ? _plantOfDay(context) : Container(),
+                        Padding(padding: const EdgeInsets.all(10.0)),
+                      ],
+                    );
+            }
+          }
+
+      )
     );
   }
 }

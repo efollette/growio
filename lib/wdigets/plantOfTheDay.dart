@@ -35,6 +35,7 @@ Container plantOfTheDay(BuildContext context) {
     ),
     child: Column(
     children: <Widget>[
+
       Divider(
         height: 15.5,
         color: Color(0xFFE2F8EE),
