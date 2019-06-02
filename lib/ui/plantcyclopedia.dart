@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/users.dart' as users;
 import '../ui/mainPage.dart' as mp;
 import '../wdigets/plantOfTheDay.dart';
-import '../wdigets/plantList.dart';
+import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../model/plantWeek_model.dart';
 import '../api/weekPlant_api.dart' as weekPlant;
@@ -19,6 +19,12 @@ class Plantcyclopedia extends StatefulWidget {
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
+
+
+  // User's search after they've pressed enter
+  String plantSearch = '';
+  String plantType = '';
+
   bool showList = false;
 
   /* Plant list */
@@ -54,15 +60,17 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   Expanded _plantList(BuildContext context) {
     return Expanded(
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: _plantsQuery.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  child: ListTile(
-                      title: Text('${_plantsQuery[index]}',
-                          style: TextStyle(fontFamily: 'Quicksand'))));
-            }));
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: _plantsQuery.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: plantTile(context),
+          );
+        }
+      )
+    );
+
   }
 
   /* Text controller for the search bar */
@@ -96,7 +104,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       child: TextField(
         style: TextStyle(color: Color(0xFF278478), fontFamily: 'Quicksand'),
         enableInteractiveSelection: true,
-        textCapitalization: TextCapitalization.sentences,
+        //textCapitalization: TextCapitalization.sentences,
         maxLines: 1,
         autocorrect: true,
         textAlign: TextAlign.left,
@@ -137,9 +145,58 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           showList = true;
           _filterSearchResults(value);
         },
+        onSubmitted: (text) {
+          plantSearch = text;
+        },
       ),
     );
   }
+
+
+int _radioValue = 0;
+
+void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+  
+      switch (_radioValue) {
+        case 0:
+          plantType = "commonName";
+          break;
+        case 1:
+          plantType = "sciName";
+          break;
+      }
+    });
+  }
+
+  /* buttons to control searching */
+  Container _nameSearchChoice(BuildContext context){
+    return Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget> [
+          Radio(
+            value: 0,
+            groupValue: _radioValue,
+            onChanged: _handleRadioValueChange,
+          ),
+          Text(
+            "Common Name"
+          ),
+          Radio(
+            value: 1,
+            groupValue: _radioValue,
+            onChanged: _handleRadioValueChange,
+          ),
+          Text(
+            "Scientific Name"
+          ),
+          ],
+        )
+    );
+  }
+
 
   /* Plant of the day */
   Container _plantOfDay(BuildContext context, AsyncSnapshot snapshot) {
@@ -176,6 +233,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   @override
   Widget build(BuildContext context) {
+    print('plantSearch: ' + plantSearch);
     return Scaffold(
         backgroundColor: Colors.white,
         body: new FutureBuilder<PlantWeek>(

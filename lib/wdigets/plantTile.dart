@@ -1,5 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
+
+
+Container plantTile(BuildContext context){
+  return Container(
+    child: Row(
+      children: <Widget>[
+        /* Plant Image */
+        Container(
+           height: 73.0,
+            width: 87.0,
+            decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(80.0),
+             color: Colors.greenAccent,
+            ),
+            // Poster's profile picture
+            child: IconButton(
+            icon: Icon(Icons.local_florist),
+            onPressed: () => debugPrint("Go to plant"),
+            iconSize: 40.0,
+           ),
+        ),
+        /* Information */
+        Container(
+            width: MediaQuery.of(context).size.width - 213.5,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFFDFFFF0)),
+            ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              width: double.infinity,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Plant Name",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontFamily: 'Quicksand',
+                                    color: Color(0xFF312F2F),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(padding: const EdgeInsets.all(1.5)),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Scientific Name",
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontStyle: FontStyle.italic,
+                                      fontFamily: 'Quicksand',
+                                      color: Color(0xFF726767)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+        ),
+      ],
+    )
+  );
+}
+
+/*
 Column plantTile(BuildContext context) {
   return Column(
     children: <Widget>[
@@ -135,4 +206,4 @@ Column plantTile(BuildContext context) {
       ),
     ],
   );
-}
+}*/
