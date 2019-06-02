@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:convert';
 import '../utils/users.dart' as users;
+import '../utils/routes.dart' as routes;
 
 // Controller that indicated which page we're at
 final controller = PageController(
@@ -26,8 +27,7 @@ bool cam = false;
  */
 void _handleLogOut(BuildContext context) {
   users.handleSignOut();
-  Navigator.of(context)
-      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+  routes.goToLoginScreen(context);
 }
 
 class MainPage extends StatefulWidget {
