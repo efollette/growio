@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../utils/users.dart' as users;
 import '../utils/routes.dart' as routes;
 import '../wdigets/plantOfTheDay.dart';
-import '../wdigets/plantList.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class Plantcyclopedia extends StatefulWidget {
@@ -12,6 +11,9 @@ class Plantcyclopedia extends StatefulWidget {
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
+
+  // User's search after they've pressed enter
+  String plantSearch = '';
 
   bool showList = false;
 
@@ -81,7 +83,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           fontFamily: 'Quicksand'
         ),
         enableInteractiveSelection: true,
-        textCapitalization: TextCapitalization.sentences,
+        //textCapitalization: TextCapitalization.sentences,
         maxLines: 1,
         autocorrect: true,
         textAlign: TextAlign.left,
@@ -118,6 +120,9 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         onChanged: (value) {
           showList = true;
           _filterSearchResults(value);
+        },
+        onSubmitted: (text) {
+          plantSearch = text;
         },
       ),
     );
@@ -159,6 +164,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   @override
   Widget build(BuildContext context) {
+    print('plantSearch: ' + plantSearch);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
