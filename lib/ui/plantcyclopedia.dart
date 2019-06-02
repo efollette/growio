@@ -6,6 +6,8 @@ import '../wdigets/plantList.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../model/plantWeek_model.dart';
 import '../api/weekPlant_api.dart' as weekPlant;
+import '../api/searchPlant_api.dart' as searchPlant;
+
 
 class Plantcyclopedia extends StatefulWidget {
   final bool showFab;
