@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'plantcyclopedia.dart';
 import 'myGarden.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:convert';
 import '../utils/users.dart' as users;
+import '../utils/routes.dart' as routes;
+import '../api/camera_api.dart' as camera;
+import '../utils/constants.dart' as constant;
 
 // Controller that indicated which page we're at
 final controller = PageController(
@@ -26,8 +30,7 @@ bool cam = false;
  */
 void _handleLogOut(BuildContext context) {
   users.handleSignOut();
-  Navigator.of(context)
-      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+  routes.goToLoginScreen(context);
 }
 
 class MainPage extends StatefulWidget {
@@ -51,6 +54,13 @@ class _MainPageState extends State<MainPage> {
       base64Image = base64Encode(imageBytes);
       print('Printing the image path');
       print(base64Image);
+      String identifyUrl = constant.apiUrl + "/plant/identify?token=";
+      identifyUrl += users.apiToken;
+      final response = await http.post(identifyUrl, body: {'image': base64Image});
+      print("API" + response.body);
+      final jsonData = json.decode(response.body)['body'][0]['suggestions'];
+      //final suggestions = jsonData['suggestions'];
+      print(jsonData);
       setState(() {
         print('Update the UI');
       });
@@ -69,6 +79,13 @@ class _MainPageState extends State<MainPage> {
       base64Image = base64Encode(imageBytes);
       print('Printing the image path');
       print(base64Image);
+      String identifyUrl = constant.apiUrl + "/plant/identify?token=";
+      identifyUrl += users.apiToken;
+      final response = await http.post(identifyUrl, body: {'image': base64Image});
+      print("API" + response.body);
+      final jsonData = json.decode(response.body)['body'][0]['suggestions'];
+      //final suggestions = jsonData['suggestions'];
+      print(jsonData);
       setState(() {
         print('Update the UI');
       });

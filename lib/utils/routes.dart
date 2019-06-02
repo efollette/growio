@@ -41,3 +41,8 @@ void goToLoginScreen(BuildContext context) {
 void goToPlantcyclopediaScreen(BuildContext context) {
   Navigator.popAndPushNamed(context, '/plantcyclopedia');
 }
+
+void goToLoginFromLogout(BuildContext context) {
+  Navigator.of(context)
+      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+}

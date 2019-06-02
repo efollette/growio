@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../wdigets/plantOfTheDay.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../model/plantWeek_model.dart';
+import '../api/weekPlant_api.dart' as weekPlant;
 
 class Plantcyclopedia extends StatefulWidget {
   final bool showFab;
@@ -79,11 +81,11 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   }
 
   /* Plant of the day */
-  Container _plantOfDay(BuildContext context) {
+  Container _plantOfDay(BuildContext context, AsyncSnapshot snapshot) {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      child: plantOfTheDay(context),
+      child: plantOfTheDay(context, snapshot),
     );
   }
 
@@ -91,17 +93,32 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          _title(context),
-          Padding(padding: const EdgeInsets.all(10.0)),
-          _searchBar(context),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          // Plant of the Day
-          widget.showFab ? _plantOfDay(context) : Container(),
-          Padding(padding: const EdgeInsets.all(10.0)),
-        ],
-      ),
+      body: new FutureBuilder<PlantWeek>(
+          future: weekPlant.getPlantOfTheWeek(),
+          builder: (context, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return new CircularProgressIndicator();
+              default:
+                if (snapshot.hasError)
+                  return new Text('Error: ${snapshot}');
+                else
+                  return new Column(
+                    children: <Widget>[
+                        _title(context),
+                        Padding(padding: const EdgeInsets.all(10.0)),
+                        _searchBar(context),
+                        Padding(padding: const EdgeInsets.all(20.0)),
+  // Plant of the Day
+                        widget.showFab ? _plantOfDay(context, snapshot) : Container(),
+                        Padding(padding: const EdgeInsets.all(10.0)),
+                      ],
+                    );
+            }
+          }
+
+      )
     );
   }
 }
