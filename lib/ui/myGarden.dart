@@ -39,11 +39,15 @@ class _MyGardenState extends State<MyGarden> {
           Expanded(
             child: GridView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: 2,
+              itemCount: 7,
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (BuildContext context, int position) {
-                return myGardenTile(context, position, "Plant Name", "Scientific Name");
+                return FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                  child: myGardenTile(context, position, "Plant Name", "Scientific Name"),
+                );
               },
             ),
           ),
