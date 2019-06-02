@@ -53,12 +53,11 @@ class _MyGardenState extends State<MyGarden> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return new Text('loading...');
+                return new CircularProgressIndicator();
               default:
                 if (snapshot.hasError)
                   return new Text('Error: ${snapshot}');
                 else
-                  print('snap');
                 return new Column(
                   children: <Widget>[
                     _title(context),
@@ -71,8 +70,6 @@ class _MyGardenState extends State<MyGarden> {
                           SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2),
                           itemBuilder: (BuildContext context, int position) {
-                            print('position');
-                            print(position);
                             return myGardenTile(context, position, snapshot.data[position].commonName,
                                 snapshot.data[position].scientificName);
                           },

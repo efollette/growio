@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:convert';
 import '../utils/users.dart' as users;
 import '../utils/routes.dart' as routes;
+import '../api/camera_api.dart' as camera;
 
 // Controller that indicated which page we're at
 final controller = PageController(
@@ -51,6 +52,8 @@ class _MainPageState extends State<MainPage> {
       base64Image = base64Encode(imageBytes);
       print('Printing the image path');
       print(base64Image);
+      final body = camera.identifyPlant(base64Image);
+      print(body.runtimeType);
       setState(() {
         print('Update the UI');
       });
