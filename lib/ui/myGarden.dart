@@ -112,7 +112,8 @@ class _MyGardenState extends State<MyGarden> {
                                       context,
                                       position,
                                       snapshot.data[position].commonName,
-                                      snapshot.data[position].scientificName);
+                                      snapshot.data[position].scientificName,
+                                      snapshot.data[position].plantImage);
                                 },
                               ))
                             ],

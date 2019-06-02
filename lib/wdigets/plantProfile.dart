@@ -8,6 +8,12 @@ var _group = AutoSizeGroup();
 var _group2 = AutoSizeGroup();
 
 class PlantProfile extends StatefulWidget {
+  final String plantName;
+  final String scientificName;
+  final String plantUrl;
+
+  PlantProfile(this.plantName, this.scientificName, this.plantUrl) : super();
+
   @override
   _PlantProfileState createState() => _PlantProfileState();
 }
@@ -95,7 +101,7 @@ class _PlantProfileState extends State<PlantProfile> {
                     color: Colors.greenAccent,
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.local_florist),
+                    icon: Image.network(widget.plantUrl),
                     iconSize: 40.0,
                   ),
                 ),
@@ -107,12 +113,12 @@ class _PlantProfileState extends State<PlantProfile> {
                 child: Column(
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width * (104 / 375),
+                  width: MediaQuery.of(context).size.width * (304 / 375),
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    "Plant Name",
+                    widget.plantName,
                     style: TextStyle(
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                       fontFamily: 'Quicksand',
                       color: Color(0xFF312F2F),
                     ),
@@ -121,17 +127,17 @@ class _PlantProfileState extends State<PlantProfile> {
                 ),
                 Padding(padding: const EdgeInsets.all(1.5)),
                 Container(
-                  width: MediaQuery.of(context).size.width * (92 / 375),
+                  width: MediaQuery.of(context).size.width * (192 / 375),
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    "Scientific Name",
+                    widget.scientificName,
                     style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 15.0,
                         fontStyle: FontStyle.italic,
                         fontFamily: 'ABeeZee Italic',
                         color: Color(0xFF726767)),
                     maxLines: 1,
-                    minFontSize: 5.0,
+                    minFontSize: 8.0,
                   ),
                 ),
               ],
