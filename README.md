@@ -40,10 +40,10 @@ From the main screen, you can do the following things:
 2. Go to the Plantcyclopedia
    - This screen can be accessed by the "Plantcyclopedia" button on the bottom right side of the screen. 
 3. Take/Upload a picture from your gallery to identify a plant
- - This can be accessed by clicking the Camera button on the bottom center of the screen.
- - When you click on the camera, it should open up two more buttons right above the camera button:
-   - The small picture button, which opens up your gallery and allows you to upload a pre-existing picture.
-   - The small capture button, which opens your device camera and allows you to take a new picture to use.
+   - This can be accessed by clicking the Camera button on the bottom center of the screen.
+   - When you click on the camera, it should open up two more buttons right above the camera button:
+     - The small picture button, which opens up your gallery and allows you to upload a pre-existing picture.
+     - The small capture button, which opens your device camera and allows you to take a new picture to use.
 4. Change your settings 
    - This can be accessed by clicking the three lines on the top left side of the screen.
 
