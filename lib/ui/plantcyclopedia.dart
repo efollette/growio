@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import '../utils/users.dart' as users;
-import '../utils/routes.dart' as routes;
+import '../ui/mainPage.dart' as mp;
 import '../wdigets/plantOfTheDay.dart';
 import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../model/plantWeek_model.dart';
+import '../api/weekPlant_api.dart' as weekPlant;
+import '../api/searchPlant_api.dart' as searchPlant;
+
 
 class Plantcyclopedia extends StatefulWidget {
+  final bool showFab;
+
+  Plantcyclopedia(this.showFab);
 
   @override
   _PlantcyclopediaState createState() => _PlantcyclopediaState();
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
+
 
   // User's search after they've pressed enter
   String plantSearch = '';
@@ -20,12 +28,32 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   bool showList = false;
 
   /* Plant list */
-  final List<String> _plants = ['Daisy', 'Sunflower', 'Poppy', 'Lavender', 'Rose',
-                          'Tiger Lily', 'Carnation', 'Tulip', 'Orchid', 'Peonie'];
+  final List<String> _plants = [
+    'Daisy',
+    'Sunflower',
+    'Poppy',
+    'Lavender',
+    'Rose',
+    'Tiger Lily',
+    'Carnation',
+    'Tulip',
+    'Orchid',
+    'Peonie'
+  ];
 
   /* Duplicate to store the plant list */
-  final List<String> _plantsDup = ['Daisy', 'Sunflower', 'Poppy', 'Lavender', 'Rose',
-                          'Tiger Lily', 'Carnation', 'Tulip', 'Orchid', 'Peonie'];
+  final List<String> _plantsDup = [
+    'Daisy',
+    'Sunflower',
+    'Poppy',
+    'Lavender',
+    'Rose',
+    'Tiger Lily',
+    'Carnation',
+    'Tulip',
+    'Orchid',
+    'Peonie'
+  ];
 
   /* List that will change based on the query */
   var _plantsQuery = List<String>();
@@ -53,7 +81,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width * (247/375),
+      width: MediaQuery.of(context).size.width * (247 / 375),
       child: AutoSizeText(
         "Plantcyclopedia",
         style: TextStyle(
@@ -74,10 +102,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       width: MediaQuery.of(context).size.width - 75.0,
       height: 35.0,
       child: TextField(
-        style: TextStyle(
-          color: Color(0xFF278478),
-          fontFamily: 'Quicksand'
-        ),
+        style: TextStyle(color: Color(0xFF278478), fontFamily: 'Quicksand'),
         enableInteractiveSelection: true,
         //textCapitalization: TextCapitalization.sentences,
         maxLines: 1,
@@ -86,31 +111,34 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         textInputAction: TextInputAction.search,
         controller: _searchController,
         decoration: InputDecoration(
-          hasFloatingPlaceholder: false,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(
-              color: Color(0x388BE4BB),
+            hasFloatingPlaceholder: false,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+              borderSide: BorderSide(
+                color: Color(0x388BE4BB),
+              ),
             ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0x388BE4BB),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color(0x388BE4BB),
+              ),
+              borderRadius: BorderRadius.circular(25.0),
             ),
-            borderRadius: BorderRadius.circular(25.0),
-          ),
-          filled: true,
-          fillColor: Color(0xFFDFFFF0),
-          hintText: 'e.x. Daisy',
-          hintStyle: TextStyle(fontFamily: 'Quicksand',
-              fontSize: 15.0, height: 0),
-          labelStyle: TextStyle(fontFamily: 'Quicksand',
-              fontWeight: FontWeight.bold, fontSize: 13.0,
-              color: Color(0xFF8BE4BB)
-          ),
-          labelText: 'Type the name of your plant here.',
-          prefixIcon: Icon(Icons.search, color: Color(0xFF278478),)
-        ),
+            filled: true,
+            fillColor: Color(0xFFDFFFF0),
+            hintText: 'e.x. Daisy',
+            hintStyle:
+                TextStyle(fontFamily: 'Quicksand', fontSize: 15.0, height: 0),
+            labelStyle: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
+                fontSize: 13.0,
+                color: Color(0xFF8BE4BB)),
+            labelText: 'Type the name of your plant here.',
+            prefixIcon: Icon(
+              Icons.search,
+              color: Color(0xFF278478),
+            )),
         cursorColor: Colors.green,
         // Functionality of search
         onChanged: (value) {
@@ -171,12 +199,11 @@ void _handleRadioValueChange(int value) {
 
 
   /* Plant of the day */
-  Container _plantOfDay(BuildContext context) {
+  Container _plantOfDay(BuildContext context, AsyncSnapshot snapshot) {
     return Container(
-        color: Colors.white,
-        alignment: Alignment.center,
-        child: plantOfTheDay(context),
-
+      color: Colors.white,
+      alignment: Alignment.center,
+      child: plantOfTheDay(context, snapshot),
     );
   }
 
@@ -184,10 +211,10 @@ void _handleRadioValueChange(int value) {
   void _filterSearchResults(String query) {
     List<String> dummySearchList = List<String>();
     dummySearchList.addAll(_plantsDup);
-    if(query.isNotEmpty) {
+    if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
-        if(item.contains(query)) {
+        if (item.contains(query)) {
           dummyListData.add(item);
         }
       });
@@ -208,29 +235,32 @@ void _handleRadioValueChange(int value) {
   Widget build(BuildContext context) {
     print('plantSearch: ' + plantSearch);
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width - 75.0,
-          child: Column(
-            children: <Widget>[
-              _title(context),
-              Padding(padding: const EdgeInsets.all(10.0)),
-              _searchBar(context),
-              Padding(padding: const EdgeInsets.all(10.0)),
-              _nameSearchChoice(context),
-              Padding(padding: const EdgeInsets.all(10.0)),
-              // Plant of the Day
-              //_plantList(context),
-              showList ? _plantList(context) : _plantOfDay(context),
-              Padding(padding: const EdgeInsets.all(10.0)),
-            ],
-          ),
-        )
-
-      )
-    );
+        backgroundColor: Colors.white,
+        body: new FutureBuilder<PlantWeek>(
+            future: weekPlant.getPlantOfTheWeek(),
+            builder: (context, AsyncSnapshot snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return CircularProgressIndicator();
+                default:
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot}');
+                  else
+                    return Column(
+                      children: <Widget>[
+                        _title(context),
+                        Padding(padding: const EdgeInsets.all(10.0)),
+                        _searchBar(context),
+                        Padding(padding: const EdgeInsets.all(20.0)),
+                        // Plant of the Day
+                        widget.showFab
+                            ? _plantOfDay(context, snapshot)
+                            : Container(),
+                        Padding(padding: const EdgeInsets.all(10.0)),
+                      ],
+                    );
+              }
+            }));
   }
 }
-
-

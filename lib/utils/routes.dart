@@ -8,7 +8,7 @@ import '../ui/Camera.dart';
 var routes = {
   '/login' : (BuildContext context) => Login(),
   '/myGarden' : (BuildContext context) => MainPage(),
-  '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(),
+  '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
   '/camera' :(BuildContext context) => Camera(),
 
   // Default route
@@ -40,4 +40,9 @@ void goToLoginScreen(BuildContext context) {
    */
 void goToPlantcyclopediaScreen(BuildContext context) {
   Navigator.popAndPushNamed(context, '/plantcyclopedia');
+}
+
+void goToLoginFromLogout(BuildContext context) {
+  Navigator.of(context)
+      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 }
