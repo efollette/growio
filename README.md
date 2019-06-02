@@ -32,6 +32,38 @@ In order to install the app, open the APK file with Package installer, and you'r
 ## How to Run
 After you have followed the installation instructions, all you need to do is click on the little plant icon labelled "Growio", and the application should then run.
 
+## Use Instructions
+
+From the main screen, you can do the following things:
+1. Go to MyGarden
+   - This is the default screen that the application opens. It can also be accessed by the "MyGarden" button on the bottom left side of the screen.
+2. Go to the Plantcyclopedia
+   - This screen can be accessed by the "Plantcyclopedia" button on the bottom right side of the screen. 
+3. Take/Upload a picture from your gallery to identify a plant
+ - This can be accessed by clicking the Camera button on the bottom center of the screen.
+ - When you click on the camera, it should open up two more buttons right above the camera button:
+   - The small picture button, which opens up your gallery and allows you to upload a pre-existing picture.
+   - The small capture button, which opens your device camera and allows you to take a new picture to use.
+4. Change your settings 
+   - This can be accessed by clicking the three lines on the top left side of the screen.
+
+From the MyGarden screen, you can:
+1. Look at the list and the details of the plants in your "MyGarden"
+   - To look at the details, click on any added plant. This should open up the details about the plant. 
+2. Change the nickname of the plants in your "MyGarden"
+   - To do so, click on the plant in your "MyGarden" who's nickname you want to change. This opens up the details about the plant.
+   - Click on the pen write below the name of the plant. This should open up a text box that allows you to enter a nickname for your plant. 
+   - Once you are done entering the nickname, click on "OK". This should change the nickname of your plant to the name you entered.
+3. Remove a plant from your garden.
+   - This screen can be accessed by the "Plantcyclopedia" button on the bottom right side of the screen. 
+   - Click on the "Remove" button on the bottom center of the pop up. This should remove the plant from your garden. 
+4. You can also go to the Plantcyclopedia page, the settings and the camera with the same instructions as for the Main Screen.
+
+From the Plantcyclopedia page, you can:
+1. Look at the details of the "Plant of the Week".
+  - This should be the information that is displayed by default when you click on the Plantcyclopedia button on the bottom right side of your screen.
+
+
 ## Known Bugs
 1. The plant you take a picture of/try to look up using the Plantcyclopedia might not be correctly identified.
 
