@@ -1,28 +1,186 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../wdigets/plantProfile.dart';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
-void _showDialog(BuildContext context) {
-  // flutter defined function
-  showGeneralDialog(
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionBuilder: (context, a1, a2, widget) {
-        return Transform.scale(
-          scale: a1.value,
-          child: Opacity(
-            opacity: a1.value,
-            child: PlantProfile(),
+// Plant of the Day! title
+Container _makeTitle(BuildContext context) {
+  return Container(
+    //alignment: Alignment.center,
+    width: MediaQuery.of(context).size.width * (247/375),
+    child: AutoSizeText(
+      "Plant of the Day!",
+      style: TextStyle(
+          fontFamily: 'Fredoka One Regular',
+          fontSize: 30.0,
+          color: Color(0xFF278478)
+      ),
+      maxLines: 1,
+    ),
+  );
+}
+
+// Plant Image
+Container _plantIcon(BuildContext context) {
+  return Container(
+    height: MediaQuery.of(context).size.height * (106/812),
+    width:  MediaQuery.of(context).size.width * (122/375),
+    // Picture of plant
+    child: IconButton(
+      icon: Image.asset("Assets/TestSucculent.png"),
+      onPressed: () => debugPrint("Go to plant"),
+    ),
+  );
+}
+
+// Plant names
+Container _plantNames(BuildContext context) {
+  return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width * (104/375),
+            alignment: Alignment.center,
+            child: AutoSizeText(
+              "Plant Name",
+              style: TextStyle(
+                fontSize: 25.0,
+                fontFamily: 'Quicksand',
+                color: Color(0xFF312F2F),
+              ),
+              maxLines: 1,
+            ),
           ),
-        );
-      },
-      transitionDuration: Duration(milliseconds: 300),
-      barrierDismissible: true,
-      barrierLabel: '',
-      context: context,
-      pageBuilder: (context, animation1, animation2) {});
+          Padding(padding: const EdgeInsets.all(1.5)),
+          Container(
+            width: MediaQuery.of(context).size.width * (92/375),
+            alignment: Alignment.center,
+            child: AutoSizeText(
+              "Scientific Name",
+              style: TextStyle(
+                  fontSize: 18.0,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'ABeeZee Italic',
+                  color: Color(0xFF726767)
+              ),
+              maxLines: 1,
+              minFontSize: 5.0,
+            ),
+          ),
+        ],
+      )
+  );
+}
+
+// Additional plant info
+Container _addInfo(BuildContext context) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Container(
+              child: Image.asset('Assets/WaterDrop.png'),
+            ),
+            Container(
+              child: Image.asset('Assets/SunIcon.png'),
+            ),
+            Container(
+              child: Image.asset('Assets/Thermostat.png'),
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * (138/375),
+              child: AutoSizeText("Watering Frequency: ",
+                group: _group,
+                maxLines: 1,
+                style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    color: Colors.black,
+                    height: 1.2
+                  //height: 1.2,
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * (69/375),
+              child: AutoSizeText("Sunlight: ",
+                group: _group,
+                maxLines: 1,
+                style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    color: Colors.black,
+                    height: 1.2
+                  //height: 1.2,
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * (135/375),
+              child: AutoSizeText("Optimal Temperature",
+                maxLines: 1,
+                minFontSize: 5.0,
+                group: _group,
+                style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    color: Colors.black,
+                    height: 1.2
+                  //height: 1.2,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Column(
+          children: <Widget>[
+            Container(
+              child: AutoSizeText("Every 14 Days",
+                maxLines: 1,
+                minFontSize: 5.0,
+                group: _group,
+                style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    color: Colors.black,
+                    height: 1.2
+                ),
+              ),
+            ),
+            Container(
+              child: AutoSizeText("Full/Partial",
+                maxLines: 1,
+                minFontSize: 5.0,
+                group: _group,
+                style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    color: Colors.black,
+                    height: 1.2
+                ),
+              ),
+            ),
+            Container(
+              child: AutoSizeText(">40°",
+                maxLines: 1,
+                minFontSize: 5.0,
+                group: _group,
+                style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    color: Colors.black,
+                    height: 1.2
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }
 
 Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
@@ -104,109 +262,8 @@ Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
           ),
           Padding(padding: const EdgeInsets.all(7.25)),
           // Additional plant info: water, sunlight
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Container(
-                      child: Image.asset('Assets/WaterDrop.png'),
-                    ),
-                    Container(
-                      child: Image.asset('Assets/SunIcon.png'),
-                    ),
-                    Container(
-                      child: Image.asset('Assets/Thermostat.png'),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * (138/375),
-                      child: AutoSizeText("Watering Frequency: ",
-                        group: _group,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Colors.black,
-                          height: 1.2
-                          //height: 1.2,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * (69/375),
-                      child: AutoSizeText("Sunlight: ",
-                        group: _group,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Colors.black,
-                          height: 1.2
-                          //height: 1.2,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * (135/375),
-                      child: AutoSizeText("Optimal Temperature",
-                        maxLines: 1,
-                        minFontSize: 5.0,
-                        group: _group,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Colors.black,
-                          height: 1.2
-                          //height: 1.2,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      child: AutoSizeText("Every 14 Days",
-                        maxLines: 1,
-                        minFontSize: 5.0,
-                        group: _group,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: AutoSizeText("Full/Partial",
-                        maxLines: 1,
-                        minFontSize: 5.0,
-                        group: _group,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: AutoSizeText(">40°",
-                        maxLines: 1,
-                        minFontSize: 5.0,
-                        group: _group,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ), // Container to close row
+          _addInfo(context),
+           // Container to close row
           Divider(
             height: 15.5,
             color: Color(0xFFE2F8EE),
