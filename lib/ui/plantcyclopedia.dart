@@ -99,12 +99,11 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return new Text('loading...');
+                return new CircularProgressIndicator();
               default:
                 if (snapshot.hasError)
                   return new Text('Error: ${snapshot}');
                 else
-                  print(snapshot.data.plantImage);
                   return new Column(
                     children: <Widget>[
                         _title(context),
