@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/users.dart' as users;
 import '../utils/routes.dart' as routes;
 import '../wdigets/plantOfTheDay.dart';
+import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class Plantcyclopedia extends StatefulWidget {
@@ -14,6 +15,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   // User's search after they've pressed enter
   String plantSearch = '';
+  String plantType = '';
 
   bool showList = false;
 
@@ -35,13 +37,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         itemCount: _plantsQuery.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(
-            child: ListTile(
-              title: Text('${_plantsQuery[index]}',
-                style: TextStyle(
-                  fontFamily: 'Quicksand'
-                )
-              )
-            )
+            child: plantTile(context),
           );
         }
       )
@@ -128,6 +124,52 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     );
   }
 
+
+int _radioValue = 0;
+
+void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+  
+      switch (_radioValue) {
+        case 0:
+          plantType = "commonName";
+          break;
+        case 1:
+          plantType = "sciName";
+          break;
+      }
+    });
+  }
+
+  /* buttons to control searching */
+  Container _nameSearchChoice(BuildContext context){
+    return Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget> [
+          Radio(
+            value: 0,
+            groupValue: _radioValue,
+            onChanged: _handleRadioValueChange,
+          ),
+          Text(
+            "Common Name"
+          ),
+          Radio(
+            value: 1,
+            groupValue: _radioValue,
+            onChanged: _handleRadioValueChange,
+          ),
+          Text(
+            "Scientific Name"
+          ),
+          ],
+        )
+    );
+  }
+
+
   /* Plant of the day */
   Container _plantOfDay(BuildContext context) {
     return Container(
@@ -175,6 +217,8 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
               _title(context),
               Padding(padding: const EdgeInsets.all(10.0)),
               _searchBar(context),
+              Padding(padding: const EdgeInsets.all(10.0)),
+              _nameSearchChoice(context),
               Padding(padding: const EdgeInsets.all(10.0)),
               // Plant of the Day
               //_plantList(context),
