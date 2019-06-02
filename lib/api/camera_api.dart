@@ -11,9 +11,7 @@ Future<List<dynamic>> identifyPlant (String base64Image) async {
 
   String identifyUrl = constant.apiUrl + "/plant/identify?token=";
   identifyUrl += users.apiToken;
-
   final response = await http.post(identifyUrl, body: {'image': base64Image});
-
   print("API" + response.body);
   final jsonData = json.decode(response.body)['body'][0]['suggestions'];
   //final suggestions = jsonData['suggestions'];
