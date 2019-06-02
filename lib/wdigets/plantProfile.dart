@@ -17,11 +17,10 @@ class _PlantProfileState extends State<PlantProfile> {
   Container _addButton(BuildContext context) {
     return Container(
         child: OutlineButton(
-      borderSide: BorderSide(
-        color: Color(0xFF278478),
-      ),
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(50.0)),
+          borderSide: BorderSide(
+            color: Color(0xFF278478),
+          ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       splashColor: Color(0xFF278478),
       onPressed: () {},
       child: Column(
@@ -280,9 +279,9 @@ class _PlantProfileState extends State<PlantProfile> {
                     padding: const EdgeInsets.only(left: 20.0),
                     child: AutoSizeText(
                       "Add dilute solution fertilizer once a month in the summer. \n"
-                          "Little need for pruning. \n"
-                          "Humidity is not an issue. \n"
-                          "Avoid wet soil and foliage when temperatures are cool.",
+                      "Little need for pruning. \n"
+                      "Humidity is not an issue. \n"
+                      "Avoid wet soil and foliage when temperatures are cool.",
                       minFontSize: 5.0,
                       maxLines: 6,
                       group: _group2,
