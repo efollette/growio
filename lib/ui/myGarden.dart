@@ -46,7 +46,7 @@ class _MyGardenState extends State<MyGarden> {
                 return FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.center,
-                  child: myGardenTile(context, position, "Plant Name", "Scientific Name"),
+                  child: MyGardenTile(),
                 );
               },
             ),
