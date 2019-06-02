@@ -198,7 +198,7 @@ class _MainPageState extends State<MainPage> {
   // Bottom navigation bar that can also navigate to the pages
   Theme _createBottomNavBar(BuildContext context) {
     BottomNavigationBar _botNav = BottomNavigationBar(
-      // elevation: 0.0,
+      elevation: 0.0,
       onTap: _onTabTapped,
       currentIndex: currentPage,
       items: [
@@ -364,7 +364,7 @@ class _MainPageState extends State<MainPage> {
         controller: controller,
         children: <Widget>[
           MyGarden(),
-          Plantcyclopedia(true),
+          Plantcyclopedia(_showFab),
         ],
       ),
       bottomNavigationBar: _createBottomNavBar(context),

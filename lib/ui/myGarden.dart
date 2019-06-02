@@ -30,8 +30,7 @@ class _MyGardenState extends State<MyGarden> {
         ),
       );
     }
-
-    return Scaffold(
+  return Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder<List<Plant>>(
             future: garden.getAllPlants(),
