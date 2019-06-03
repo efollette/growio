@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
 import 'package:Growio/ui/myGarden.dart';
 
-void _showDialog(BuildContext context, String plantName, String scientificName, String plantImage) {
+void _showDialog(BuildContext context, String plantName, String scientificName, String plantImage, String nickname, String temp, String light, String moisture) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -16,6 +16,7 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
               alignment: Alignment.center,
               child: plantProf(context, "plantName", "scientifcName"),
             ),
+            // child: PlantProfile(plantName, scientificName, plantImage, nickname,temp, light, moisture ),
           ),
         );
       },
@@ -27,11 +28,11 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
 }
 
 Column myGardenTile(
-    BuildContext context, int index, String plantName, String scientificName, String plantImage) {
+    BuildContext context, int index, String plantName, String scientificName, String plantImage, String nickname, String temp, String light, String moisture) {
   return Column(
     children: <Widget>[
       FlatButton(
-        onPressed: () => _showDialog(context, plantName, scientificName, plantImage),
+        onPressed: () => _showDialog(context, plantName, scientificName, plantImage, nickname, temp, light, moisture),
         child: Container(
           width: 190.0,
           height: 200.0,
@@ -61,7 +62,7 @@ Column myGardenTile(
                       ),
                       // Poster's profile picture
                       child: IconButton(
-                        icon: Icon(Icons.local_florist),
+                        icon: Image.network(plantImage),
                         onPressed: () => debugPrint("Go to plant"),
                         iconSize: 40.0,
                       ),

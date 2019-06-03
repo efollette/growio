@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:Growio/wdigets/myGardenTile.dart';
+import '../api/garden_api.dart' as garden;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -8,6 +8,14 @@ var _group = AutoSizeGroup();
 // Group to scale size of text for additional info
 var _group2 = AutoSizeGroup();
 
+class PlantProfile extends StatefulWidget {
+  final String plantName;
+  final String scientificName;
+  final String plantUrl;
+  final String nickname;
+  final String temp;
+  final String light;
+  final String moisture;
 
 /* button to edit the name */
  Container _editButton(BuildContext context) {
@@ -72,6 +80,9 @@ Future<String> _asyncInputDialog(BuildContext context) async {
       );
     },
   );
+  PlantProfile(this.plantName, this.scientificName, this.plantUrl, this.nickname, this.temp, this.light, this.moisture) : super();
+  @override
+  _PlantProfileState createState() => _PlantProfileState();
 }
 
 /* button to remove plant */
@@ -84,7 +95,13 @@ Future<String> _asyncInputDialog(BuildContext context) async {
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(50.0)),
       splashColor: Color(0xFF278478),
-      onPressed: () {},
+      onPressed: () async {
+        bool response = await garden.removePlant(widget.nickname);
+        if (response) {
+          Navigator.of(context).pop();
+        }
+        Navigator.pushNamed(context, '/myGarden');
+      },
       child: Column(
         children: <Widget>[
           Container(
@@ -158,7 +175,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                     color: Colors.greenAccent,
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.local_florist),//Image.network(widget.plantUrl),
+                    icon: Image.network(widget.plantUrl),
                     iconSize: 40.0,
                   ),
                 ),
@@ -278,7 +295,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                     children: <Widget>[
                       Container(
                         child: AutoSizeText(
-                          "Every 14 Days",
+                         widget.moisture,
                           maxLines: 1,
                           minFontSize: 5.0,
                           group: _group,
@@ -291,7 +308,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                       Padding(padding: EdgeInsets.all(5.0)),
                       Container(
                         child: AutoSizeText(
-                          "Full/Partial",
+                          widget.light,
                           maxLines: 1,
                           minFontSize: 5.0,
                           group: _group,
@@ -304,7 +321,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
                       Padding(padding: EdgeInsets.all(5.0)),
                       Container(
                         child: AutoSizeText(
-                          ">40°",
+                          widget.temp,
                           maxLines: 1,
                           minFontSize: 5.0,
                           group: _group,
@@ -329,3 +346,4 @@ Future<String> _asyncInputDialog(BuildContext context) async {
       ),
     );
   }
+}

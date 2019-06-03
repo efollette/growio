@@ -5,7 +5,7 @@ import 'package:Growio/wdigets/plantProfile.dart';
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
-void _showDialog(BuildContext context, String commonName, String scientificName, String imageUrl) {
+void _showDialog(BuildContext context, String commonName, String scientificName, String imageUrl, String nickname, String temp, String light, String moisture) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
