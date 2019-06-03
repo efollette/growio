@@ -17,6 +17,13 @@ class Plantcyclopedia extends StatefulWidget {
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
+  Future<PlantWeek> _plantWeek;
+
+  @override
+  void initState() {
+    this._plantWeek = weekPlant.getPlantOfTheWeek();
+  }
+
   bool showList = false;
 
   /* Plant list */
@@ -177,7 +184,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: new FutureBuilder<PlantWeek>(
-            future: weekPlant.getPlantOfTheWeek(),
+            future: this._plantWeek,
             builder: (context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:

@@ -10,6 +10,13 @@ class MyGarden extends StatefulWidget {
 }
 
 class _MyGardenState extends State<MyGarden> {
+  Future<List<Plant>> _plants;
+
+  @override
+  void initState() {
+    this._plants = garden.getAllPlants();
+  }
+
   @override
   Widget build(BuildContext context) {
     /* Plantcyclopedia title */
@@ -34,7 +41,7 @@ class _MyGardenState extends State<MyGarden> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder<List<Plant>>(
-            future: garden.getAllPlants(),
+            future: this._plants,
             builder: (context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
