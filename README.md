@@ -20,8 +20,8 @@ The application needs the following:
 In order to install the app on your Android phone, you will have to install the APK (which can be found here: <enter google drive link>).
  
 Before you install, please make sure that:
--- Your device has the API Level 28 (or above), which corresponds to Android Version 9.0 (Pie).
--- Google Drive has "Install unknown apps" permissions. 
+*- Your device has the API Level 28 (or above), which corresponds to Android Version 9.0 (Pie).
+*- Google Drive has "Install unknown apps" permissions. 
   * How to give Google Drive "Install unknown apps" permissions?
       
       From the Settings App, click on Apps & notifications -> Advanced -> Special app access -> Install unknown apps 
