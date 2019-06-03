@@ -100,8 +100,8 @@ void _showDialog(BuildContext context) {
                                         if (_nicknameController.text != "") {
                                           await Navigator.of(context).pop();
                                           await Navigator.of(context).pop();
-
                                         }
+                                        Navigator.pushNamed(context, '/myGarden');
                                       },
                                     ),
                                   ],
@@ -260,6 +260,7 @@ class _MainPageState extends State<MainPage> {
       await http.post(identifyUrl, body: {'image': base64Image});
       suggestions = json.decode(response.body)['body'][0]['suggestions'];
       imageUrl = json.decode(response.body)['body'][0]['images'][0]['url'];
+      print(imageUrl);
       Navigator.of(context).pop();
       setState(() {
         _showDialog(context);
