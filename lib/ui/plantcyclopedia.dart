@@ -18,54 +18,11 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   @override
   void initState() {
+    super.initState();
     this._plantWeek = weekPlant.getPlantOfTheWeek();
   }
 
   bool showList = false;
-
-  /* Plant list */
-  final List<String> _plants = [
-    'Daisy',
-    'Sunflower',
-    'Poppy',
-    'Lavender',
-    'Rose',
-    'Tiger Lily',
-    'Carnation',
-    'Tulip',
-    'Orchid',
-    'Peonie'
-  ];
-
-  /* Duplicate to store the plant list */
-  final List<String> _plantsDup = [
-    'Daisy',
-    'Sunflower',
-    'Poppy',
-    'Lavender',
-    'Rose',
-    'Tiger Lily',
-    'Carnation',
-    'Tulip',
-    'Orchid',
-    'Peonie'
-  ];
-
-  /* List that will change based on the query */
-  var _plantsQuery = List<String>();
-
-  Expanded _plantList(BuildContext context) {
-    return Expanded(
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: _plantsQuery.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  child: ListTile(
-                      title: Text('${_plantsQuery[index]}',
-                          style: TextStyle(fontFamily: 'Quicksand'))));
-            }));
-  }
 
   /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
@@ -146,16 +103,31 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: new FutureBuilder<PlantWeek>(
+        body: FutureBuilder<PlantWeek>(
             future: this._plantWeek,
             builder: (context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                 case ConnectionState.waiting:
-                  return CircularProgressIndicator();
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                    AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                  ),
+                );
                 default:
                   if (snapshot.hasError)
-                    return Text('Error: ${snapshot}');
+                    return Center(
+                      child: AutoSizeText(
+                        "Sorry, there was an error loading the Plant of the Day :(",
+                        style: TextStyle(
+                          fontFamily: "Quicksand",
+                          color: Color(0xFF8BE4BB),
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
                   else
                     return Column(
                       children: <Widget>[

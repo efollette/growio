@@ -37,7 +37,8 @@ class _MyGardenState extends State<MyGarden> {
         ),
       );
     }
-  return Scaffold(
+
+    return Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder<List<Plant>>(
             future: this._plants,
@@ -54,13 +55,14 @@ class _MyGardenState extends State<MyGarden> {
                 default:
                   if (snapshot.hasError)
                     return Center(
-                      child: Text(
+                      child: AutoSizeText(
                         "Sorry, there was an error loading your plants :(",
                         style: TextStyle(
                           fontFamily: "Quicksand",
                           color: Color(0xFF8BE4BB),
-                          fontSize: 30,
+                          fontSize: 20,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     );
                   else
@@ -73,6 +75,8 @@ class _MyGardenState extends State<MyGarden> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
+                                    _title(context),
+                                    Expanded(child: Container()),
                                     AutoSizeText(
                                       "Your garden is empty :(",
                                       style: TextStyle(
@@ -97,6 +101,7 @@ class _MyGardenState extends State<MyGarden> {
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
+                                    Expanded(child: Container()),
                                   ])
                             ],
                           )
@@ -113,13 +118,15 @@ class _MyGardenState extends State<MyGarden> {
                                         crossAxisCount: 2),
                                 itemBuilder:
                                     (BuildContext context, int position) {
-                                  print('position');
-                                  print(position);
-                                  return myGardenTile(
-                                      context,
-                                      position,
-                                      snapshot.data[position].commonName,
-                                      snapshot.data[position].scientificName);
+                                  return FittedBox(
+                                    child: myGardenTile(
+                                        context,
+                                        position,
+                                        snapshot.data[position].commonName,
+                                        snapshot.data[position].scientificName),
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.center,
+                                  );
                                 },
                               ))
                             ],
