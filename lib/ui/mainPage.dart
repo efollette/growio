@@ -12,6 +12,7 @@ import '../utils/constants.dart' as constant;
 
 // List of suggestions from PlanterID
 List suggestions;
+String imageUrl;
 
 // Suggestions list that pops up once a plant ID has been requested
 void _showDialog(BuildContext context) {
@@ -86,8 +87,13 @@ void _showDialog(BuildContext context) {
                                           color: Color(0xFF8BE4BB),
                                         ),
                                       ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         // Add to garden func goes here, passing in _nicknameContoller.text as the param
+                                        String addUrl = constant.apiUrl + "/garden/plant?token=";
+                                        addUrl += users.apiToken;
+                                        final response =
+                                          await http.post(addUrl, body: {'sciName': suggestions[position]['plant']['name'], 'nickname': _nicknameController.text, 'imageUrl': imageUrl});
+                                        print(response.body);
                                         // Pop off both dialog boxes
                                         if (_nicknameController.text != "") {
                                           Navigator.of(context).pop();
@@ -201,6 +207,7 @@ class _MainPageState extends State<MainPage> {
       final response =
       await http.post(identifyUrl, body: {'image': base64Image});
       suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      print(suggestions);
       Navigator.of(context).pop();
       setState(() {
         _showDialog(context);
@@ -249,6 +256,7 @@ class _MainPageState extends State<MainPage> {
       final response =
       await http.post(identifyUrl, body: {'image': base64Image});
       suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      imageUrl = json.decode(response.body)['body'][0]['images'][0]['url'];
       Navigator.of(context).pop();
       setState(() {
         _showDialog(context);
