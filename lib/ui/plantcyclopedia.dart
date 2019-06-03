@@ -24,7 +24,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   Future<PlantWeek> _plantWeek;
 
   // Declare a var that stores the searched plant after api call
-  Future <Plant> _plantSearchResult;
+  Plant _plantSearchResult;
 
   @override
   void initState() {
@@ -67,23 +67,22 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 //    'Peonie'
 //  ];
 
-  /* List that will change based on the query */
+//  /* List that will change based on the query */
 //  var _plantsQuery = List<String>();
-//
-//  Expanded _plantList(BuildContext context) {
-//    return Expanded(
-//      child: ListView.builder(
-//        shrinkWrap: true,
-//        itemCount: _plantsQuery.length,
-//        itemBuilder: (BuildContext context, int index) {
-//          return Card(
-//            child: plantTile(context),
-//          );
-//        }
-//      )
-//    );
-//
-//  }
+
+  Expanded _plantList(BuildContext context, Plant searchedPlant) {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: plantTile(context, searchedPlant.nickname, searchedPlant.scientificName, searchedPlant.plantImage),
+          );
+        }
+      )
+    );
+  }
 
   /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
@@ -161,16 +160,26 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           //Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
           
           /* TODO: get rid of this hardcoded data */
-          var hardcodedPlantInfo = {
-            nickname: "sandra", 
-            scientificName: "omg",
-            commonName: "rose",
-            moistureUse: "50%",
-            temperature: ">50",
-            sunlight: "so much",
-            plantImage: "url"
-          }
-          Future<Plant> hardcoded = new Plant(hardcodedPlantInfo);
+//          var hardcodedPlantInfo = {
+//            nickname: "sandra",
+//            scientificName: "omg",
+//            commonName: "rose",
+//            moistureUse: "50%",
+//            temperature: ">50",
+//            sunlight: "so much",
+//            plantImage: "url"
+//          };
+
+          Plant hardcoded = new Plant(
+              nickname: "sandra",
+              scientificName: "omg",
+              commonName: "rose",
+              moistureUse: "50%",
+              temperature: ">50",
+              sunlight: "so much",
+              plantImage: "https://plants.sc.egov.usda.gov/gallery/standard/abli_001_shp.jpg"
+          );
+
           print('Saurabh');
           // print (responsePlant);
 
@@ -214,6 +223,7 @@ void _handleRadioValueChange(int value) {
             value: 0,
             groupValue: _radioValue,
             onChanged: _handleRadioValueChange,
+            activeColor: Color(0xFF278478),
           ),
           Text(
             "Common Name"
@@ -222,6 +232,7 @@ void _handleRadioValueChange(int value) {
             value: 1,
             groupValue: _radioValue,
             onChanged: _handleRadioValueChange,
+            activeColor: Color(0xFF278478),
           ),
           Text(
             "Scientific Name"
@@ -240,15 +251,16 @@ void _handleRadioValueChange(int value) {
       child: plantOfTheDay(context, snapshot),
     );
   }
+
 //
 //  /* Function to search and list the new items */
 //  void _filterSearchResults(String query) {
 //    List<String> dummySearchList = List<String>();
 //    dummySearchList.addAll(_plantsDup);
-//    if (query.isNotEmpty) {
+//    if(query.isNotEmpty) {
 //      List<String> dummyListData = List<String>();
 //      dummySearchList.forEach((item) {
-//        if (item.contains(query)) {
+//        if(item.contains(query)) {
 //          dummyListData.add(item);
 //        }
 //      });
@@ -290,9 +302,7 @@ void _handleRadioValueChange(int value) {
                         _searchBar(context),
                         Padding(padding: const EdgeInsets.all(10.0)),
                         // Plant of the Day
-                        showList
-                            ? _plantList
-                            : _plantOfDay(context, snapshot),
+                        showList ? _plantList(context, _plantSearchResult) : _plantOfDay(context, snapshot),
                         Padding(padding: const EdgeInsets.all(10.0)),
                       ],
                     );

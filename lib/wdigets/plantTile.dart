@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 
 
-Container plantTile(BuildContext context, String commonName, String scientificName){
+Container plantTile(BuildContext context, String commonName, String scientificName, String plantUrl){
   return Container(
     child: Row(
       children: <Widget>[
@@ -16,11 +16,12 @@ Container plantTile(BuildContext context, String commonName, String scientificNa
              color: Colors.greenAccent,
             ),
             // Poster's profile picture
-            child: IconButton(
-            icon: Icon(Icons.local_florist),
-            onPressed: () => debugPrint("Go to plant"),
-            iconSize: 40.0,
-           ),
+            child: CircleAvatar(
+              radius: 50.0,
+              backgroundImage:
+              NetworkImage(plantUrl),
+              backgroundColor: Colors.transparent,
+            )
         ),
         /* Information */
         Container(
