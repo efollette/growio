@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'plantProfile.dart';
+import 'package:Growio/wdigets/plantProfile.dart';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -31,7 +31,7 @@ void _showDialog(BuildContext context) {
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: PlantProfile(),
+            child: plantProf(context, "Plant name", "Scientific Name"),
           ),
         );
       },

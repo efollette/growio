@@ -20,12 +20,19 @@ class Plantcyclopedia extends StatefulWidget {
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
+  Future<PlantWeek> _plantWeek;
+
+  @override
+  void initState() {
+    _plantWeek = weekPlant.getPlantOfTheWeek();
+  }
+
 
   // User's search after they've pressed enter
   String plantSearch = '';
   String plantType = '';
 
-  bool showList = false;
+  bool showList = true;
 
   /* Plant list */
   final List<String> _plants = [
@@ -142,12 +149,12 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         cursorColor: Colors.green,
         // Functionality of search
         onChanged: (value) {
+          print (value);
           showList = true;
           _filterSearchResults(value);
         },
         onSubmitted: (text) {
           plantSearch = text;
-        },
       ),
     );
   }
@@ -237,7 +244,7 @@ void _handleRadioValueChange(int value) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: new FutureBuilder<PlantWeek>(
-            future: weekPlant.getPlantOfTheWeek(),
+            future: _plantWeek,
             builder: (context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -252,7 +259,9 @@ void _handleRadioValueChange(int value) {
                         _title(context),
                         Padding(padding: const EdgeInsets.all(10.0)),
                         _searchBar(context),
-                        Padding(padding: const EdgeInsets.all(20.0)),
+                        Padding(padding: const EdgeInsets.all(5.0)),
+                        _nameSearchChoice(context),
+                        Padding(padding: const EdgeInsets.all(10.0)),
                         // Plant of the Day
                         widget.showFab
                             ? _plantOfDay(context, snapshot)

@@ -275,15 +275,6 @@ class _MainPageState extends State<MainPage> {
               });
             },
           ),
-          SwitchListTile(
-            title: const Text('Mode'),
-            value: _mode,
-            onChanged: (bool value) {
-              setState(() {
-                _mode = value;
-              });
-            },
-          ),
           Expanded(
               child: Container(),
           ),
