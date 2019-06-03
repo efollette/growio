@@ -61,22 +61,22 @@ From the MyGarden screen, you can:
 
 From the Plantcyclopedia page, you can:
 1. Look at the details of the "Plant of the Week".
-  - This should be the information that is displayed by default when you click on the Plantcyclopedia button on the bottom right side of your screen.
+   - This should be the information that is displayed by default when you click on the Plantcyclopedia button on the bottom right side of your screen.
 2. Search for a plant by its name and add it to your "MyGarden"
-  - To do so, click on the search bar at the top of the screen. Once you enter the name of the plant here, the application should give you one or more suggestions for that plant name.
-  - If you click on any of these suggestions, it should open a pop up that gives you details about that plant and allows you to add it to your "MyGarden" by clicking the "Add to MyGarden" button at the bottom of the pop up. 
+   - To do so, click on the search bar at the top of the screen. Once you enter the name of the plant here, the application should give you one or more suggestions for that plant name.
+   - If you click on any of these suggestions, it should open a pop up that gives you details about that plant and allows you to add it to your "MyGarden" by clicking the "Add to MyGarden" button at the bottom of the pop up. 
 3. You can also go to the MyGarden page, the settings and the camera with the same instructions as for the Main Screen.
 
 From the Settings page you can:
 1. Change the notification settings for the app
-  - If the notifications are turned on (toggle is blue) you can toggle the button and turn off the notification (toggle should become gray) and vice versa. 
-  - Log out of the application by clicking on the "Logout" button at the bottom of the panel. 
+   - If the notifications are turned on (toggle is blue) you can toggle the button and turn off the notification (toggle should become gray) and vice versa. 
+   - Log out of the application by clicking on the "Logout" button at the bottom of the panel. 
 2. Go back to the Main Screen by clicking anywhere outside the panel. 
 
 From the Camera button you can:
 1. Upload an existing picture from your gallery:
-  - To do so, click on the small picture button, which opens up your gallery and allows you to upload a pre-existing picture.
-  - To exit without selecting an image, click the back button on your device.
+   - To do so, click on the small picture button, which opens up your gallery and allows you to upload a pre-existing picture.
+   - To exit without selecting an image, click the back button on your device.
 2. Take a new picture using your device's camera.
    - To do so, click on the small capture button, which opens your device camera and allows you to take a new picture to use.
    - To exit without taking a picture, click the back button on your device. 
@@ -86,24 +86,14 @@ From the Camera button you can:
 1. The plant you take a picture of/try to look up using the Plantcyclopedia might not be correctly identified.
 
 ## Our Team
-Grace Augustine Carlson	-- 	Business Analyst
-
-Jaikrish Chitrarasu	-- Senior System Analyst
-
-Erik Antonio Follette -- Project Manager
-
-Yash Garde -- Algorithm Specialist
-
-Saurabh Kanhegaonkar -- Software Development Lead
-
-Paridhi Khaitan -- Software Architect
-
-Daniela Fernandez Molina -- Quality Assurance Lead
-
-Noella Moraa Ogamba -- User Interface Specialist
-
-Sandra Maria Pekelis -- User Interface Specialist
-
-Priyal Rakesh Suneja -- Software Architect
-
-Darya A Verzhbinsky -- Database Specialist
+1. Grace Augustine Carlson	-- 	Business Analyst
+2. Jaikrish Chitrarasu	-- Senior System Analyst
+3. Erik Antonio Follette -- Project Manager
+4. Yash Garde -- Algorithm Specialist
+5. Saurabh Kanhegaonkar -- Software Development Lead
+6. Paridhi Khaitan -- Software Architect
+7. Daniela Fernandez Molina -- Quality Assurance Lead
+8. Noella Moraa Ogamba -- User Interface Specialist
+9. Sandra Maria Pekelis -- User Interface Specialist
+10. Priyal Rakesh Suneja -- Software Architect
+11. Darya A Verzhbinsky -- Database Specialist
