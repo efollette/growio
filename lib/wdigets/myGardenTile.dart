@@ -22,11 +22,11 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
 }
 
 Column myGardenTile(
-    BuildContext context, int index, String plantName, String scientificName, String plantImage) {
+    BuildContext context, int index, String nickname, String scientificName, String plantImage) {
   return Column(
     children: <Widget>[
       FlatButton(
-        onPressed: () => _showDialog(context, plantName, scientificName, plantImage),
+        onPressed: () => _showDialog(context, nickname, scientificName, plantImage),
         child: Container(
           width: 190.0,
           height: 200.0,
@@ -79,7 +79,7 @@ Column myGardenTile(
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                plantName,
+                                nickname,
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   fontFamily: 'Quicksand',

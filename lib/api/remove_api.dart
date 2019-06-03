@@ -7,11 +7,13 @@ import 'dart:convert';
 
 Future<void> removePlant(String nickname) async {
   final client = http.Client();
+  print(nickname);
   String removeUrl = constant.apiUrl + "/garden/plant?token=";
   removeUrl += users.apiToken;
   final response = await client.send(
       http.Request("DELETE", Uri.parse(removeUrl))
         ..body = json.encode({"nickname": nickname}));
+  print(response);
   //print(response.body);
 
 }

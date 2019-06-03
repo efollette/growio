@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../api/remove_api.dart' as remove;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -28,7 +29,9 @@ class _PlantProfileState extends State<PlantProfile> {
           ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       splashColor: Color(0xFF278478),
-      onPressed: () {},
+      onPressed: () {
+        remove.removePlant(widget.plantName);
+      },
       child: Column(
         children: <Widget>[
           Container(
@@ -101,7 +104,7 @@ class _PlantProfileState extends State<PlantProfile> {
                     color: Colors.greenAccent,
                   ),
                   child: IconButton(
-                    icon: Image.network(widget.plantUrl),
+                    icon: Icon(Icons.local_florist),
                     iconSize: 40.0,
                   ),
                 ),
