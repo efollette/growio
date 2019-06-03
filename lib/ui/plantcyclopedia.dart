@@ -5,6 +5,7 @@ import '../wdigets/plantOfTheDay.dart';
 import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../model/plantWeek_model.dart';
+import '../model/plant_model.dart';
 import '../api/weekPlant_api.dart' as weekPlant;
 import '../api/searchPlant_api.dart' as searchPlant;
 
@@ -22,63 +23,67 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   Future<PlantWeek> _plantWeek;
 
+  // Declare a var that stores the searched plant after api call
+  Future <Plant> _plantSearchResult;
+
   @override
   void initState() {
     _plantWeek = weekPlant.getPlantOfTheWeek();
+    _plantSearchResult = null;
   }
 
 
   // User's search after they've pressed enter
   String plantSearch = '';
-  String plantType = '';
+  String plantType = 'commonName';
 
-  bool showList = true;
+  bool showList = false;
 
-  /* Plant list */
-  final List<String> _plants = [
-    'Daisy',
-    'Sunflower',
-    'Poppy',
-    'Lavender',
-    'Rose',
-    'Tiger Lily',
-    'Carnation',
-    'Tulip',
-    'Orchid',
-    'Peonie'
-  ];
-
-  /* Duplicate to store the plant list */
-  final List<String> _plantsDup = [
-    'Daisy',
-    'Sunflower',
-    'Poppy',
-    'Lavender',
-    'Rose',
-    'Tiger Lily',
-    'Carnation',
-    'Tulip',
-    'Orchid',
-    'Peonie'
-  ];
+//  /* Plant list */
+//  final List<String> _plants = [
+//    'Daisy',
+//    'Sunflower',
+//    'Poppy',
+//    'Lavender',
+//    'Rose',
+//    'Tiger Lily',
+//    'Carnation',
+//    'Tulip',
+//    'Orchid',
+//    'Peonie'
+//  ];
+//
+//  /* Duplicate to store the plant list */
+//  final List<String> _plantsDup = [
+//    'Daisy',
+//    'Sunflower',
+//    'Poppy',
+//    'Lavender',
+//    'Rose',
+//    'Tiger Lily',
+//    'Carnation',
+//    'Tulip',
+//    'Orchid',
+//    'Peonie'
+//  ];
 
   /* List that will change based on the query */
-  var _plantsQuery = List<String>();
-
-  Expanded _plantList(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: _plantsQuery.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: plantTile(context),
-          );
-        }
-      )
-    );
-
-  }
+//  var _plantsQuery = List<String>();
+//
+//  Expanded _plantList(BuildContext context) {
+//    return Expanded(
+//      child: ListView.builder(
+//        shrinkWrap: true,
+//        itemCount: _plantsQuery.length,
+//        itemBuilder: (BuildContext context, int index) {
+//          return Card(
+//            child: plantTile(context),
+//          );
+//        }
+//      )
+//    );
+//
+//  }
 
   /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
@@ -148,13 +153,19 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
             )),
         cursorColor: Colors.green,
         // Functionality of search
-        onChanged: (value) {
-          print (value);
-          showList = true;
-          _filterSearchResults(value);
-        },
         onSubmitted: (text) {
           plantSearch = text;
+          showList = true;
+
+          Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
+
+          print('Saurabh');
+          print (responsePlant);
+
+          setState(() {
+            _plantSearchResult = responsePlant;
+          });
+        },
       ),
     );
   }
@@ -213,30 +224,30 @@ void _handleRadioValueChange(int value) {
       child: plantOfTheDay(context, snapshot),
     );
   }
-
-  /* Function to search and list the new items */
-  void _filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(_plantsDup);
-    if (query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        _plantsQuery.clear();
-        _plantsQuery.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        _plantsQuery.clear();
-        _plantsQuery.addAll(_plantsDup);
-      });
-    }
-  }
+//
+//  /* Function to search and list the new items */
+//  void _filterSearchResults(String query) {
+//    List<String> dummySearchList = List<String>();
+//    dummySearchList.addAll(_plantsDup);
+//    if (query.isNotEmpty) {
+//      List<String> dummyListData = List<String>();
+//      dummySearchList.forEach((item) {
+//        if (item.contains(query)) {
+//          dummyListData.add(item);
+//        }
+//      });
+//      setState(() {
+//        _plantsQuery.clear();
+//        _plantsQuery.addAll(dummyListData);
+//      });
+//      return;
+//    } else {
+//      setState(() {
+//        _plantsQuery.clear();
+//        _plantsQuery.addAll(_plantsDup);
+//      });
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -257,19 +268,21 @@ void _handleRadioValueChange(int value) {
                     return Column(
                       children: <Widget>[
                         _title(context),
-                        Padding(padding: const EdgeInsets.all(10.0)),
-                        _searchBar(context),
                         Padding(padding: const EdgeInsets.all(5.0)),
                         _nameSearchChoice(context),
+                        Padding(padding: const EdgeInsets.all(3.0)),
+                        _searchBar(context),
                         Padding(padding: const EdgeInsets.all(10.0)),
                         // Plant of the Day
-                        widget.showFab
-                            ? _plantOfDay(context, snapshot)
-                            : Container(),
+                        showList
+                            ? _plantList
+                            : _plantOfDay(context, snapshot),
                         Padding(padding: const EdgeInsets.all(10.0)),
                       ],
                     );
               }
-            }));
+            }
+            )
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 
 
-Container plantTile(BuildContext context){
+Container plantTile(BuildContext context, String commonName, String scientificName){
   return Container(
     child: Row(
       children: <Widget>[
@@ -38,7 +38,7 @@ Container plantTile(BuildContext context){
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "Plant Name",
+                                  commonName,
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'Quicksand',
@@ -53,7 +53,7 @@ Container plantTile(BuildContext context){
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "Scientific Name",
+                                  scientificName,
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontStyle: FontStyle.italic,
