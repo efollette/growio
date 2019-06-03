@@ -106,13 +106,15 @@ class _MyGardenState extends State<MyGarden> {
                                         crossAxisCount: 2),
                                 itemBuilder:
                                     (BuildContext context, int position) {
-                                  print('position');
-                                  print(position);
-                                  return myGardenTile(
-                                      context,
-                                      position,
-                                      snapshot.data[position].commonName,
-                                      snapshot.data[position].scientificName);
+                                  return FittedBox(
+                                    child: myGardenTile(
+                                        context,
+                                        position,
+                                        snapshot.data[position].commonName,
+                                        snapshot.data[position].scientificName),
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.center,
+                                  );
                                 },
                               ))
                             ],

@@ -10,6 +10,46 @@ import '../utils/routes.dart' as routes;
 import '../api/camera_api.dart' as camera;
 import '../utils/constants.dart' as constant;
 
+var suggestions;
+
+void _showDialog(BuildContext context) {
+  // flutter defined function
+  showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              backgroundColor: Color(0xFFE2F8EE),
+              child: ListView.builder(
+                  itemBuilder: ( BuildContext context, int position ) {
+                      return ListTile(
+                        leading: Icon(Icons.local_florist),
+                        title: Text(suggestions[position]['plant']['name']),
+                        trailing: IconButton(
+                            icon: Icon(Icons.add_circle_outline),
+                            onPressed: null // Add to garden func goes here
+                        ),
+                      );
+                  },
+                  itemCount: suggestions.length,
+              ),
+            ),
+          ),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {});
+}
+
 // Controller that indicated which page we're at
 final controller = PageController(
   initialPage: 0,
@@ -58,11 +98,11 @@ class _MainPageState extends State<MainPage> {
       identifyUrl += users.apiToken;
       final response = await http.post(identifyUrl, body: {'image': base64Image});
       print("API" + response.body);
-      final jsonData = json.decode(response.body)['body'][0]['suggestions'];
-      //final suggestions = jsonData['suggestions'];
-      print(jsonData);
+      suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      print(suggestions);
       setState(() {
         print('Update the UI');
+        _showDialog(context);
       });
     }
   }
@@ -83,11 +123,10 @@ class _MainPageState extends State<MainPage> {
       identifyUrl += users.apiToken;
       final response = await http.post(identifyUrl, body: {'image': base64Image});
       print("API" + response.body);
-      final jsonData = json.decode(response.body)['body'][0]['suggestions'];
-      //final suggestions = jsonData['suggestions'];
-      print(jsonData);
+      suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      print(suggestions);
       setState(() {
-        print('Update the UI');
+        _showDialog(context);
       });
     }
   }
