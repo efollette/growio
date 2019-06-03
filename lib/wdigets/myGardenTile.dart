@@ -14,7 +14,7 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
             child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.center,
-              child: plantProf(context, "plantName", "scientifcName"),
+              child: plantProf(context, plantName, scientificName, plantImage, nickname, temp, light, moisture),
             ),
             // child: PlantProfile(plantName, scientificName, plantImage, nickname,temp, light, moisture ),
           ),
@@ -85,7 +85,7 @@ Column myGardenTile(
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                plantName,
+                                nickname,
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   fontFamily: 'Quicksand',
@@ -100,7 +100,7 @@ Column myGardenTile(
                             child: Container(
                               alignment: Alignment.center,
                               child: Text(
-                                scientificName,
+                                plantName,
                                 style: TextStyle(
                                     fontSize: 15.0,
                                     fontStyle: FontStyle.italic,

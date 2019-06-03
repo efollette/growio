@@ -14,7 +14,7 @@ void _showDialog(BuildContext context, String commonName, String scientificName,
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: plantProf(context, "Plant name", "Scientific Name"),
+            child: plantProf(context, commonName, scientificName, imageUrl, nickname, temp, light, moisture),
           ),
         );
       },
