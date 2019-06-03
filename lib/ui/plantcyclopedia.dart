@@ -14,6 +14,59 @@ class Plantcyclopedia extends StatefulWidget {
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
+  Future<PlantWeek> _plantWeek;
+
+  @override
+  void initState() {
+    this._plantWeek = weekPlant.getPlantOfTheWeek();
+  }
+
+  bool showList = false;
+
+  /* Plant list */
+  final List<String> _plants = [
+    'Daisy',
+    'Sunflower',
+    'Poppy',
+    'Lavender',
+    'Rose',
+    'Tiger Lily',
+    'Carnation',
+    'Tulip',
+    'Orchid',
+    'Peonie'
+  ];
+
+  /* Duplicate to store the plant list */
+  final List<String> _plantsDup = [
+    'Daisy',
+    'Sunflower',
+    'Poppy',
+    'Lavender',
+    'Rose',
+    'Tiger Lily',
+    'Carnation',
+    'Tulip',
+    'Orchid',
+    'Peonie'
+  ];
+
+  /* List that will change based on the query */
+  var _plantsQuery = List<String>();
+
+  Expanded _plantList(BuildContext context) {
+    return Expanded(
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _plantsQuery.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                  child: ListTile(
+                      title: Text('${_plantsQuery[index]}',
+                          style: TextStyle(fontFamily: 'Quicksand'))));
+            }));
+  }
+
   /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
 
@@ -92,33 +145,32 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: new FutureBuilder<PlantWeek>(
-          future: weekPlant.getPlantOfTheWeek(),
-          builder: (context, AsyncSnapshot snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return new CircularProgressIndicator();
-              default:
-                if (snapshot.hasError)
-                  return new Text('Error: ${snapshot}');
-                else
-                  return new Column(
-                    children: <Widget>[
+        backgroundColor: Colors.white,
+        body: new FutureBuilder<PlantWeek>(
+            future: this._plantWeek,
+            builder: (context, AsyncSnapshot snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return CircularProgressIndicator();
+                default:
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot}');
+                  else
+                    return Column(
+                      children: <Widget>[
                         _title(context),
                         Padding(padding: const EdgeInsets.all(10.0)),
                         _searchBar(context),
                         Padding(padding: const EdgeInsets.all(20.0)),
-  // Plant of the Day
-                        widget.showFab ? _plantOfDay(context, snapshot) : Container(),
+                        // Plant of the Day
+                        widget.showFab
+                            ? _plantOfDay(context, snapshot)
+                            : Container(),
                         Padding(padding: const EdgeInsets.all(10.0)),
                       ],
                     );
-            }
-          }
-
-      )
-    );
+              }
+            }));
   }
 }
