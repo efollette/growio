@@ -239,12 +239,11 @@ Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
         children: <Widget>[
           // Plant Image
           Container(
-            height: MediaQuery.of(context).size.height * (106/812),
-            width:  MediaQuery.of(context).size.width * (122/375),
+            height: 80,
+            width: 80,
             // Picture of plant
-            child: IconButton(
-              icon: Image.network(snapshot.data.plantImage),
-              onPressed: () => _showDialog(context),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(snapshot.data.plantImage),
             ),
           ),
           // Plant Info: Name, Scientific name

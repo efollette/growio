@@ -70,17 +70,50 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 //  /* List that will change based on the query */
 //  var _plantsQuery = List<String>();
 
+  /* button to exit searching mechanism */
+  Container _returnButton(BuildContext context) {
+    return Container(
+        child: OutlineButton(
+          borderSide: BorderSide(
+            color: Color(0xFF278478),
+          ),
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(200.0)),
+          splashColor: Color(0xFF278478),
+          onPressed: () {
+            setState(() {
+              showList = false;
+            });
+          },
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Icon(
+                 Icons.close,
+                    color: Color(0xFF278478),
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
   Expanded _plantList(BuildContext context, Plant searchedPlant) {
     return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: 1,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: plantTile(context, searchedPlant.nickname, searchedPlant.scientificName, searchedPlant.plantImage),
-          );
-        }
-      )
+      child: Column(
+        children: <Widget> [
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: 1,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: plantTile(context, searchedPlant.nickname, searchedPlant.scientificName, searchedPlant.plantImage),
+              );
+            }
+          ),
+          _returnButton(context),
+        ],
+      ),
     );
   }
 
