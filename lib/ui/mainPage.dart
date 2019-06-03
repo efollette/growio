@@ -91,13 +91,16 @@ void _showDialog(BuildContext context) {
                                         // Add to garden func goes here, passing in _nicknameContoller.text as the param
                                         String addUrl = constant.apiUrl + "/garden/plant?token=";
                                         addUrl += users.apiToken;
+                                        print(suggestions[position]['plant']['name']);
                                         final response =
                                           await http.post(addUrl, body: {'sciName': suggestions[position]['plant']['name'], 'nickname': _nicknameController.text, 'imageUrl': imageUrl});
                                         print(response.body);
+
                                         // Pop off both dialog boxes
                                         if (_nicknameController.text != "") {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
+                                          await Navigator.of(context).pop();
+                                          await Navigator.of(context).pop();
+
                                         }
                                       },
                                     ),
@@ -260,6 +263,8 @@ class _MainPageState extends State<MainPage> {
       Navigator.of(context).pop();
       setState(() {
         _showDialog(context);
+      });
+      setState(() {
       });
     }
   }
