@@ -12,7 +12,7 @@ var routes = {
   '/camera' :(BuildContext context) => Camera(),
 
   // Default route
-  '/' : (BuildContext context) => MainPage(),
+  '/' : (BuildContext context) => Login(),
 };
 
 /*

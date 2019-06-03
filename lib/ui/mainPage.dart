@@ -10,6 +10,124 @@ import '../utils/routes.dart' as routes;
 import '../api/camera_api.dart' as camera;
 import '../utils/constants.dart' as constant;
 
+// List of suggestions from PlanterID
+List suggestions;
+
+// Suggestions list that pops up once a plant ID has been requested
+void _showDialog(BuildContext context) {
+  TextEditingController _nicknameController = TextEditingController();
+  // flutter defined function
+  showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              backgroundColor: Color(0xFFE2F8EE),
+              child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Color(0xFF278478),
+                  title: Text(
+                    "Suggestions",
+                    style: TextStyle(
+                      fontFamily: 'Quicksand',
+                    ),
+                  ),
+                  centerTitle: true,
+                ),
+                body: ListView.builder(
+                  itemBuilder: (BuildContext context, int position) {
+                    return ListTile(
+                      leading: Icon(Icons.local_florist),
+                      title: Text(suggestions[position]['plant']['name']),
+                      trailing: IconButton(
+                          icon: Icon(Icons.add_circle_outline),
+                          onPressed: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    "Give Your Plant A Nickname!",
+                                    style: TextStyle(
+                                      color: Color(0xFF278478),
+                                    ),
+                                  ),
+                                  content: TextFormField(
+                                    autovalidate: true,
+                                    controller: _nicknameController,
+                                    validator: (text) {
+                                      if (text == "")
+                                        return "You must give your plant a nickname!";
+                                    },
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text(
+                                        "Return to Suggestions",
+                                        style: TextStyle(
+                                          color: Color(0xFF8BE4BB),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        // Return to the list of options
+                                        if (_nicknameController.text != "")
+                                          Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: Text(
+                                        "Submit",
+                                        style: TextStyle(
+                                          color: Color(0xFF8BE4BB),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        // Add to garden func goes here, passing in _nicknameContoller.text as the param
+                                        // Pop off both dialog boxes
+                                        if (_nicknameController.text != "") {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                );
+                              })),
+                    );
+                  },
+                  itemCount: suggestions.length,
+                ),
+                bottomNavigationBar: Container(
+                  child: Text(
+                    "Plant not found? Try a manual search in the PLantcyclepodeia!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF8BE4BB),
+                      fontFamily: 'Quicksand',
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(20.0),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {});
+}
+
 // Controller that indicated which page we're at
 final controller = PageController(
   initialPage: 0,
@@ -44,50 +162,94 @@ class _MainPageState extends State<MainPage> {
   String base64Image;
   //async function that calls the ImagePicker.camera
   cameraPicker() async {
-    print('Camera is called');
     img = await ImagePicker.pickImage(source: ImageSource.camera);
     if (img != null) {
       image = img;
       print(img.path);
-      //updates our UI
       List<int> imageBytes = image.readAsBytesSync();
       base64Image = base64Encode(imageBytes);
-      print('Printing the image path');
       print(base64Image);
       String identifyUrl = constant.apiUrl + "/plant/identify?token=";
       identifyUrl += users.apiToken;
-      final response = await http.post(identifyUrl, body: {'image': base64Image});
-      print("API" + response.body);
-      final jsonData = json.decode(response.body)['body'][0]['suggestions'];
-      //final suggestions = jsonData['suggestions'];
-      print(jsonData);
       setState(() {
-        print('Update the UI');
+        cam = !cam;
+        showDialog(
+            context: context,
+            child: Material(
+              type: MaterialType.transparency,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Loading Your PlantID Suggestions",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Quicksand',
+                        fontSize: 30,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Padding(padding: const EdgeInsets.all(5.0)),
+                    CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                    ),
+                  ],
+                )
+            ));
+      });
+      final response =
+          await http.post(identifyUrl, body: {'image': base64Image});
+      suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      Navigator.of(context).pop();
+      setState(() {
+        _showDialog(context);
       });
     }
   }
 
   //calls image picker on the gallery
   galleryPicker() async {
-    print('Gallery is called');
     img = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (img != null) {
       image = img;
       print(img.path);
-      //updates our UI
       List<int> imageBytes = image.readAsBytesSync();
       base64Image = base64Encode(imageBytes);
-      print('Printing the image path');
       print(base64Image);
       String identifyUrl = constant.apiUrl + "/plant/identify?token=";
       identifyUrl += users.apiToken;
-      final response = await http.post(identifyUrl, body: {'image': base64Image});
-      print("API" + response.body);
-      final jsonData = json.decode(response.body)['body'][0]['suggestions'];
-      //final suggestions = jsonData['suggestions'];
-      print(jsonData);
       setState(() {
-        print('Update the UI');
+        cam = !cam;
+        showDialog(
+            context: context,
+            child: Material(
+                type: MaterialType.transparency,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Loading Your PlantID Suggestions",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Quicksand',
+                      fontSize: 30,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(padding: const EdgeInsets.all(5.0)),
+                  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                  ),
+                ],
+              )
+            ));
+      });
+      final response =
+          await http.post(identifyUrl, body: {'image': base64Image});
+      suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      Navigator.of(context).pop();
+      setState(() {
+        _showDialog(context);
       });
     }
   }
@@ -198,7 +360,7 @@ class _MainPageState extends State<MainPage> {
   // Bottom navigation bar that can also navigate to the pages
   Theme _createBottomNavBar(BuildContext context) {
     BottomNavigationBar _botNav = BottomNavigationBar(
-      // elevation: 0.0,
+      elevation: 0.0,
       onTap: _onTabTapped,
       currentIndex: currentPage,
       items: [
@@ -285,7 +447,7 @@ class _MainPageState extends State<MainPage> {
             },
           ),
           Expanded(
-              child: Container(),
+            child: Container(),
           ),
           Column(
             children: <Widget>[
@@ -364,7 +526,7 @@ class _MainPageState extends State<MainPage> {
         controller: controller,
         children: <Widget>[
           MyGarden(),
-          Plantcyclopedia(true),
+          Plantcyclopedia(_showFab),
         ],
       ),
       bottomNavigationBar: _createBottomNavBar(context),

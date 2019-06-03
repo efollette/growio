@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "104886834429",
-    "firebase_url": "https://growio-c3f76.firebaseio.com",
-    "project_id": "growio-c3f76",
-    "storage_bucket": "growio-c3f76.appspot.com"
+    "project_number": "41873801636",
+    "firebase_url": "https://growio-2019.firebaseio.com",
+    "project_id": "growio-2019",
+    "storage_bucket": "growio-2019.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:104886834429:android:f7bcfd54dc7a89c1",
+        "mobilesdk_app_id": "1:41873801636:android:f7bcfd54dc7a89c1",
         "android_client_info": {
           "package_name": "reallyintoplants.growio"
         }
       },
       "oauth_client": [
         {
-          "client_id": "104886834429-i02do6779j08fhb560oomeuikf3ges86.apps.googleusercontent.com",
+          "client_id": "41873801636-7ggr7t9uoi6gtii1huecijfcfmlj143u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "reallyintoplants.growio",
-            "certificate_hash": "1324a3f485bab377845d15fd11168d6016a2ea28"
+            "certificate_hash": "e284a577199a1784b81f7be74b53e2778ac86ab1"
           }
         },
         {
-          "client_id": "104886834429-anrvgv5lf4afk1ii48061d6j6861fdun.apps.googleusercontent.com",
+          "client_id": "41873801636-7du43r30988qga587s4duormmi07h0op.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5XXIpN5iEN-u7VCFuX5srmjwJt7MhTNI"
+          "current_key": "AIzaSyBH17Wo4MOEP5qo-ngkHEn21MoxF0bCvzg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "104886834429-anrvgv5lf4afk1ii48061d6j6861fdun.apps.googleusercontent.com",
+              "client_id": "41873801636-7du43r30988qga587s4duormmi07h0op.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
