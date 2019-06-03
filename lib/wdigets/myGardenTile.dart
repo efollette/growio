@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
+import 'package:Growio/ui/myGarden.dart';
 
-void _showDialog(BuildContext context) {
+void _showDialog(BuildContext context, String plantName, String scientificName, String plantImage, String nickname, String temp, String light, String moisture) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -10,7 +11,12 @@ void _showDialog(BuildContext context) {
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: PlantProfile(),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+              child: plantProf(context, plantName, scientificName, plantImage, nickname, temp, light, moisture),
+            ),
+            // child: PlantProfile(plantName, scientificName, plantImage, nickname,temp, light, moisture ),
           ),
         );
       },
@@ -22,11 +28,11 @@ void _showDialog(BuildContext context) {
 }
 
 Column myGardenTile(
-    BuildContext context, int index, String plantName, String scientificName) {
+    BuildContext context, int index, String plantName, String scientificName, String plantImage, String nickname, String temp, String light, String moisture) {
   return Column(
     children: <Widget>[
       FlatButton(
-        onPressed: () => _showDialog(context),
+        onPressed: () => _showDialog(context, plantName, scientificName, plantImage, nickname, temp, light, moisture),
         child: Container(
           width: 190.0,
           height: 200.0,
@@ -56,7 +62,7 @@ Column myGardenTile(
                       ),
                       // Poster's profile picture
                       child: IconButton(
-                        icon: Icon(Icons.local_florist),
+                        icon: Image.network(plantImage),
                         onPressed: () => debugPrint("Go to plant"),
                         iconSize: 40.0,
                       ),
@@ -79,7 +85,7 @@ Column myGardenTile(
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                plantName,
+                                nickname,
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   fontFamily: 'Quicksand',
@@ -94,7 +100,7 @@ Column myGardenTile(
                             child: Container(
                               alignment: Alignment.center,
                               child: Text(
-                                scientificName,
+                                plantName,
                                 style: TextStyle(
                                     fontSize: 15.0,
                                     fontStyle: FontStyle.italic,

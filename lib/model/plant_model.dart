@@ -59,7 +59,8 @@ class Plant {
     commonName: json["commonName"],
     temperature: json["temperature"],
     sunlight: json["sunlight"],
-    plantImage: json["plantImage"]
+    plantImage: json["image"],
+    moistureUse: json["moistureUse"]
   );
 
   Map<String, dynamic> toJson() => {

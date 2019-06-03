@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:Growio/wdigets/myGardenTile.dart';
-import '../api/garden_api.dart' as garden;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -9,102 +7,35 @@ var _group = AutoSizeGroup();
 // Group to scale size of text for additional info
 var _group2 = AutoSizeGroup();
 
-/* button to edit the name */
-Container _editButton(BuildContext context) {
+
+/* button to add plant */
+Container _addButton(BuildContext context) {
   return Container(
-    child: OutlineButton(
+      child: OutlineButton(
         borderSide: BorderSide(
           color: Color(0xFF278478),
         ),
-        shape: new CircleBorder(),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(50.0)),
         splashColor: Color(0xFF278478),
-        onPressed: () => _asyncInputDialog(context),
-        child: Icon(
-          Icons.edit,
-          color: Color(0xFF278478),
-        )),
-  );
-}
-
-/* used to change name */
-Future<String> _asyncInputDialog(BuildContext context) async {
-  String nickName = " ";
-  return showDialog<String>(
-    context: context,
-    barrierDismissible:
-        false, // dialog is dismissible with a tap on the barrier
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          "Enter a nickname for your plant.",
-          style: TextStyle(
-            fontFamily: 'Quicksand',
-          ),
-        ),
-        backgroundColor: Color(0xFFE2F8EE),
-        content: new Row(
+        onPressed: () {},
+        child: Column(
           children: <Widget>[
-            new Expanded(
-                child: new TextField(
-              autofocus: true,
-              decoration: new InputDecoration(
-                  labelText: 'Nickname', hintText: 'eg. Groot'),
-              onChanged: (value) {
-                nickName = value;
-              },
-            ))
+            Container(
+              width: 190.0,
+              child: Text(
+                "Add To MyGarden",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: 'Quicksand',
+                  color: Color(0xFF278478),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Ok',
-              style: new TextStyle(color: Color(0xFF278478)),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-/* button to remove plant */
-Container _addButton(BuildContext context, String nickname) {
-  return Container(
-      child: OutlineButton(
-    borderSide: BorderSide(
-      color: Color(0xFF278478),
-    ),
-    shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(50.0)),
-    splashColor: Color(0xFF278478),
-    onPressed: () async {
-      bool response = await garden.removePlant(nickname);
-      if (response) {
-        Navigator.of(context).pop();
-      }
-      Navigator.pushNamed(context, '/myGarden');
-    },
-    child: Column(
-      children: <Widget>[
-        Container(
-          width: 190.0,
-          child: Text(
-            "Remove",
-            style: TextStyle(
-              fontSize: 18.0,
-              fontFamily: 'Quicksand',
-              color: Color(0xFF278478),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ],
-    ),
-  ));
+      ));
 }
 
 /* button to exit the page */
@@ -125,15 +56,7 @@ Container _exitButton(BuildContext context) {
 }
 
 /* Plant Profile Page */
-Dialog plantProf(
-    BuildContext context,
-    String plantName,
-    String scientificName,
-    String plantUrl,
-    String nickname,
-    String temp,
-    String light,
-    String moisture) {
+Dialog plantcyclopediaProf(BuildContext context, String plantName, String scientificName, String plantUrl) {
   return Dialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
@@ -162,16 +85,18 @@ Dialog plantProf(
             children: <Widget>[
               // Plant Image
               Container(
-                height: MediaQuery.of(context).size.height * (106 / 812),
-                width: MediaQuery.of(context).size.width * (122 / 375),
+                height: 100,
+                width: 100,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(80.0),
-                  color: Colors.greenAccent,
+                  borderRadius: BorderRadius.circular(150.0),
+                  color: Colors.transparent,
                 ),
-                child: IconButton(
-                  icon: Image.network(plantUrl),
-                  iconSize: 40.0,
-                ),
+                child: CircleAvatar(
+                  radius: 150.0,
+                  backgroundImage:
+                  NetworkImage(plantUrl),
+                  backgroundColor: Colors.transparent,
+              ),
               ),
             ],
           ),
@@ -203,16 +128,14 @@ Dialog plantProf(
             child: AutoSizeText(
               scientificName,
               style: TextStyle(
-                  fontSize: 15.0,
+                  fontSize: 18.0,
                   fontStyle: FontStyle.italic,
                   fontFamily: 'ABeeZee Italic',
                   color: Color(0xFF726767)),
               maxLines: 1,
-              minFontSize: 8.0,
+              minFontSize: 5.0,
             ),
           ),
-          Padding(padding: const EdgeInsets.all(7.25)),
-          _editButton(context),
           Padding(padding: const EdgeInsets.all(7.25)),
           // Additional plant info: water, sunlight
           Container(
@@ -248,8 +171,8 @@ Dialog plantProf(
                             fontFamily: 'Quicksand',
                             color: Colors.black,
                             height: 1.2
-                            //height: 1.2,
-                            ),
+                          //height: 1.2,
+                        ),
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(5.0)),
@@ -263,8 +186,8 @@ Dialog plantProf(
                             fontFamily: 'Quicksand',
                             color: Colors.black,
                             height: 1.2
-                            //height: 1.2,
-                            ),
+                          //height: 1.2,
+                        ),
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(5.0)),
@@ -279,8 +202,8 @@ Dialog plantProf(
                             fontFamily: 'Quicksand',
                             color: Colors.black,
                             height: 1.2
-                            //height: 1.2,
-                            ),
+                          //height: 1.2,
+                        ),
                       ),
                     ),
                   ],
@@ -289,7 +212,7 @@ Dialog plantProf(
                   children: <Widget>[
                     Container(
                       child: AutoSizeText(
-                        moisture,
+                        "Every 14 Days",
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,
@@ -302,7 +225,7 @@ Dialog plantProf(
                     Padding(padding: EdgeInsets.all(5.0)),
                     Container(
                       child: AutoSizeText(
-                        light,
+                        "Full/Partial",
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,
@@ -315,7 +238,7 @@ Dialog plantProf(
                     Padding(padding: EdgeInsets.all(5.0)),
                     Container(
                       child: AutoSizeText(
-                        temp,
+                        ">40°",
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,
@@ -334,7 +257,7 @@ Dialog plantProf(
           // More info about the plant of the day
           // adding the button to the bottom
           Padding(padding: EdgeInsets.all(60.0)),
-          _addButton(context, nickname),
+          _addButton(context),
         ],
       ),
     ),

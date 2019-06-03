@@ -70,7 +70,7 @@ Future<void> handleSignIn(BuildContext context) async {
     userName = currentUser.displayName;
     userEmail = currentUser.email;
     userPic = GoogleUserCircleAvatar(identity: currentUser);
-    if( accessToken != "" ) {
+    if (accessToken != "") {
       data = await getAPIToken(accessToken);
     }
     apiToken = data['token'];

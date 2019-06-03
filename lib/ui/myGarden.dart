@@ -37,7 +37,8 @@ class _MyGardenState extends State<MyGarden> {
         ),
       );
     }
-  return Scaffold(
+
+    return Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder<List<Plant>>(
             future: this._plants,
@@ -117,15 +118,16 @@ class _MyGardenState extends State<MyGarden> {
                                         crossAxisCount: 2),
                                 itemBuilder:
                                     (BuildContext context, int position) {
-                                  return FittedBox(
-                                    child: myGardenTile(
-                                        context,
-                                        position,
-                                        snapshot.data[position].commonName,
-                                        snapshot.data[position].scientificName),
-                                    fit: BoxFit.scaleDown,
-                                    alignment: Alignment.center,
-                                  );
+                                  return myGardenTile(
+                                      context,
+                                      position,
+                                      snapshot.data[position].commonName,
+                                      snapshot.data[position].scientificName,
+                                      snapshot.data[position].plantImage,
+                                      snapshot.data[position].nickname,
+                                      snapshot.data[position].temperature,
+                                      snapshot.data[position].sunlight,
+                                      snapshot.data[position].moistureUse);
                                 },
                               ))
                             ],
