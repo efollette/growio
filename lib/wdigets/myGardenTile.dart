@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
+import 'package:Growio/ui/myGarden.dart';
 
 void _showDialog(BuildContext context, String plantName, String scientificName, String plantImage) {
   // flutter defined function
@@ -10,7 +11,11 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: PlantProfile(plantName, scientificName, plantImage),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+              child: plantProf(context, "plantName", "scientifcName"),
+            ),
           ),
         );
       },

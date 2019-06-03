@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:Growio/wdigets/myGardenTile.dart';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -7,18 +8,73 @@ var _group = AutoSizeGroup();
 // Group to scale size of text for additional info
 var _group2 = AutoSizeGroup();
 
-class PlantProfile extends StatefulWidget {
-  final String plantName;
-  final String scientificName;
-  final String plantUrl;
 
-  PlantProfile(this.plantName, this.scientificName, this.plantUrl) : super();
-  @override
-  _PlantProfileState createState() => _PlantProfileState();
+/* button to edit the name */
+ Container _editButton(BuildContext context) {
+    return Container(
+      child: OutlineButton(
+      borderSide: BorderSide(
+        color: Color(0xFF278478),
+      ),
+      shape: new CircleBorder(
+      ),
+      splashColor: Color(0xFF278478),
+      onPressed: () => _asyncInputDialog(context),
+      child: Icon(
+        Icons.edit,
+        color: Color(0xFF278478),
+      )
+      ),
+    );
+  }
+
+/* used to change name */
+Future<String> _asyncInputDialog(BuildContext context) async {
+  String nickName = " ";
+  return showDialog<String>(
+    context: context,
+    barrierDismissible: false, // dialog is dismissible with a tap on the barrier
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          "Enter a nickname for your plant.",
+          style: TextStyle(
+            fontFamily: 'Quicksand',
+          ),
+        ),
+        backgroundColor: Color(0xFFE2F8EE),
+        content: new Row(
+          children: <Widget>[
+            new Expanded(
+                child: new TextField(
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Nickname', hintText: 'eg. Groot'),
+              onChanged: (value) {
+                  nickName = value;
+              },
+            )
+            )
+          ],
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Ok',
+            style: new TextStyle(
+              color: Color(0xFF278478)
+            ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
-class _PlantProfileState extends State<PlantProfile> {
-/* button top remove plant */
+/* button to remove plant */
   Container _addButton(BuildContext context) {
     return Container(
         child: OutlineButton(
@@ -48,6 +104,7 @@ class _PlantProfileState extends State<PlantProfile> {
     ));
   }
 
+  /* button to exit the page */
   Container _exitButton(BuildContext context) {
     return Container(
       width: 50.0,
@@ -65,7 +122,7 @@ class _PlantProfileState extends State<PlantProfile> {
   }
 
 /* Plant Profile Page */
-  Dialog build(BuildContext context) {
+  Dialog plantProf(BuildContext context, String plantName, String scientificName) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -110,27 +167,30 @@ class _PlantProfileState extends State<PlantProfile> {
             Padding(padding: EdgeInsets.all(6.0)),
             // Plant Info: Name, Scientific name
             Container(
-                child: Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * (304 / 375),
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    widget.plantName,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontFamily: 'Quicksand',
-                      color: Color(0xFF312F2F),
+                      child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * (104 / 375),
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          plantName,
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontFamily: 'Quicksand',
+                            color: Color(0xFF312F2F),
+                          ),
+                        maxLines: 1,
+                      ),
                     ),
-                    maxLines: 1,
-                  ),
+                  ],
                 ),
-                Padding(padding: const EdgeInsets.all(1.5)),
-                Container(
-                  width: MediaQuery.of(context).size.width * (192 / 375),
+                ),
+            Padding(padding: const EdgeInsets.all(1.5)),
+             Container(
+                  width: MediaQuery.of(context).size.width * (92 / 375),
                   alignment: Alignment.center,
                   child: AutoSizeText(
-                    widget.scientificName,
+                    scientificName,
                     style: TextStyle(
                         fontSize: 15.0,
                         fontStyle: FontStyle.italic,
@@ -140,8 +200,8 @@ class _PlantProfileState extends State<PlantProfile> {
                     minFontSize: 8.0,
                   ),
                 ),
-              ],
-            )),
+            Padding(padding: const EdgeInsets.all(7.25)),
+            _editButton(context),
             Padding(padding: const EdgeInsets.all(7.25)),
             // Additional plant info: water, sunlight
             Container(
@@ -261,53 +321,11 @@ class _PlantProfileState extends State<PlantProfile> {
             ), // Container to close row
             Padding(padding: const EdgeInsets.all(7.25)),
             // More info about the plant of the day
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: AutoSizeText(
-                      "Additional Info:",
-                      textAlign: TextAlign.start,
-                      minFontSize: 5.0,
-                      maxLines: 1,
-                      group: _group2,
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Padding(padding: const EdgeInsets.all(4.25)),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: AutoSizeText(
-                      "Add dilute solution fertilizer once a month in the summer. \n"
-                          "Little need for pruning. \n"
-                          "Humidity is not an issue. \n"
-                          "Avoid wet soil and foliage when temperatures are cool.",
-                      minFontSize: 5.0,
-                      maxLines: 6,
-                      group: _group2,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  //Padding(padding: const EdgeInsets.all(7.25))
-                ],
-              ),
-            ),
             // adding the button to the bottom
-            Padding(padding: EdgeInsets.all(40.0)),
+            Padding(padding: EdgeInsets.all(60.0)),
             _addButton(context),
           ],
         ),
       ),
     );
   }
-}

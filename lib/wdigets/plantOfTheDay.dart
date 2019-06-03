@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../wdigets/plantProfile.dart';
+import 'package:Growio/wdigets/plantProfile.dart';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -14,7 +14,7 @@ void _showDialog(BuildContext context, String commonName, String scientificName,
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: PlantProfile(commonName, scientificName, imageUrl),
+            child: plantProf(context, "Plant name", "Scientific Name"),
           ),
         );
       },
@@ -58,12 +58,11 @@ Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
         children: <Widget>[
           // Plant Image
           Container(
-            height: MediaQuery.of(context).size.height * (106/812),
-            width:  MediaQuery.of(context).size.width * (122/375),
+            height: 80,
+            width: 80,
             // Picture of plant
-            child: IconButton(
-              icon: Image.network(snapshot.data.plantImage),
-              onPressed: () => _showDialog(context, snapshot.data.commonName, snapshot.data.scientificName, snapshot.data.plantImage),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(snapshot.data.plantImage),
             ),
           ),
           // Plant Info: Name, Scientific name
