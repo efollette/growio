@@ -24,6 +24,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   Future<PlantWeek> _plantWeek;
 
   // Declare a var that stores the searched plant after api call
+  // TODO: put this back to Future<Plant>
   Plant _plantSearchResult;
 
   @override
@@ -190,18 +191,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           showList = true;
 
           /* TODO: uncomment this */
-          //Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
-          
-          /* TODO: get rid of this hardcoded data */
-//          var hardcodedPlantInfo = {
-//            nickname: "sandra",
-//            scientificName: "omg",
-//            commonName: "rose",
-//            moistureUse: "50%",
-//            temperature: ">50",
-//            sunlight: "so much",
-//            plantImage: "url"
-//          };
+          // Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
 
           Plant hardcoded = new Plant(
               nickname: "sandra",

@@ -12,5 +12,5 @@ Future<Plant> searchByName(plantSearch, searchBy) async {
   gardulUrl += "&plantSearch=" + plantSearch;
   final response = await http.get(gardenUrl);
   print(response.body);
-  return plantFromJson(response.body);
+  return plantFromJson(response.body.data);
 }
