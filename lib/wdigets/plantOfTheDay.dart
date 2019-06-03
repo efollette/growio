@@ -5,7 +5,7 @@ import '../wdigets/plantProfile.dart';
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
-void _showDialog(BuildContext context) {
+void _showDialog(BuildContext context, String commonName, String scientificName, String imageUrl) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -14,7 +14,7 @@ void _showDialog(BuildContext context) {
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: PlantProfile(),
+            child: PlantProfile(commonName, scientificName, imageUrl),
           ),
         );
       },
@@ -63,7 +63,7 @@ Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
             // Picture of plant
             child: IconButton(
               icon: Image.network(snapshot.data.plantImage),
-              onPressed: () => _showDialog(context),
+              onPressed: () => _showDialog(context, snapshot.data.commonName, snapshot.data.scientificName, snapshot.data.plantImage),
             ),
           ),
           // Plant Info: Name, Scientific name

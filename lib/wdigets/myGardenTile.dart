@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
 
-void _showDialog(BuildContext context) {
+void _showDialog(BuildContext context, String plantName, String scientificName, String plantImage) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -10,7 +10,7 @@ void _showDialog(BuildContext context) {
           scale: a1.value,
           child: Opacity(
             opacity: a1.value,
-            child: PlantProfile(),
+            child: PlantProfile(plantName, scientificName, plantImage),
           ),
         );
       },
@@ -22,11 +22,11 @@ void _showDialog(BuildContext context) {
 }
 
 Column myGardenTile(
-    BuildContext context, int index, String plantName, String scientificName) {
+    BuildContext context, int index, String plantName, String scientificName, String plantImage) {
   return Column(
     children: <Widget>[
       FlatButton(
-        onPressed: () => _showDialog(context),
+        onPressed: () => _showDialog(context, plantName, scientificName, plantImage),
         child: Container(
           width: 190.0,
           height: 200.0,
