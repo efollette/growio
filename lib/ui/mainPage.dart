@@ -75,8 +75,7 @@ void _showDialog(BuildContext context) {
                                       ),
                                       onPressed: () {
                                         // Return to the list of options
-                                        if (_nicknameController.text != "")
-                                          Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
                                       },
                                     ),
                                     FlatButton(
@@ -176,7 +175,7 @@ class _MainPageState extends State<MainPage> {
         showDialog(
             context: context,
             child: Material(
-              type: MaterialType.transparency,
+                type: MaterialType.transparency,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -191,11 +190,11 @@ class _MainPageState extends State<MainPage> {
                     ),
                     Padding(padding: const EdgeInsets.all(5.0)),
                     CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
                     ),
                   ],
-                )
-            ));
+                )));
       });
       final response =
           await http.post(identifyUrl, body: {'image': base64Image});
@@ -224,25 +223,25 @@ class _MainPageState extends State<MainPage> {
             context: context,
             child: Material(
                 type: MaterialType.transparency,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Loading Your PlantID Suggestions",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Quicksand',
-                      fontSize: 30,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Loading Your PlantID Suggestions",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Quicksand',
+                        fontSize: 30,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Padding(padding: const EdgeInsets.all(5.0)),
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
-                  ),
-                ],
-              )
-            ));
+                    Padding(padding: const EdgeInsets.all(5.0)),
+                    CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                    ),
+                  ],
+                )));
       });
       final response =
           await http.post(identifyUrl, body: {'image': base64Image});
