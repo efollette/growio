@@ -9,7 +9,7 @@ Future<Plant> searchByName(plantSearch, searchBy) async {
   String gardenUrl = constant.apiUrl + "/plantcyclopedia/search?token=";
   gardenUrl += users.apiToken;
   gardenUrl += "&searchBy=" + searchBy;
-  gardulUrl += "&plantSearch=" + plantSearch;
+  gardenUrl += "&plantSearch=" + plantSearch;
   final response = await http.get(gardenUrl);
   print(response.body);
   return plantFromJson(response.body);

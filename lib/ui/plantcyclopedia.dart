@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../utils/users.dart' as users;
+import '../ui/mainPage.dart' as mp;
 import '../wdigets/plantOfTheDay.dart';
 import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -18,15 +20,102 @@ class Plantcyclopedia extends StatefulWidget {
 }
 
 class _PlantcyclopediaState extends State<Plantcyclopedia> {
+
   Future<PlantWeek> _plantWeek;
+
+  // Declare a var that stores the searched plant after api call
+  Plant _plantSearchResult;
 
   @override
   void initState() {
-    super.initState();
-    this._plantWeek = weekPlant.getPlantOfTheWeek();
+    _plantWeek = weekPlant.getPlantOfTheWeek();
+    _plantSearchResult = null;
   }
 
+
+  // User's search after they've pressed enter
+  String plantSearch = '';
+  String plantType = 'commonName';
+
   bool showList = false;
+
+//  /* Plant list */
+//  final List<String> _plants = [
+//    'Daisy',
+//    'Sunflower',
+//    'Poppy',
+//    'Lavender',
+//    'Rose',
+//    'Tiger Lily',
+//    'Carnation',
+//    'Tulip',
+//    'Orchid',
+//    'Peonie'
+//  ];
+//
+//  /* Duplicate to store the plant list */
+//  final List<String> _plantsDup = [
+//    'Daisy',
+//    'Sunflower',
+//    'Poppy',
+//    'Lavender',
+//    'Rose',
+//    'Tiger Lily',
+//    'Carnation',
+//    'Tulip',
+//    'Orchid',
+//    'Peonie'
+//  ];
+
+//  /* List that will change based on the query */
+//  var _plantsQuery = List<String>();
+
+  /* button to exit searching mechanism */
+  Container _returnButton(BuildContext context) {
+    return Container(
+        child: OutlineButton(
+          borderSide: BorderSide(
+            color: Color(0xFF278478),
+          ),
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(200.0)),
+          splashColor: Color(0xFF278478),
+          onPressed: () {
+            setState(() {
+              showList = false;
+            });
+          },
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Icon(
+                  Icons.close,
+                  color: Color(0xFF278478),
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  Expanded _plantList(BuildContext context, Plant searchedPlant) {
+    return Expanded(
+      child: Column(
+        children: <Widget> [
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: 1,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: plantTile(context, searchedPlant.nickname, searchedPlant.scientificName, searchedPlant.plantImage),
+                );
+              }
+          ),
+          _returnButton(context),
+        ],
+      ),
+    );
+  }
 
   /* Text controller for the search bar */
   TextEditingController _searchController = TextEditingController();
@@ -66,31 +155,34 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         textInputAction: TextInputAction.search,
         controller: _searchController,
         decoration: InputDecoration(
-          hasFloatingPlaceholder: false,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(
-              color: Color(0x388BE4BB),
+            hasFloatingPlaceholder: false,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+              borderSide: BorderSide(
+                color: Color(0x388BE4BB),
+              ),
             ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0x388BE4BB),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color(0x388BE4BB),
+              ),
+              borderRadius: BorderRadius.circular(25.0),
             ),
-            borderRadius: BorderRadius.circular(25.0),
-          ),
-          filled: true,
-          fillColor: Color(0xFFDFFFF0),
-          hintText: 'e.x. Daisy',
-          hintStyle:
-              TextStyle(fontFamily: 'Quicksand', fontSize: 15.0, height: 0),
-          labelStyle: TextStyle(
-              fontFamily: 'Quicksand',
-              fontWeight: FontWeight.bold,
-              fontSize: 13.0,
-              color: Color(0xFF8BE4BB)),
-          labelText: 'Type the name of your plant here.',
-        ),
+            filled: true,
+            fillColor: Color(0xFFDFFFF0),
+            hintText: 'e.x. Daisy',
+            hintStyle:
+            TextStyle(fontFamily: 'Quicksand', fontSize: 15.0, height: 0),
+            labelStyle: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
+                fontSize: 13.0,
+                color: Color(0xFF8BE4BB)),
+            labelText: 'Type the name of your plant here.',
+            prefixIcon: Icon(
+              Icons.search,
+              color: Color(0xFF278478),
+            )),
         cursorColor: Colors.green,
         // Functionality of search
         onSubmitted: (text) {
@@ -99,7 +191,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
           /* TODO: uncomment this */
           //Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
-          
+
           /* TODO: get rid of this hardcoded data */
 //          var hardcodedPlantInfo = {
 //            nickname: "sandra",
@@ -137,12 +229,12 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   }
 
 
-int _radioValue = 0;
+  int _radioValue = 0;
 
-void _handleRadioValueChange(int value) {
+  void _handleRadioValueChange(int value) {
     setState(() {
       _radioValue = value;
-  
+
       switch (_radioValue) {
         case 0:
           plantType = "commonName";
@@ -160,24 +252,24 @@ void _handleRadioValueChange(int value) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget> [
-          Radio(
-            value: 0,
-            groupValue: _radioValue,
-            onChanged: _handleRadioValueChange,
-            activeColor: Color(0xFF278478),
-          ),
-          Text(
-            "Common Name"
-          ),
-          Radio(
-            value: 1,
-            groupValue: _radioValue,
-            onChanged: _handleRadioValueChange,
-            activeColor: Color(0xFF278478),
-          ),
-          Text(
-            "Scientific Name"
-          ),
+            Radio(
+              value: 0,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChange,
+              activeColor: Color(0xFF278478),
+            ),
+            Text(
+                "Common Name"
+            ),
+            Radio(
+              value: 1,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChange,
+              activeColor: Color(0xFF278478),
+            ),
+            Text(
+                "Scientific Name"
+            ),
           ],
         )
     );
@@ -223,31 +315,16 @@ void _handleRadioValueChange(int value) {
     print('plantSearch: ' + plantSearch);
     return Scaffold(
         backgroundColor: Colors.white,
-        body: FutureBuilder<PlantWeek>(
-            future: this._plantWeek,
+        body: new FutureBuilder<PlantWeek>(
+            future: _plantWeek,
             builder: (context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                 case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor:
-                    AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
-                  ),
-                );
+                  return CircularProgressIndicator();
                 default:
                   if (snapshot.hasError)
-                    return Center(
-                      child: AutoSizeText(
-                        "Sorry, there was an error loading the Plant of the Day :(",
-                        style: TextStyle(
-                          fontFamily: "Quicksand",
-                          color: Color(0xFF8BE4BB),
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    );
+                    return Text('Error: ${snapshot}');
                   else
                     return Column(
                       children: <Widget>[
@@ -264,7 +341,7 @@ void _handleRadioValueChange(int value) {
                     );
               }
             }
-            )
+        )
     );
   }
 }
