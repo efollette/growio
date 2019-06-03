@@ -12,16 +12,16 @@ In order to use the app, you need to log in with a valid google account.
 
 ## Requirements
 The application needs the following:
-* Camera Access
-* Wireless Access
-* Notification Access
+1. Camera Access
+2. Wireless Access
+3. Notification Access
 
 ## Installation Instructions
 In order to install the app on your Android phone, you will have to install the APK (which can be found here: <enter google drive link>).
  
 Before you install, please make sure that:
-* Your device has the API Level 28 (or above), which corresponds to Android Version 9.0 (Pie).
-* Google Drive has "Install unknown apps" permissions. 
+-- Your device has the API Level 28 (or above), which corresponds to Android Version 9.0 (Pie).
+-- Google Drive has "Install unknown apps" permissions. 
   * How to give Google Drive "Install unknown apps" permissions?
       
       From the Settings App, click on Apps & notifications -> Advanced -> Special app access -> Install unknown apps 
