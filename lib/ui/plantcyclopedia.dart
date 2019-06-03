@@ -157,13 +157,29 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           plantSearch = text;
           showList = true;
 
-          Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
-
+          /* TODO: uncomment this */
+          //Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
+          
+          /* TODO: get rid of this hardcoded data */
+          var hardcodedPlantInfo = {
+            nickname: "sandra", 
+            scientificName: "omg",
+            commonName: "rose",
+            moistureUse: "50%",
+            temperature: ">50",
+            sunlight: "so much",
+            plantImage: "url"
+          }
+          Future<Plant> hardcoded = new Plant(hardcodedPlantInfo);
           print('Saurabh');
-          print (responsePlant);
+          // print (responsePlant);
 
           setState(() {
-            _plantSearchResult = responsePlant;
+            /* TODO: comment this back in */
+            // _plantSearchResult = responsePlant;
+
+            _plantSearchResult = hardcoded;
+            print(_plantSearchResult);
           });
         },
       ),
