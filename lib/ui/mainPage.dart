@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'plantcyclopedia.dart';
 import 'myGarden.dart';
+import 'package:Growio/wdigets/Credits.dart';
+import 'package:Growio/wdigets/Support.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -436,6 +438,14 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+Future navigateToSubPage(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => SubPage()));
+}
+Future navigateToSupPage(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => SupPage()));
+}
+
+
   // Drawer that contains the settings and logout buttons
   Drawer _makeDrawer(BuildContext context) {
     var _mode = true; // i don't know what this is yet, its for switches :)
@@ -464,23 +474,35 @@ class _MainPageState extends State<MainPage> {
           ),
           Column(
             children: <Widget>[
-              Text(
-                'Credits',
-                style: TextStyle(
-                  fontSize: 12.0,
-                  fontFamily: 'Quicksand',
-                  color: Color(0xFF278478),
+              Container(
+                height: 30,
+                child: RawMaterialButton(
+                  onPressed: () => navigateToSubPage(context),
+                  child: Text(
+                    'Credits',
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontFamily: 'Quicksand',
+                      color: Color(0xFF278478),
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-                textAlign: TextAlign.left,
               ),
-              Text(
-                'Support',
-                style: TextStyle(
-                    fontSize: 12.0,
-                    fontFamily: 'Quicksand',
-                    color: Color(0xFF278478),
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.right,
+              Container(
+              height: 30,
+              child: RawMaterialButton(
+                onPressed: () =>  navigateToSupPage(context),
+                child: Text(
+                  'Support',
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      fontFamily: 'Quicksand',
+                      color: Color(0xFF278478),
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.right,
+                ),
+              ),
               ),
               Padding(padding: EdgeInsets.all(2)),
               Center(
