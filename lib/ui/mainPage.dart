@@ -130,7 +130,7 @@ void _showDialog(BuildContext context) {
                     "Plant not found? Try a manual search in the PLantcyclepodeia!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF8BE4BB),
+                      color: Color(0xFF278478),
                       fontFamily: 'Quicksand',
                     ),
                   ),

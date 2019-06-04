@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:Growio/wdigets/myGardenTile.dart';
 import '../api/garden_api.dart' as garden;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
-// Group to scale size of text for additional info
-var _group2 = AutoSizeGroup();
-
 /* button to edit the name */
 Container _editButton(BuildContext context) {
   return Container(
+    height: 20,
     child: OutlineButton(
         borderSide: BorderSide(
           color: Color(0xFF278478),
         ),
-        shape: new CircleBorder(),
+        shape: CircleBorder(),
         splashColor: Color(0xFF278478),
         onPressed: () => _asyncInputDialog(context),
         child: Icon(
           Icons.edit,
           color: Color(0xFF278478),
+          size: 10,
         )),
   );
 }
@@ -35,8 +33,11 @@ Future<String> _asyncInputDialog(BuildContext context) async {
         false, // dialog is dismissible with a tap on the barrier
     builder: (BuildContext context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         title: Text(
-          "Enter a nickname for your plant.",
+          "Give your plant a new name!",
           style: TextStyle(
             fontFamily: 'Quicksand',
           ),
@@ -56,6 +57,15 @@ Future<String> _asyncInputDialog(BuildContext context) async {
           ],
         ),
         actions: <Widget>[
+          FlatButton(
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: Color(0xFF278478)),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           FlatButton(
             child: Text(
               'Ok',
@@ -78,52 +88,52 @@ Container _addButton(BuildContext context, String nickname) {
     borderSide: BorderSide(
       color: Color(0xFF278478),
     ),
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50.0)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
     splashColor: Color(0xFF278478),
     onPressed: () async {
       showDialog(
-        context: context,
-        child: AlertDialog(
-          title: Text(
-            "Are you sure you wish to remove this plant from MyGarden?",
-            style: TextStyle(
-              color: Color(0xFF278478),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                "No",
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                "Are you sure you wish to remove this plant from MyGarden?",
                 style: TextStyle(
-                  color: Color(0xFF8BE4BB),
+                  color: Color(0xFF278478),
                 ),
               ),
-              onPressed: () {
-                // Return to the list of options
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text(
-                "Yes",
-                style: TextStyle(
-                  color: Color(0xFF8BE4BB),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    "No",
+                    style: TextStyle(
+                      color: Color(0xFF8BE4BB),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Return to the list of options
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              onPressed: () async {
-                // Return to the list of options
-                Navigator.of(context).pop();
-                bool response = await garden.removePlant(nickname);
-                if (response) {
-                  Navigator.of(context).pop();
-                }
-                Navigator.pushNamed(context, '/myGarden');
-              },
-            ),
-          ],
-        ),
-      );
+                FlatButton(
+                  child: Text(
+                    "Yes",
+                    style: TextStyle(
+                      color: Color(0xFF8BE4BB),
+                    ),
+                  ),
+                  onPressed: () async {
+                    // Return to the list of options
+                    Navigator.of(context).pop();
+                    bool response = await garden.removePlant(nickname);
+                    if (response) {
+                      Navigator.of(context).pop();
+                    }
+                    Navigator.pushNamed(context, '/myGarden');
+                  },
+                ),
+              ],
+            );
+          });
     },
     child: Column(
       children: <Widget>[
@@ -191,7 +201,7 @@ Dialog plantProf(
                 height: 15.5,
                 color: Color(0xFFE2F8EE),
               ),
-              Padding(padding: EdgeInsets.only(left: 230.0)),
+              Expanded(child: Container()),
               _exitButton(context),
             ],
           ),
@@ -200,39 +210,47 @@ Dialog plantProf(
               // Plant Image
               Container(
                 height: MediaQuery.of(context).size.height * (106 / 812),
-                width: MediaQuery.of(context).size.width * (122 / 375),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(80.0),
-                ),
                 child: ClipRRect(
-                  child: IconButton(
-                    icon: Image.network(plantUrl),
-                    iconSize: 40.0,
-                  ),
-                  borderRadius: BorderRadius.circular(80.0),
+                  child: Image.network(plantUrl),
+                  borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
             ],
           ),
           Padding(padding: EdgeInsets.all(6.0)),
+          // Nickname and edit nickname button
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(child: Container(),),
+              Container(
+                width: MediaQuery.of(context).size.width * (104 / 375),
+                alignment: Alignment.center,
+                child: AutoSizeText(
+                  nickname,
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Quicksand',
+                    color: Color(0xFF312F2F),
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+              _editButton(context),
+            ],
+          ),
           // Plant Info: Name, Scientific name
           Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * (104 / 375),
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    plantName,
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: 'Quicksand',
-                      color: Color(0xFF312F2F),
-                    ),
-                    maxLines: 1,
-                  ),
-                ),
-              ],
+            width: MediaQuery.of(context).size.width * (104 / 375),
+            alignment: Alignment.center,
+            child: AutoSizeText(
+              plantName,
+              style: TextStyle(
+                fontSize: 20.0,
+                fontFamily: 'Quicksand',
+                color: Color(0xFF312F2F),
+              ),
+              maxLines: 1,
             ),
           ),
           Padding(padding: const EdgeInsets.all(1.5)),
@@ -250,8 +268,6 @@ Dialog plantProf(
               minFontSize: 8.0,
             ),
           ),
-          Padding(padding: const EdgeInsets.all(7.25)),
-          _editButton(context),
           Padding(padding: const EdgeInsets.all(7.25)),
           // Additional plant info: water, sunlight
           Container(
@@ -369,11 +385,9 @@ Dialog plantProf(
               ],
             ),
           ), // Container to close row
-          Padding(padding: const EdgeInsets.all(7.25)),
-          // More info about the plant of the day
-          // adding the button to the bottom
-          Padding(padding: EdgeInsets.all(60.0)),
+          Expanded(child: Container()),
           _addButton(context, nickname),
+          Padding(padding: const EdgeInsets.all(5.0))
         ],
       ),
     ),

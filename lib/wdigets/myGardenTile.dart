@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
 import 'package:Growio/ui/myGarden.dart';
 
-void _showDialog(BuildContext context, String plantName, String scientificName, String plantImage, String nickname, String temp, String light, String moisture) {
+void _showDialog(
+    BuildContext context,
+    String plantName,
+    String scientificName,
+    String plantImage,
+    String nickname,
+    String temp,
+    String light,
+    String moisture) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -14,7 +22,8 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
             child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.center,
-              child: plantProf(context, plantName, scientificName, plantImage, nickname, temp, light, moisture),
+              child: plantProf(context, plantName, scientificName, plantImage,
+                  nickname, temp, light, moisture),
             ),
             // child: PlantProfile(plantName, scientificName, plantImage, nickname,temp, light, moisture ),
           ),
@@ -28,11 +37,20 @@ void _showDialog(BuildContext context, String plantName, String scientificName, 
 }
 
 Column myGardenTile(
-    BuildContext context, int index, String plantName, String scientificName, String plantImage, String nickname, String temp, String light, String moisture) {
+    BuildContext context,
+    int index,
+    String plantName,
+    String scientificName,
+    String plantImage,
+    String nickname,
+    String temp,
+    String light,
+    String moisture) {
   return Column(
     children: <Widget>[
       FlatButton(
-        onPressed: () => _showDialog(context, plantName, scientificName, plantImage, nickname, temp, light, moisture),
+        onPressed: () => _showDialog(context, plantName, scientificName,
+            plantImage, nickname, temp, light, moisture),
         child: Container(
           width: 190.0,
           height: 200.0,
@@ -54,20 +72,11 @@ Column myGardenTile(
                   Hero(
                     tag: 'plantProf$index',
                     child: Container(
-                      height: 73.0,
-                      width: 87.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80.0),
-                      ),
-                      // Poster's profile picture
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(80.0),
-                        child: IconButton(
-                          icon: Image.network(
-                            plantImage,
-                          ),
-                          onPressed: () => debugPrint("Go to plant"),
-                          iconSize: 40.0,
+                        borderRadius: BorderRadius.circular(25.0),
+                        child: Image.network(
+                          plantImage,
+                          height: 75,
                         ),
                       ),
                     ),

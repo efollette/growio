@@ -169,7 +169,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 //            plantImage: "url"
 //          };
 
-          Plant hardcoded = new Plant(
+          Plant hardcoded = Plant(
               nickname: "sandra",
               scientificName: "omg",
               commonName: "rose",
@@ -244,31 +244,6 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     );
   }
 
-//
-//  /* Function to search and list the new items */
-//  void _filterSearchResults(String query) {
-//    List<String> dummySearchList = List<String>();
-//    dummySearchList.addAll(_plantsDup);
-//    if(query.isNotEmpty) {
-//      List<String> dummyListData = List<String>();
-//      dummySearchList.forEach((item) {
-//        if(item.contains(query)) {
-//          dummyListData.add(item);
-//        }
-//      });
-//      setState(() {
-//        _plantsQuery.clear();
-//        _plantsQuery.addAll(dummyListData);
-//      });
-//      return;
-//    } else {
-//      setState(() {
-//        _plantsQuery.clear();
-//        _plantsQuery.addAll(_plantsDup);
-//      });
-//    }
-//  }
-
   @override
   Widget build(BuildContext context) {
     print('plantSearch: ' + plantSearch);
@@ -311,7 +286,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                         // Plant of the Day
                         showList
                             ? _plantList(context, _plantSearchResult)
-                            : _plantOfDay(context, snapshot),
+                            : widget.showFab ? _plantOfDay(context, snapshot) : Container(),
                         Padding(padding: const EdgeInsets.all(10.0)),
                       ],
                     );
