@@ -58,13 +58,17 @@ Column myGardenTile(
                       width: 87.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(80.0),
-                        color: Colors.greenAccent,
                       ),
                       // Poster's profile picture
-                      child: IconButton(
-                        icon: Image.network(plantImage),
-                        onPressed: () => debugPrint("Go to plant"),
-                        iconSize: 40.0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(80.0),
+                        child: IconButton(
+                          icon: Image.network(
+                            plantImage,
+                          ),
+                          onPressed: () => debugPrint("Go to plant"),
+                          iconSize: 40.0,
+                        ),
                       ),
                     ),
                   ),

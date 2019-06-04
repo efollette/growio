@@ -42,13 +42,13 @@ Future<String> _asyncInputDialog(BuildContext context) async {
           ),
         ),
         backgroundColor: Color(0xFFE2F8EE),
-        content: new Row(
+        content: Row(
           children: <Widget>[
-            new Expanded(
-                child: new TextField(
+            Expanded(
+                child: TextField(
               autofocus: true,
-              decoration: new InputDecoration(
-                  labelText: 'Nickname', hintText: 'eg. Groot'),
+              decoration:
+                  InputDecoration(labelText: 'Nickname', hintText: 'eg. Groot'),
               onChanged: (value) {
                 nickName = value;
               },
@@ -59,7 +59,7 @@ Future<String> _asyncInputDialog(BuildContext context) async {
           FlatButton(
             child: Text(
               'Ok',
-              style: new TextStyle(color: Color(0xFF278478)),
+              style: TextStyle(color: Color(0xFF278478)),
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -78,15 +78,52 @@ Container _addButton(BuildContext context, String nickname) {
     borderSide: BorderSide(
       color: Color(0xFF278478),
     ),
-    shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(50.0)),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50.0)),
     splashColor: Color(0xFF278478),
     onPressed: () async {
-      bool response = await garden.removePlant(nickname);
-      if (response) {
-        Navigator.of(context).pop();
-      }
-      Navigator.pushNamed(context, '/myGarden');
+      showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text(
+            "Are you sure you wish to remove this plant from MyGarden?",
+            style: TextStyle(
+              color: Color(0xFF278478),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "No",
+                style: TextStyle(
+                  color: Color(0xFF8BE4BB),
+                ),
+              ),
+              onPressed: () {
+                // Return to the list of options
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Yes",
+                style: TextStyle(
+                  color: Color(0xFF8BE4BB),
+                ),
+              ),
+              onPressed: () async {
+                // Return to the list of options
+                Navigator.of(context).pop();
+                bool response = await garden.removePlant(nickname);
+                if (response) {
+                  Navigator.of(context).pop();
+                }
+                Navigator.pushNamed(context, '/myGarden');
+              },
+            ),
+          ],
+        ),
+      );
     },
     child: Column(
       children: <Widget>[
@@ -166,11 +203,13 @@ Dialog plantProf(
                 width: MediaQuery.of(context).size.width * (122 / 375),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(80.0),
-                  color: Colors.greenAccent,
                 ),
-                child: IconButton(
-                  icon: Image.network(plantUrl),
-                  iconSize: 40.0,
+                child: ClipRRect(
+                  child: IconButton(
+                    icon: Image.network(plantUrl),
+                    iconSize: 40.0,
+                  ),
+                  borderRadius: BorderRadius.circular(80.0),
                 ),
               ),
             ],

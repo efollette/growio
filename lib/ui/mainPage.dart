@@ -106,8 +106,8 @@ void _showDialog(BuildContext context) {
 
                                         // Pop off both dialog boxes
                                         if (_nicknameController.text != "") {
-                                          await Navigator.of(context).pop();
-                                          await Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
                                         }
                                         Navigator.pushNamed(
                                             context, '/myGarden');
