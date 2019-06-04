@@ -158,16 +158,19 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           /* TODO: uncomment this */
           //Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
 
-          /* TODO: get rid of this hardcoded data */
-//          var hardcodedPlantInfo = {
-//            nickname: "sandra",
-//            scientificName: "omg",
-//            commonName: "rose",
-//            moistureUse: "50%",
-//            temperature: ">50",
-//            sunlight: "so much",
-//            plantImage: "url"
-//          };
+
+          /* TODO: NOTES FOR SAURABH:
+             ------------------
+              the variable "_plantSearchResult" is what is being used to display
+              the information. it is on line *316* of this file if you'd 
+              like to see where it is being used. So when you are changing it to a 
+              Future<Plant>, I would either pass in just the Plant object to the method
+              "_plantList" (written on line *67* but used on line *316*) 
+              or change "_plantList" 's signature to take in 
+              a Future<Plant> (and not a Plant) and edit the body of the method to match 
+              that data type. Since I dont really know how Future<> works I can't do this 
+              myself :(
+          */
 
           Plant hardcoded = new Plant(
               nickname: "sandra",
@@ -179,11 +182,11 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
               plantImage:
                   "https://plants.sc.egov.usda.gov/gallery/standard/abli_001_shp.jpg");
 
-          print('Saurabh');
+          // print('Saurabh');
           // print (responsePlant);
 
           setState(() {
-            /* TODO: comment this back in */
+            // TODO: comment this back in 
             // _plantSearchResult = responsePlant;
 
             _plantSearchResult = hardcoded;
@@ -310,7 +313,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                         Padding(padding: const EdgeInsets.all(10.0)),
                         // Plant of the Day
                         showList
-                            ? _plantList(context, _plantSearchResult)
+                            ? _plantList(context, _plantSearchResult) // TODO: Saurabh it's used here
                             : _plantOfDay(context, snapshot),
                         Padding(padding: const EdgeInsets.all(10.0)),
                       ],
