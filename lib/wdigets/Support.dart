@@ -54,7 +54,7 @@ Widget build(BuildContext context) {
             fontFamily: 'Quicksand',
             ),
         ),
-         Padding(padding: EdgeInsets.all(190.0)),
+         Padding(padding: EdgeInsets.all(130.0)),
          Text(
           "CSE 110 - Spring 2019",
           textAlign: TextAlign.center,
@@ -64,7 +64,7 @@ Widget build(BuildContext context) {
             fontFamily: 'Quicksand',
             ),
         ),
-        Padding(padding: EdgeInsets.all(10.0)),
+        Padding(padding: EdgeInsets.all(5.0)),
         _exitButton(context),
         ],
     ),
