@@ -158,7 +158,9 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         onSubmitted: (text) async {
           plantSearch = text;
           showList = true;
-
+          setState(() {
+            CircularProgressIndicator();
+          });
           /* TODO: uncomment this */
           PlantcycPlant responsePlant = await searchPlant.searchByName(plantSearch, plantType);
 

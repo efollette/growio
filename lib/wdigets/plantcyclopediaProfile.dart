@@ -1,5 +1,9 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../utils/constants.dart' as constant;
+import '../utils/users.dart' as users;
+import 'package:http/http.dart' as http;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -9,7 +13,9 @@ var _group2 = AutoSizeGroup();
 
 
 /* button to add plant */
-Container _addButton(BuildContext context) {
+Container _addButton(BuildContext context, String plantName, String scientificName, String plantUrl) {
+  TextEditingController _nicknameController = TextEditingController();
+
   return Container(
       child: OutlineButton(
         borderSide: BorderSide(
@@ -18,7 +24,69 @@ Container _addButton(BuildContext context) {
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(50.0)),
         splashColor: Color(0xFF278478),
-        onPressed: () {},
+        onPressed: () => showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text(
+                  "Give your Plant A Nickname!",
+                  style: TextStyle(
+                    color: Color(0xFF278478),
+                  ),
+                ),
+                content: TextFormField(
+                  autovalidate: true,
+                  controller: _nicknameController,
+                  validator: (text) {
+                    if (text == "")
+                      return "You must give your plant a nickname!";
+                  },
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      "Return to Suggestions",
+                      style: TextStyle(
+                        color: Color(0xFF8BE4BB),
+                      ),
+                    ),
+                    onPressed: () {
+                      // Return to the list of options
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                        color: Color(0xFF8BE4BB),
+                      ),
+                    ),
+                    onPressed: () async {
+                      // Add to garden func goes here, passing in _nicknameContoller.text as the param
+                      String addUrl = constant.apiUrl + "/garden/plant?token=";
+                      addUrl += users.apiToken;
+                      final response =
+                      await http.post(addUrl, body: {'sciName': scientificName, 'nickname': _nicknameController.text, 'imageUrl': plantUrl});
+                      print(response.body);
+
+                      // Pop off both dialog boxes
+                      if (_nicknameController.text != "") {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      }
+                      Navigator.pushNamed(
+                          context, '/myGarden');
+                    },
+                  ),
+                ],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              );
+            }
+        ),
+
         child: Column(
           children: <Widget>[
             Container(
@@ -257,7 +325,7 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName, String scient
           // More info about the plant of the day
           // adding the button to the bottom
           Padding(padding: EdgeInsets.all(60.0)),
-          _addButton(context),
+          _addButton(context, plantName, scientificName, plantUrl),
         ],
       ),
     ),
