@@ -10,6 +10,13 @@ Plant plantFromJson(String str) {
   return Plant.fromJson(jsonData);
 }
 
+Plant plantcyclopediaPlantFromJson(String str) {
+  final jsonData = json.decode(str)['data'];
+  jsonData['nickname'] = "";
+  print (jsonData);
+  return Plant.fromPlantcyclopediaJson(jsonData);
+}
+
 String plantToJson(Plant data) {
   final dyn = data.toJson();
   return json.encode(dyn);
@@ -61,6 +68,15 @@ class Plant {
     sunlight: json["sunlight"],
     plantImage: json["image"],
     moistureUse: json["moistureUse"]
+  );
+
+  factory Plant.fromPlantcyclopediaJson(Map<String, dynamic> json) => new Plant(
+      scientificName: json["scientificName"],
+      commonName: json["commonName"],
+      temperature: json["temperature"],
+      sunlight: json["sunlight"],
+      plantImage: json["image"],
+      moistureUse: json["moistureUse"]
   );
 
   Map<String, dynamic> toJson() => {

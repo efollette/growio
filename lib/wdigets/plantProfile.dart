@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../api/garden_api.dart' as garden;
+import '../utils/constants.dart' as constant;
+import '../utils/users.dart' as users;
+import 'package:http/http.dart' as http;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
 /* button to edit the name */
-Container _editButton(BuildContext context) {
+Container _editButton(BuildContext context, String nickname) {
   return Container(
     height: 20,
     child: OutlineButton(
@@ -15,7 +18,7 @@ Container _editButton(BuildContext context) {
         ),
         shape: CircleBorder(),
         splashColor: Color(0xFF278478),
-        onPressed: () => _asyncInputDialog(context),
+        onPressed: () => _asyncInputDialog(context, nickname),
         child: Icon(
           Icons.edit,
           color: Color(0xFF278478),
@@ -25,7 +28,7 @@ Container _editButton(BuildContext context) {
 }
 
 /* used to change name */
-Future<String> _asyncInputDialog(BuildContext context) async {
+Future<String> _asyncInputDialog(BuildContext context, String oldNickname) async {
   String nickName = " ";
   return showDialog<String>(
     context: context,
@@ -71,8 +74,13 @@ Future<String> _asyncInputDialog(BuildContext context) async {
               'Ok',
               style: TextStyle(color: Color(0xFF278478)),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
+            onPressed: () async {
+              // this is where the API call will go I believe (Yash)
+              String updateUrl = constant.apiUrl + "/garden/plant/nickname?token=";
+              updateUrl += users.apiToken;
+              final response = await http.put(updateUrl, body: {"oldNickname": oldNickname, "newNickname": nickName});
+              //Navigator.of(context).pop();
+              Navigator.pushNamed(context, '/myGarden');
             },
           ),
         ],
@@ -123,7 +131,7 @@ Container _addButton(BuildContext context, String nickname) {
                   ),
                   onPressed: () async {
                     // Return to the list of options
-                    Navigator.of(context).pop();
+                    //Navigator.of(context).pop();
                     bool response = await garden.removePlant(nickname);
                     if (response) {
                       Navigator.of(context).pop();
@@ -236,7 +244,7 @@ Dialog plantProf(
                   maxLines: 1,
                 ),
               ),
-              _editButton(context),
+              _editButton(context, nickname),
             ],
           ),
           // Plant Info: Name, Scientific name

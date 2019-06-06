@@ -6,6 +6,7 @@ import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../model/plantWeek_model.dart';
 import '../model/plant_model.dart';
+import '../model/plantcyclopediaPlant_model.dart';
 import '../api/weekPlant_api.dart' as weekPlant;
 import '../api/searchPlant_api.dart' as searchPlant;
 
@@ -22,7 +23,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
   Future<PlantWeek> _plantWeek;
 
   // Declare a var that stores the searched plant after api call
-  Plant _plantSearchResult;
+  PlantcycPlant _plantSearchResult;
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     ));
   }
 
-  Expanded _plantList(BuildContext context, Plant searchedPlant) {
+  Expanded _plantList(BuildContext context, PlantcycPlant searchedPlant) {
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -73,7 +74,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
               itemCount: 1,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  child: plantTile(context, searchedPlant.nickname,
+                  child: plantTile(context, searchedPlant.commonName,
                       searchedPlant.scientificName, searchedPlant.plantImage),
                 );
               }),
@@ -151,43 +152,21 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
             )),
         cursorColor: Colors.green,
         // Functionality of search
-        onSubmitted: (text) {
+        onSubmitted: (text) async {
           plantSearch = text;
           showList = true;
 
           /* TODO: uncomment this */
-          //Future<Plant> responsePlant = searchPlant.searchByName(plantSearch, plantType);
-
-          /* TODO: get rid of this hardcoded data */
-//          var hardcodedPlantInfo = {
-//            nickname: "sandra",
-//            scientificName: "omg",
-//            commonName: "rose",
-//            moistureUse: "50%",
-//            temperature: ">50",
-//            sunlight: "so much",
-//            plantImage: "url"
-//          };
-
-          Plant hardcoded = Plant(
-              nickname: "sandra",
-              scientificName: "omg",
-              commonName: "rose",
-              moistureUse: "50%",
-              temperature: ">50",
-              sunlight: "so much",
-              plantImage:
-                  "https://plants.sc.egov.usda.gov/gallery/standard/abli_001_shp.jpg");
+          PlantcycPlant responsePlant = await searchPlant.searchByName(plantSearch, plantType);
 
           print('Saurabh');
-          // print (responsePlant);
+          print (responsePlant.commonName);
 
           setState(() {
             /* TODO: comment this back in */
             // _plantSearchResult = responsePlant;
 
-            _plantSearchResult = hardcoded;
-            print(_plantSearchResult);
+            _plantSearchResult = responsePlant;
           });
         },
       ),
