@@ -126,7 +126,7 @@ FlatButton plantTile(BuildContext context, String commonName, String scientificN
                                 child: Text(
                                   scientificName,
                                   style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 8.0,
                                       fontStyle: FontStyle.italic,
                                       fontFamily: 'Quicksand',
                                       color: Color(0xFF726767)),

@@ -217,10 +217,17 @@ Dialog plantProf(
             children: <Widget>[
               // Plant Image
               Container(
-                height: MediaQuery.of(context).size.height * (106 / 812),
-                child: ClipRRect(
-                  child: Image.network(plantUrl),
-                  borderRadius: BorderRadius.circular(25.0),
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(150.0),
+                  color: Colors.transparent,
+                ),
+                child: CircleAvatar(
+                  radius: 150.0,
+                  backgroundImage:
+                  NetworkImage(plantUrl),
+                  backgroundColor: Colors.transparent,
                 ),
               ),
             ],

@@ -72,12 +72,17 @@ Column myGardenTile(
                   Hero(
                     tag: 'plantProf$index',
                     child: Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(25.0),
-                        child: Image.network(
-                          plantImage,
-                          height: 75,
-                        ),
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(150.0),
+                        color: Colors.transparent,
+                      ),
+                      child: CircleAvatar(
+                        radius: 150.0,
+                        backgroundImage:
+                        NetworkImage(plantImage),
+                        backgroundColor: Colors.transparent,
                       ),
                     ),
                   ),

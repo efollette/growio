@@ -118,7 +118,9 @@ class _MyGardenState extends State<MyGarden> {
                                         crossAxisCount: 2),
                                 itemBuilder:
                                     (BuildContext context, int position) {
-                                  return myGardenTile(
+                                  return FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: myGardenTile(
                                       context,
                                       position,
                                       snapshot.data[position].commonName,
@@ -127,7 +129,8 @@ class _MyGardenState extends State<MyGarden> {
                                       snapshot.data[position].nickname,
                                       snapshot.data[position].temperature,
                                       snapshot.data[position].sunlight,
-                                      snapshot.data[position].moistureUse);
+                                      snapshot.data[position].moistureUse)
+                                  );
                                 },
                               ))
                             ],

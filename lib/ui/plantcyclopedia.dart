@@ -74,8 +74,11 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
               itemCount: 1,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
                   child: plantTile(context, searchedPlant.commonName,
                       searchedPlant.scientificName, searchedPlant.plantImage),
+                  ),
                 );
               }),
           _returnButton(context),
