@@ -3,106 +3,116 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../api/garden_api.dart' as garden;
-import '../utils/constants.dart' as constant;
-import '../utils/users.dart' as users;
+import '../utils/routes.dart' as routes;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
 
-
 /* button to add plant */
-Container _addButton(BuildContext context, String plantName, String scientificName, String plantUrl) {
-
+Container _addButton(BuildContext context, String plantName,
+    String scientificName, String plantUrl) {
   TextEditingController _nicknameController = TextEditingController();
 
   return Container(
       child: OutlineButton(
-        borderSide: BorderSide(
-          color: Color(0xFF278478),
-        ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.0)),
-        splashColor: Color(0xFF278478),
-        onPressed: () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(
-                  "Give your Plant A Nickname!",
-                  style: TextStyle(
-                    color: Color(0xFF278478),
-                  ),
-                ),
-                content: TextFormField(
-                  autovalidate: true,
-                  controller: _nicknameController,
-                  validator: (text) {
-                    if (text == "")
-                      return "You must give your plant a nickname!";
-                  },
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      "Return to Suggestions",
-                      style: TextStyle(
-                        color: Color(0xFF8BE4BB),
-                      ),
-                    ),
-                    onPressed: () {
-                      // Return to the list of options
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  FlatButton(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                        color: Color(0xFF8BE4BB),
-                      ),
-                    ),
-                    onPressed: () async {
-                      // Add to garden func goes here, passing in _nicknameContoller.text as the param
-                      // NEED A ADDLOADING HERE
-                      bool response = await garden.addToGarden(scientificName, _nicknameController.text, plantUrl);
-
-                      if (response) {
-                        if (_nicknameController.text != "") {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        }
-                        Navigator.pushNamed(
-                            context, '/myGarden');
-                      }
-
-                      // Pop off both dialog boxes
-
-                    },
-                  ),
-                ],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              );
-            }
-        ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 190.0,
-              child: Text(
-                "Add To MyGarden",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: 'Quicksand',
-                  color: Color(0xFF278478),
-                ),
-                textAlign: TextAlign.center,
+    borderSide: BorderSide(
+      color: Color(0xFF278478),
+    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+    splashColor: Color(0xFF278478),
+    onPressed: () => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Give your Plant A Nickname!",
+              style: TextStyle(
+                color: Color(0xFF278478),
               ),
             ),
-          ],
+            content: TextFormField(
+              autovalidate: true,
+              controller: _nicknameController,
+              validator: (text) {
+                if (text == "") return "You must give your plant a nickname!";
+              },
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  "Return to Suggestions",
+                  style: TextStyle(
+                    color: Color(0xFF8BE4BB),
+                  ),
+                ),
+                onPressed: () {
+                  // Return to the list of options
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                    color: Color(0xFF8BE4BB),
+                  ),
+                ),
+                onPressed: () async {
+                  // Add to garden func goes here, passing in _nicknameContoller.text as the param
+                  // NEED A ADDLOADING HERE -- DONE
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Material(
+                          type: MaterialType.transparency,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF8BE4BB)),
+                            ),
+                          ),
+                        );
+                      });
+                  bool response = await garden.addToGarden(
+                      scientificName, _nicknameController.text, plantUrl);
+
+                  if (response) {
+                    if (_nicknameController.text != "") {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    }
+                    routes.goToMyGardenScreen(context);
+                  }
+                  else {
+                    routes.makeToast("There was an error adding your lant to myGarden, please try again!");
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          );
+        }),
+    child: Column(
+      children: <Widget>[
+        Container(
+          width: 190.0,
+          child: Text(
+            "Add To MyGarden",
+            style: TextStyle(
+              fontSize: 18.0,
+              fontFamily: 'Quicksand',
+              color: Color(0xFF278478),
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
-      ));
+      ],
+    ),
+  ));
 }
 
 /* button to exit the page */
@@ -123,7 +133,8 @@ Container _exitButton(BuildContext context) {
 }
 
 /* Plant Profile Page */
-Dialog plantcyclopediaProf(BuildContext context, String plantName, String scientificName, String plantUrl) {
+Dialog plantcyclopediaProf(BuildContext context, String plantName,
+    String scientificName, String plantUrl) {
   return Dialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
@@ -163,12 +174,20 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName, String scient
                   backgroundColor: Colors.transparent,
                   child: (plantUrl != null)
                       ? CachedNetworkImage(
-                    imageUrl: plantUrl,
-                    placeholder: (context, url) => Icon(Icons.local_florist, color: Color(0xFF278478), size: 40,),
-                    errorWidget: (context, url, error) => Icon(Icons.local_florist, color: Color(0xFF278478), size: 40,),
-                  )
+                          imageUrl: plantUrl,
+                          placeholder: (context, url) => Icon(
+                                Icons.local_florist,
+                                color: Color(0xFF278478),
+                                size: 40,
+                              ),
+                          errorWidget: (context, url, error) => Icon(
+                                Icons.local_florist,
+                                color: Color(0xFF278478),
+                                size: 40,
+                              ),
+                        )
                       : Icon(Icons.local_florist),
-              ),
+                ),
               ),
             ],
           ),
@@ -243,8 +262,8 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName, String scient
                             fontFamily: 'Quicksand',
                             color: Colors.black,
                             height: 1.2
-                          //height: 1.2,
-                        ),
+                            //height: 1.2,
+                            ),
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(5.0)),
@@ -258,8 +277,8 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName, String scient
                             fontFamily: 'Quicksand',
                             color: Colors.black,
                             height: 1.2
-                          //height: 1.2,
-                        ),
+                            //height: 1.2,
+                            ),
                       ),
                     ),
                     Padding(padding: EdgeInsets.all(5.0)),
@@ -274,8 +293,8 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName, String scient
                             fontFamily: 'Quicksand',
                             color: Colors.black,
                             height: 1.2
-                          //height: 1.2,
-                        ),
+                            //height: 1.2,
+                            ),
                       ),
                     ),
                   ],

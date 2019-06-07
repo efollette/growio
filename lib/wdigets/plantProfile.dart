@@ -4,6 +4,7 @@ import '../api/garden_api.dart' as garden;
 import '../utils/constants.dart' as constant;
 import '../utils/users.dart' as users;
 import 'package:http/http.dart' as http;
+import '../utils/routes.dart' as routes;
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -28,7 +29,8 @@ Container _editButton(BuildContext context, String nickname) {
 }
 
 /* used to change name */
-Future<String> _asyncInputDialog(BuildContext context, String oldNickname) async {
+Future<String> _asyncInputDialog(
+    BuildContext context, String oldNickname) async {
   String nickName = " ";
   return showDialog<String>(
     context: context,
@@ -76,9 +78,11 @@ Future<String> _asyncInputDialog(BuildContext context, String oldNickname) async
             ),
             onPressed: () async {
               // this is where the API call will go I believe (Yash)
-              String updateUrl = constant.apiUrl + "/garden/plant/nickname?token=";
+              String updateUrl =
+                  constant.apiUrl + "/garden/plant/nickname?token=";
               updateUrl += users.apiToken;
-              final response = await http.put(updateUrl, body: {"oldNickname": oldNickname, "newNickname": nickName});
+              final response = await http.put(updateUrl,
+                  body: {"oldNickname": oldNickname, "newNickname": nickName});
               //Navigator.of(context).pop();
               Navigator.pushNamed(context, '/myGarden');
             },
@@ -136,7 +140,7 @@ Container _addButton(BuildContext context, String nickname) {
                     if (response) {
                       Navigator.of(context).pop();
                     }
-                    Navigator.pushNamed(context, '/myGarden');
+                    routes.goToMyGardenScreen(context);
                   },
                 ),
               ],
@@ -225,8 +229,7 @@ Dialog plantProf(
                 ),
                 child: CircleAvatar(
                   radius: 150.0,
-                  backgroundImage:
-                  NetworkImage(plantUrl),
+                  backgroundImage: NetworkImage(plantUrl),
                   backgroundColor: Colors.transparent,
                 ),
               ),
@@ -237,7 +240,9 @@ Dialog plantProf(
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Expanded(child: Container(),),
+              Expanded(
+                child: Container(),
+              ),
               Container(
                 width: MediaQuery.of(context).size.width * (104 / 375),
                 alignment: Alignment.center,

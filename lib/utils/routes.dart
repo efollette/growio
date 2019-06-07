@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import '../ui/Login.dart';
-import '../utils/users.dart' as users;
 import '../ui/plantcyclopedia.dart';
 import '../ui/mainPage.dart';
 import '../ui/Camera.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+Future<bool> makeToast ( String msg) {
+return Fluttertoast.showToast(
+  msg: "$msg",
+  toastLength: Toast.LENGTH_SHORT,
+  gravity: ToastGravity.CENTER,
+  timeInSecForIos: 1,
+  backgroundColor: Color(0xFF278478),
+  textColor: Color(0xFF8BE4BB),
+  fontSize: 16.0,
+);
+}
 
 var routes = {
-  '/login' : (BuildContext context) => Login(),
-  '/myGarden' : (BuildContext context) => MainPage(),
-  '/plantcyclopedia' : (BuildContext context) => Plantcyclopedia(true),
-  '/camera' :(BuildContext context) => Camera(),
+  '/login': (BuildContext context) => Login(),
+  '/myGarden': (BuildContext context) => MainPage(),
+  '/plantcyclopedia': (BuildContext context) => Plantcyclopedia(true),
+  '/camera': (BuildContext context) => Camera(),
 
   // Default route
-  '/' : (BuildContext context) => Login(),
+  '/': (BuildContext context) => Login(),
 };
 
 /*
@@ -21,7 +33,8 @@ var routes = {
    * Description: Sends user to MyGarden screen.
    */
 void goToMyGardenScreen(BuildContext context) {
-  Navigator.popAndPushNamed(context, '/myGarden');
+  Navigator.of(context)
+      .pushNamedAndRemoveUntil('/myGarden', (Route<dynamic> route) => false);
 }
 
 /*

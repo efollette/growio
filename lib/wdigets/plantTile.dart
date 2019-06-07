@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:Growio/wdigets/plantcyclopediaProfile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../api/garden_api.dart' as garden;
+import '../utils/routes.dart' as routes;
 
 void _showDialog(BuildContext context, String commonName, String scientificName,
     String plantUrl) {
@@ -31,8 +32,8 @@ void _showDialog(BuildContext context, String commonName, String scientificName,
 }
 
 /* button to add a plant */
-Container _addButton(BuildContext context, String plantName, String scientificName, String plantUrl) {
-
+Container _addButton(BuildContext context, String plantName,
+    String scientificName, String plantUrl) {
   TextEditingController _nicknameController = TextEditingController();
 
   return Container(
@@ -40,8 +41,7 @@ Container _addButton(BuildContext context, String plantName, String scientificNa
     borderSide: BorderSide(
       color: Color(0xFF278478),
     ),
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50.0)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
     splashColor: Color(0xFF278478),
     onPressed: () => showDialog(
         context: context,
@@ -57,8 +57,7 @@ Container _addButton(BuildContext context, String plantName, String scientificNa
               autovalidate: true,
               controller: _nicknameController,
               validator: (text) {
-                if (text == "")
-                  return "You must give your plant a nickname!";
+                if (text == "") return "You must give your plant a nickname!";
               },
             ),
             actions: <Widget>[
@@ -83,20 +82,35 @@ Container _addButton(BuildContext context, String plantName, String scientificNa
                 ),
                 onPressed: () async {
                   // Add to garden func goes here, passing in _nicknameContoller.text as the param
-                  // NEED A ADDLOADING HERE
-                  bool response = await garden.addToGarden(scientificName, _nicknameController.text, plantUrl);
+                  // NEED A ADDLOADING HERE -- DONE
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Material(
+                          type: MaterialType.transparency,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF8BE4BB)),
+                            ),
+                          ),
+                        );
+                      });
+                  bool response = await garden.addToGarden(
+                      scientificName, _nicknameController.text, plantUrl);
 
                   if (response) {
                     if (_nicknameController.text != "") {
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     }
-                    Navigator.pushNamed(
-                        context, '/myGarden');
+                    routes.goToMyGardenScreen(context);
                   }
-
-                  // Pop off both dialog boxes
-
+                  else {
+                    routes.makeToast("There was an error adding your lant to myGarden, please try again!");
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -104,8 +118,7 @@ Container _addButton(BuildContext context, String plantName, String scientificNa
               borderRadius: BorderRadius.circular(10.0),
             ),
           );
-        }
-    ),
+        }),
     child: Column(
       children: <Widget>[
         Container(
@@ -152,8 +165,16 @@ FlatButton plantTile(BuildContext context, String commonName,
                 child: (plantUrl != null)
                     ? CachedNetworkImage(
                         imageUrl: plantUrl,
-                        placeholder: (context, url) => Icon(Icons.local_florist, color: Color(0xFF278478), size: 40,),
-                        errorWidget: (context, url, error) => Icon(Icons.local_florist, color: Color(0xFF278478), size: 40,),
+                        placeholder: (context, url) => Icon(
+                              Icons.local_florist,
+                              color: Color(0xFF278478),
+                              size: 40,
+                            ),
+                        errorWidget: (context, url, error) => Icon(
+                              Icons.local_florist,
+                              color: Color(0xFF278478),
+                              size: 40,
+                            ),
                       )
                     : Icon(Icons.local_florist),
               )),

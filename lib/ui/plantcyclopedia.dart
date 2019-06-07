@@ -42,8 +42,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       borderSide: BorderSide(
         color: Color(0xFF278478),
       ),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(200.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200.0)),
       splashColor: Color(0xFF278478),
       onPressed: () {
         setState(() {
@@ -169,7 +168,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                            AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
                       ),
                     ),
                   );
@@ -177,14 +176,13 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
           });
           PlantcycPlant responsePlant =
               await searchPlant.searchByName(plantSearch, plantType);
-          print('Saurabh');
           setState(() {
             Navigator.pop(context);
-            if( responsePlant.commonName != null ) {
+            if (responsePlant.commonName != null) {
               _plantSearchResult = responsePlant;
               showList = true;
-            }
-            else Fluttertoast.showToast(
+            } else
+              Fluttertoast.showToast(
                 msg: "There was no plant found with the name $plantSearch.",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
@@ -192,7 +190,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                 backgroundColor: Color(0xFF278478),
                 textColor: Color(0xFF8BE4BB),
                 fontSize: 16.0,
-            );
+              );
           });
         },
       ),
@@ -251,7 +249,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   @override
   Widget build(BuildContext context) {
-    print('plantSearch: ' + plantSearch);
+    //print('plantSearch: ' + plantSearch);
     return Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder<PlantWeek>(

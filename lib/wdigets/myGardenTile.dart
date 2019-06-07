@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:Growio/wdigets/plantProfile.dart';
-import 'package:Growio/ui/myGarden.dart';
 
 void _showDialog(
     BuildContext context,
@@ -25,7 +24,6 @@ void _showDialog(
               child: plantProf(context, plantName, scientificName, plantImage,
                   nickname, temp, light, moisture),
             ),
-            // child: PlantProfile(plantName, scientificName, plantImage, nickname,temp, light, moisture ),
           ),
         );
       },

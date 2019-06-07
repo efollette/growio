@@ -12,6 +12,14 @@ import '../utils/routes.dart' as routes;
 import '../utils/constants.dart' as constant;
 import '../api/garden_api.dart' as garden;
 
+// Controller that indicated which page we're at
+final controller = PageController(
+  initialPage: 0,
+);
+
+// Current page
+int currentPage = 0;
+
 // List of suggestions from PlanterID
 List suggestions;
 
@@ -92,20 +100,40 @@ void _showDialog(BuildContext context) {
                                       ),
                                       onPressed: () async {
                                         // Add to garden func goes here, passing in _nicknameController.text as the param
-                                        // NEED A ADDLOADING HERE
-                                        bool response = await garden.addToGarden(suggestions[position]['plant']['name'], _nicknameController.text, imageUrl);
+                                        // NEED A ADDLOADING HERE -- DONE
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Material(
+                                                type: MaterialType.transparency,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                                Color>(
+                                                            Color(0xFF8BE4BB)),
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                        bool response =
+                                            await garden.addToGarden(
+                                                suggestions[position]['plant']
+                                                    ['name'],
+                                                _nicknameController.text,
+                                                imageUrl);
 
                                         if (response) {
                                           if (_nicknameController.text != "") {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context).pop();
+                                            routes.goToMyGardenScreen(context);
                                           }
-                                          Navigator.pushNamed(
-                                              context, '/myGarden');
                                         }
-
-                                        // Pop off both dialog boxes
-
+                                        else {
+                                          routes.makeToast("There was an error adding your lant to myGarden, please try again!");
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        }
                                       },
                                     ),
                                   ],
@@ -120,7 +148,7 @@ void _showDialog(BuildContext context) {
                 ),
                 bottomNavigationBar: Container(
                   child: Text(
-                    "Plant not found? Try a manual search in the PLantcyclepodeia!",
+                    "Plant not found? Try a manual search in the Plantcyclopedia!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF278478),
@@ -140,14 +168,6 @@ void _showDialog(BuildContext context) {
       context: context,
       pageBuilder: (context, animation1, animation2) {});
 }
-
-// Controller that indicated which page we're at
-final controller = PageController(
-  initialPage: 0,
-);
-
-// Current page
-int currentPage = 0;
 
 // Boolean checks if camera button has been clicked
 bool cam = false;
@@ -361,17 +381,19 @@ class _MainPageState extends State<MainPage> {
 
   // Event for when the page is scrolled to be called in the scroll listener
   void _pageSwiped() {
-    // If the user is scrolling to plantcyclopedia, set the nav index to 1
-    if (controller.page >= 0.5) {
-      setState(() {
-        currentPage = 1;
-      });
-    }
-    // If the user is scrolling to myGarden, set the nav index to 0
-    else {
-      setState(() {
-        currentPage = 0;
-      });
+    if(this.mounted) {
+      // If the user is scrolling to plantcyclopedia, set the nav index to 1
+      if (controller.page >= 0.5) {
+        setState(() {
+          currentPage = 1;
+        });
+      }
+      // If the user is scrolling to myGarden, set the nav index to 0
+      else {
+        setState(() {
+          currentPage = 0;
+        });
+      }
     }
   }
 
@@ -432,13 +454,13 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-Future navigateToSubPage(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => SubPage()));
-}
-Future navigateToSupPage(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => SupPage()));
-}
+  Future navigateToSubPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SubPage()));
+  }
 
+  Future navigateToSupPage(context) async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SupPage()));
+  }
 
   // Drawer that contains the settings and logout buttons
   Drawer _makeDrawer(BuildContext context) {
@@ -484,19 +506,19 @@ Future navigateToSupPage(context) async {
                 ),
               ),
               Container(
-              height: 30,
-              child: RawMaterialButton(
-                onPressed: () =>  navigateToSupPage(context),
-                child: Text(
-                  'Support',
-                  style: TextStyle(
-                      fontSize: 12.0,
-                      fontFamily: 'Quicksand',
-                      color: Color(0xFF278478),
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.right,
+                height: 30,
+                child: RawMaterialButton(
+                  onPressed: () => navigateToSupPage(context),
+                  child: Text(
+                    'Support',
+                    style: TextStyle(
+                        fontSize: 12.0,
+                        fontFamily: 'Quicksand',
+                        color: Color(0xFF278478),
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.right,
+                  ),
                 ),
-              ),
               ),
               Padding(padding: EdgeInsets.all(2)),
               Center(
