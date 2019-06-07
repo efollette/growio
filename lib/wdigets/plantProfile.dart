@@ -5,6 +5,7 @@ import '../utils/constants.dart' as constant;
 import '../utils/users.dart' as users;
 import 'package:http/http.dart' as http;
 import '../utils/routes.dart' as routes;
+import 'dart:convert';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
@@ -77,14 +78,36 @@ Future<String> _asyncInputDialog(
               style: TextStyle(color: Color(0xFF278478)),
             ),
             onPressed: () async {
-              // this is where the API call will go I believe (Yash)
               String updateUrl =
                   constant.apiUrl + "/garden/plant/nickname?token=";
               updateUrl += users.apiToken;
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Material(
+                      type: MaterialType.transparency,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF8BE4BB)),
+                        ),
+                      ),
+                    );
+                  });
               final response = await http.put(updateUrl,
                   body: {"oldNickname": oldNickname, "newNickname": nickName});
-              //Navigator.of(context).pop();
-              Navigator.pushNamed(context, '/myGarden');
+              debugPrint(response.body);
+              try {
+                var decodeResponse = jsonDecode(response.body);
+                if ( decodeResponse["success"] ) routes.goToMyGardenScreen(context);
+                else {
+                  Navigator.of(context).pop();
+                  routes.makeToast(decodeResponse["msg"]);
+                }
+              } catch (error) {
+                Navigator.of(context).pop();
+                routes.makeToast("You cannot add another plant with the same nickname!");
+              }
             },
           ),
         ],
@@ -135,7 +158,6 @@ Container _addButton(BuildContext context, String nickname) {
                   ),
                   onPressed: () async {
                     // Return to the list of options
-                    //Navigator.of(context).pop();
                     bool response = await garden.removePlant(nickname);
                     if (response) {
                       Navigator.of(context).pop();
@@ -390,7 +412,7 @@ Dialog plantProf(
                     Padding(padding: EdgeInsets.all(5.0)),
                     Container(
                       child: AutoSizeText(
-                        temp,
+                        temp + "°F",
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,

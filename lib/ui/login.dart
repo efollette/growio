@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../utils/routes.dart' as routes;
 import '../utils/users.dart' as users;
 import 'dart:async';
@@ -13,8 +12,10 @@ class Login extends StatefulWidget {
 
 // Method to handle logging in using Google Auth API
 void handleLogin(BuildContext context) async {
-  await users.handleSignIn(context);
-  routes.goToMyGardenScreen(context);
+  // If login is successful, enter the app
+  if( await users.handleSignIn(context) ) {
+    routes.goToMyGardenScreen(context);
+  }
 }
 
 class _LoginState extends State<Login> {

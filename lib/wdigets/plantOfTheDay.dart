@@ -1,29 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:Growio/wdigets/plantProfile.dart';
 
 // Group to scale size of text for water, sun and temp
 var _group = AutoSizeGroup();
-
-void _showDialog(BuildContext context, String commonName, String scientificName, String imageUrl, String nickname, String temp, String light, String moisture) {
-  // flutter defined function
-  showGeneralDialog(
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionBuilder: (context, a1, a2, widget) {
-        return Transform.scale(
-          scale: a1.value,
-          child: Opacity(
-            opacity: a1.value,
-            child: plantProf(context, commonName, scientificName, imageUrl, nickname, temp, light, moisture),
-          ),
-        );
-      },
-      transitionDuration: Duration(milliseconds: 300),
-      barrierDismissible: true,
-      barrierLabel: '',
-      context: context,
-      pageBuilder: (context, animation1, animation2) {});
-}
 
 Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
   return Container(
@@ -191,7 +170,7 @@ Container plantOfTheDay(BuildContext context, AsyncSnapshot snapshot) {
                       ),
                     ),
                     Container(
-                      child: AutoSizeText(">40°",
+                      child: AutoSizeText(">40°F",
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../helper/messages.dart' as help;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:convert' as json;
 import 'package:http/http.dart' as http;
@@ -53,30 +52,28 @@ Future<Map> getAPIToken(String accessToken) async {
  * Parameters: apiToken - User's unique api token to be able to access their garden
  * Description: Gets the user's garden data from our server in JSON format
  */
-//Future<Map> getGarden(String apiToken) async {
-//  apiUrl += "/garden/plants?token=";
-//  apiUrl += apiToken;
-//  http.Response response = await http.get(apiUrl);
-//  return json.jsonDecode(response.body);
-//}
 
-Future<void> handleSignIn(BuildContext context) async {
+Future<bool> handleSignIn(BuildContext context) async {
   try {
     var result = await googleSignIn.signIn();
-    var googleKey = await result.authentication;
-    currentUser = googleSignIn.currentUser;
-    accessToken = googleKey.accessToken;
-    debugPrint(accessToken);
-    userName = currentUser.displayName;
-    userEmail = currentUser.email;
-    userPic = GoogleUserCircleAvatar(identity: currentUser);
-    if (accessToken != "") {
-      data = await getAPIToken(accessToken);
+    if ( result != null ) {
+      var googleKey = await result.authentication;
+      currentUser = googleSignIn.currentUser;
+      accessToken = googleKey.accessToken;
+      debugPrint(accessToken);
+      userName = currentUser.displayName;
+      userEmail = currentUser.email;
+      userPic = GoogleUserCircleAvatar(identity: currentUser);
+      if (accessToken != "") {
+        data = await getAPIToken(accessToken);
+      }
+      apiToken = data['token'];
+      debugPrint(apiToken);
     }
-    apiToken = data['token'];
-    debugPrint(apiToken);
+    return result != null;
   } catch (error) {
     debugPrint(error.toString());
+    return false;
   }
 }
 
