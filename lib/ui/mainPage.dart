@@ -92,6 +92,7 @@ void _showDialog(BuildContext context) {
                                       ),
                                       onPressed: () async {
                                         // Add to garden func goes here, passing in _nicknameController.text as the param
+                                        // NEED A ADDLOADING HERE
                                         bool response = await garden.addToGarden(suggestions[position]['plant']['name'], _nicknameController.text, imageUrl);
 
                                         if (response) {

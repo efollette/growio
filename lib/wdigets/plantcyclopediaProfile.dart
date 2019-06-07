@@ -63,6 +63,7 @@ Container _addButton(BuildContext context, String plantName, String scientificNa
                     ),
                     onPressed: () async {
                       // Add to garden func goes here, passing in _nicknameContoller.text as the param
+                      // NEED A ADDLOADING HERE
                       bool response = await garden.addToGarden(scientificName, _nicknameController.text, plantUrl);
 
                       if (response) {
