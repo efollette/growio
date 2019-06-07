@@ -9,7 +9,6 @@ import 'dart:io';
 import 'dart:convert';
 import '../utils/users.dart' as users;
 import '../utils/routes.dart' as routes;
-import '../api/camera_api.dart' as camera;
 import '../utils/constants.dart' as constant;
 
 // List of suggestions from PlanterID

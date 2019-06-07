@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import '../utils/users.dart' as users;
-import '../ui/mainPage.dart' as mp;
 import '../wdigets/plantOfTheDay.dart';
 import '../wdigets/plantTile.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../model/plantWeek_model.dart';
-import '../model/plant_model.dart';
 import '../model/plantcyclopediaPlant_model.dart';
 import '../api/weekPlant_api.dart' as weekPlant;
 import '../api/searchPlant_api.dart' as searchPlant;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Plantcyclopedia extends StatefulWidget {
   final bool showFab;
@@ -44,8 +42,8 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       borderSide: BorderSide(
         color: Color(0xFF278478),
       ),
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(200.0)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(200.0)),
       splashColor: Color(0xFF278478),
       onPressed: () {
         setState(() {
@@ -65,25 +63,31 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
     ));
   }
 
-  Expanded _plantList(BuildContext context, PlantcycPlant searchedPlant) {
-    return Expanded(
-      child: Column(
-        children: <Widget>[
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                  child: plantTile(context, searchedPlant.commonName,
-                      searchedPlant.scientificName, searchedPlant.plantImage),
-                  ),
-                );
-              }),
-          _returnButton(context),
-        ],
-      ),
+  ListView _plantList(BuildContext context, PlantcycPlant searchedPlant) {
+    return ListView(
+      shrinkWrap: true,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: plantTile(
+                          context,
+                          searchedPlant.commonName,
+                          searchedPlant.scientificName,
+                          searchedPlant.plantImage),
+                    ),
+                  );
+                }),
+            widget.showFab ? _returnButton(context) : Container(),
+          ],
+        )
+      ],
     );
   }
 
@@ -118,7 +122,6 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
       child: TextField(
         style: TextStyle(color: Color(0xFF278478), fontFamily: 'Quicksand'),
         enableInteractiveSelection: true,
-        //textCapitalization: TextCapitalization.sentences,
         maxLines: 1,
         autocorrect: true,
         textAlign: TextAlign.left,
@@ -157,21 +160,39 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
         // Functionality of search
         onSubmitted: (text) async {
           plantSearch = text;
-          showList = true;
           setState(() {
-            CircularProgressIndicator();
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Material(
+                    type: MaterialType.transparency,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFF8BE4BB)),
+                      ),
+                    ),
+                  );
+                });
           });
-          /* TODO: uncomment this */
-          PlantcycPlant responsePlant = await searchPlant.searchByName(plantSearch, plantType);
-
+          PlantcycPlant responsePlant =
+              await searchPlant.searchByName(plantSearch, plantType);
           print('Saurabh');
-          print (responsePlant.commonName);
-
           setState(() {
-            /* TODO: comment this back in */
-            // _plantSearchResult = responsePlant;
-
-            _plantSearchResult = responsePlant;
+            Navigator.pop(context);
+            if( responsePlant.commonName != null ) {
+              _plantSearchResult = responsePlant;
+              showList = true;
+            }
+            else Fluttertoast.showToast(
+                msg: "There was no plant found with the name $plantSearch.",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIos: 1,
+                backgroundColor: Color(0xFF278478),
+                textColor: Color(0xFF8BE4BB),
+                fontSize: 16.0,
+            );
           });
         },
       ),
@@ -270,7 +291,10 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                         // Plant of the Day
                         showList
                             ? _plantList(context, _plantSearchResult)
-                            : widget.showFab ? _plantOfDay(context, snapshot) : Container(),
+                            : widget.showFab
+                                ? _plantOfDay(context, snapshot)
+                                : Container(),
+
                         Padding(padding: const EdgeInsets.all(10.0)),
                       ],
                     );
