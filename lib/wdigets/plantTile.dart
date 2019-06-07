@@ -6,7 +6,7 @@ import '../api/garden_api.dart' as garden;
 import '../utils/routes.dart' as routes;
 
 void _showDialog(BuildContext context, String commonName, String scientificName,
-    String plantUrl) {
+    String plantUrl, String moisture, String temp, String light) {
   // flutter defined function
   showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -19,7 +19,7 @@ void _showDialog(BuildContext context, String commonName, String scientificName,
               fit: BoxFit.scaleDown,
               alignment: Alignment.center,
               child: plantcyclopediaProf(
-                  context, commonName, scientificName, plantUrl),
+                  context, commonName, scientificName, plantUrl, moisture, temp, light),
             ),
           ),
         );
@@ -139,10 +139,10 @@ Container _addButton(BuildContext context, String plantName,
 }
 
 FlatButton plantTile(BuildContext context, String commonName,
-    String scientificName, String plantUrl) {
+    String scientificName, String plantUrl, String moisture, String temp, String light) {
   return FlatButton(
     splashColor: Color(0xFFF3FCF8),
-    onPressed: () => _showDialog(context, commonName, scientificName, plantUrl),
+    onPressed: () => _showDialog(context, commonName, scientificName, plantUrl, moisture, temp, light),
     child: Container(
       height: 130,
       child: Row(

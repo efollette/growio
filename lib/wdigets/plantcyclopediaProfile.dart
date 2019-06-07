@@ -134,7 +134,7 @@ Container _exitButton(BuildContext context) {
 
 /* Plant Profile Page */
 Dialog plantcyclopediaProf(BuildContext context, String plantName,
-    String scientificName, String plantUrl) {
+    String scientificName, String plantUrl, String moisture, String temp, String light) {
   return Dialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
@@ -303,7 +303,7 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName,
                   children: <Widget>[
                     Container(
                       child: AutoSizeText(
-                        "Every 14 Days",
+                        moisture,
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,
@@ -316,7 +316,7 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName,
                     Padding(padding: EdgeInsets.all(5.0)),
                     Container(
                       child: AutoSizeText(
-                        "Full/Partial",
+                        light,
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,
@@ -329,7 +329,7 @@ Dialog plantcyclopediaProf(BuildContext context, String plantName,
                     Padding(padding: EdgeInsets.all(5.0)),
                     Container(
                       child: AutoSizeText(
-                        ">40°",
+                        temp,
                         maxLines: 1,
                         minFontSize: 5.0,
                         group: _group,

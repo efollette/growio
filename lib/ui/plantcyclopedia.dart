@@ -79,7 +79,10 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
                           context,
                           searchedPlant.commonName,
                           searchedPlant.scientificName,
-                          searchedPlant.plantImage),
+                          searchedPlant.plantImage,
+                          searchedPlant.moisture,
+                          searchedPlant.temp,
+                          searchedPlant.light),
                     ),
                   );
                 }),
