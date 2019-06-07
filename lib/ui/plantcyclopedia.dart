@@ -9,6 +9,7 @@ import '../model/plant_model.dart';
 import '../model/plantcyclopediaPlant_model.dart';
 import '../api/weekPlant_api.dart' as weekPlant;
 import '../api/searchPlant_api.dart' as searchPlant;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Plantcyclopedia extends StatefulWidget {
   final bool showFab;
@@ -24,18 +25,44 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   // Declare a var that stores the searched plant after api call
   PlantcycPlant _plantSearchResult;
-
-  @override
-  void initState() {
-    _plantWeek = weekPlant.getPlantOfTheWeek();
-    _plantSearchResult = null;
-  }
-
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   // User's search after they've pressed enter
   String plantSearch = '';
   String plantType = 'commonName';
 
   bool showList = false;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterLocalNotificationsPlugin= new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('../Assets/GrowioIconScaled.png');
+    var iOS= new IOSInitializationSettings();
+    var initSettings= new InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSettings, onSelectNotification: onSelectNotifications_func);
+
+
+    _plantWeek = weekPlant.getPlantOfTheWeek();
+    _plantSearchResult = null;
+  }
+
+  Future onSelectNotifications_func(String payload){
+    debugPrint("payload:$payload");
+    showDialog(context: context, builder: (_)=> new AlertDialog(
+      title: new Text('Payload'),
+      content: new Text('$payload'),
+    ));
+  }
+
+  showNotification() async{
+    var android= new AndroidNotificationDetails('channel ID', 'channel NAME', 'channel DESCRIPTION');
+    var iOS= new IOSNotificationDetails();
+    var platform= new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(0, 'Go water your plant',
+        'Flutter Local Notification', platform);
+  }
+
+
 
   /* button to exit searching mechanism */
   Container _returnButton(BuildContext context) {
