@@ -10,6 +10,7 @@ import 'dart:convert';
 import '../utils/users.dart' as users;
 import '../utils/routes.dart' as routes;
 import '../utils/constants.dart' as constant;
+import '../api/garden_api.dart' as garden;
 
 // List of suggestions from PlanterID
 List suggestions;
@@ -90,28 +91,20 @@ void _showDialog(BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        // Add to garden func goes here, passing in _nicknameContoller.text as the param
-                                        String addUrl = constant.apiUrl +
-                                            "/garden/plant?token=";
-                                        addUrl += users.apiToken;
-                                        print(suggestions[position]['plant']
-                                            ['name']);
-                                        final response =
-                                            await http.post(addUrl, body: {
-                                          'sciName': suggestions[position]
-                                              ['plant']['name'],
-                                          'nickname': _nicknameController.text,
-                                          'imageUrl': imageUrl
-                                        });
-                                        print(response.body);
+                                        // Add to garden func goes here, passing in _nicknameController.text as the param
+                                        bool response = await garden.addToGarden(suggestions[position]['plant']['name'], _nicknameController.text, imageUrl);
+
+                                        if (response) {
+                                          if (_nicknameController.text != "") {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          }
+                                          Navigator.pushNamed(
+                                              context, '/myGarden');
+                                        }
 
                                         // Pop off both dialog boxes
-                                        if (_nicknameController.text != "") {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
-                                        }
-                                        Navigator.pushNamed(
-                                            context, '/myGarden');
+
                                       },
                                     ),
                                   ],
@@ -219,6 +212,7 @@ class _MainPageState extends State<MainPage> {
       final response =
           await http.post(identifyUrl, body: {'image': base64Image});
       suggestions = json.decode(response.body)['body'][0]['suggestions'];
+      imageUrl = json.decode(response.body)['body'][0]['images'][0]['url'];
       print(suggestions);
 
       Navigator.of(context).pop();

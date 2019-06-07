@@ -34,3 +34,26 @@ Future<bool> removePlant(String nickname) async {
   }
 
 }
+
+Future<bool> addToGarden(String scientificName, String nickname, String imageUrl) async {
+
+  String addUrl = constant.apiUrl + "/garden/plant?token=";
+  addUrl += users.apiToken;
+  print ('cool');
+  print (scientificName);
+  print (nickname);
+  if (imageUrl == null) {
+    imageUrl = 'https://res.cloudinary.com/growio/image/upload/v1559880516/plants_identify/lilPlantDude_fxgb5h.png';
+  }
+  print (imageUrl);
+  final response = await http.post(addUrl, body: {"sciName": scientificName, "nickname": nickname, "imageUrl": imageUrl});
+
+  print ('suarbah');
+  print(response.body);
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
+}
