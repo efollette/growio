@@ -25,6 +25,7 @@ class _PlantcyclopediaState extends State<Plantcyclopedia> {
 
   @override
   void initState() {
+    super.initState();
     _plantWeek = weekPlant.getPlantOfTheWeek();
     _plantSearchResult = null;
   }

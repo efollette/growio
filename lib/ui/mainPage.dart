@@ -130,7 +130,7 @@ void _showDialog(BuildContext context) {
                                           }
                                         }
                                         else {
-                                          routes.makeToast("There was an error adding your lant to myGarden, please try again!");
+                                          routes.makeToast("There was an error adding your plant to myGarden, please try again!");
                                           Navigator.of(context).pop();
                                           Navigator.of(context).pop();
                                         }
