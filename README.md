@@ -97,3 +97,5 @@ From the Camera button you can:
 9. Sandra Maria Pekelis -- User Interface Specialist
 10. Priyal Rakesh Suneja -- Software Architect
 11. Darya A Verzhbinsky -- Database Specialist
+
+https://www.youtube.com/watch?v=VfxWXQdKZ3A 
